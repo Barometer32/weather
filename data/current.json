@@ -1,8 +1,8 @@
 {
     "current_conditions": {
-        "hour_utc": "2026-08-08T13:00:00+00:00",
-        "hour_local": "2026-08-08T08:00:00-05:00",
-        "display_time": "8 AM",
+        "hour_utc": "2026-08-08T14:00:00+00:00",
+        "hour_local": "2026-08-08T09:00:00-05:00",
+        "display_time": "9 AM",
         "stations_present": [
             "KFCM",
             "KMIC",
@@ -11,60 +11,60 @@
         "missing_stations": [],
         "available": true,
         "status": "Complete",
-        "temperature_f": 62,
-        "dewpoint_f": 56,
-        "wind": "West at 4 mph",
-        "wind_speed_mph": 4,
-        "wind_direction": "West"
+        "temperature_f": 67,
+        "dewpoint_f": 57,
+        "wind": "Calm",
+        "wind_speed_mph": 2,
+        "wind_direction": null
     },
     "quality": {
         "ok": true,
-        "all_stations_present": false,
+        "all_stations_present": true,
         "valid_minute_window": "50-59",
         "stations_required": [
             "KFCM",
             "KMIC",
             "KMSP"
         ],
-        "stations_present": [],
-        "missing_stations": [
+        "stations_present": [
             "KFCM",
             "KMIC",
             "KMSP"
         ],
-        "message": "Waiting for new hourly METAR set",
-        "new_hour_ready": false
+        "missing_stations": [],
+        "message": "All 3 stations verified",
+        "new_hour_ready": true
     },
     "stations": {
         "KFCM": {
             "available": true,
-            "observation_time_utc": "2026-08-08T12:53:00+00:00",
-            "observation_time_local": "2026-08-08T07:53:00-05:00",
-            "temperature_c": 15.6,
-            "dewpoint_c": 13.9,
-            "wind_direction_degrees": 230,
-            "wind_speed_knots": 4,
-            "raw_metar": "METAR KFCM 081253Z 23004KT 10SM CLR 16/14 A3006 RMK AO2 SLP177 T01560139"
+            "observation_time_utc": "2026-08-08T13:53:00+00:00",
+            "observation_time_local": "2026-08-08T08:53:00-05:00",
+            "temperature_c": 18.3,
+            "dewpoint_c": 15,
+            "wind_direction_degrees": 0,
+            "wind_speed_knots": 0,
+            "raw_metar": "METAR KFCM 081353Z 00000KT 10SM CLR 18/15 A3007 RMK AO2 SLP178 T01830150"
         },
         "KMIC": {
             "available": true,
-            "observation_time_utc": "2026-08-08T12:53:00+00:00",
-            "observation_time_local": "2026-08-08T07:53:00-05:00",
-            "temperature_c": 17.8,
-            "dewpoint_c": 12.8,
-            "wind_direction_degrees": 270,
+            "observation_time_utc": "2026-08-08T13:53:00+00:00",
+            "observation_time_local": "2026-08-08T08:53:00-05:00",
+            "temperature_c": 20,
+            "dewpoint_c": 12.2,
+            "wind_direction_degrees": 300,
             "wind_speed_knots": 4,
-            "raw_metar": "METAR KMIC 081253Z 27004KT 10SM CLR 18/13 A3005 RMK AO2 SLP173 T01780128"
+            "raw_metar": "METAR KMIC 081353Z 30004KT 10SM CLR 20/12 A3006 RMK AO2 SLP175 T02000122"
         },
         "KMSP": {
             "available": true,
-            "observation_time_utc": "2026-08-08T12:53:00+00:00",
-            "observation_time_local": "2026-08-08T07:53:00-05:00",
-            "temperature_c": 17.2,
-            "dewpoint_c": 13.3,
-            "wind_direction_degrees": 250,
-            "wind_speed_knots": 3,
-            "raw_metar": "METAR KMSP 081253Z 25003KT 10SM FEW250 17/13 A3007 RMK AO2 SLP178 T01720133"
+            "observation_time_utc": "2026-08-08T13:53:00+00:00",
+            "observation_time_local": "2026-08-08T08:53:00-05:00",
+            "temperature_c": 20,
+            "dewpoint_c": 13.9,
+            "wind_direction_degrees": 0,
+            "wind_speed_knots": 0,
+            "raw_metar": "METAR KMSP 081353Z 00000KT 10SM FEW250 20/14 A3007 RMK AO2 SLP181 T02000139"
         }
     },
     "history": [
@@ -72,18 +72,18 @@
             "hour_utc": "2026-08-08T14:00:00+00:00",
             "hour_local": "2026-08-08T09:00:00-05:00",
             "display_time": "9 AM",
-            "stations_present": [],
-            "missing_stations": [
+            "stations_present": [
                 "KFCM",
                 "KMIC",
                 "KMSP"
             ],
-            "available": false,
-            "status": "Unavailable",
-            "temperature_f": null,
-            "dewpoint_f": null,
-            "wind": "Unavailable",
-            "wind_speed_mph": null,
+            "missing_stations": [],
+            "available": true,
+            "status": "Complete",
+            "temperature_f": 67,
+            "dewpoint_f": 57,
+            "wind": "Calm",
+            "wind_speed_mph": 2,
             "wind_direction": null
         },
         {
