@@ -49,7 +49,9 @@ def wind_direction_name(degrees):
         "NW",
     ]
 
-    index = int((degrees + 22.5) // 45) % 8
+    index = int(
+        (degrees + 22.5) // 45
+    ) % 8
 
     return directions[index]
 
@@ -278,9 +280,6 @@ def calculate_wind(reports):
         * KNOTS_TO_MPH
     )
 
-    if speed_mph <= 3:
-        return speed_mph, None
-
     direction = (
         math.degrees(
             math.atan2(
@@ -399,8 +398,19 @@ def build_hour_record(
         )
     )
 
-    if wind_speed <= 3:
-        wind_display = "Calm"
+    #
+    # Wind display rules:
+    #
+    # 3 mph or less = CALM
+    #
+    # Above 3 mph:
+    #
+    # N 8
+    # SW 12
+    # W 5
+    #
+    if wind_speed_display <= 3:
+        wind_display = "CALM"
         wind_direction_display = None
 
     else:
@@ -412,7 +422,7 @@ def build_hour_record(
 
         wind_display = (
             f"{wind_direction_display} "
-            f"at {wind_speed_display} mph"
+            f"{wind_speed_display}"
         )
 
     record.update({
