@@ -1,0 +1,41 @@
+{
+    "updated_utc": "2026-08-08T13:13:49.385296+00:00",
+    "stations_used": [
+        "KFCM",
+        "KMIC",
+        "KMSP"
+    ],
+    "current_conditions": {
+        "temperature_f": 62,
+        "dewpoint_f": 56,
+        "wind": "West at 4 mph",
+        "wind_speed_mph": 4,
+        "wind_direction": "West"
+    },
+    "stations": {
+        "KMSP": {
+            "observation_time": "2026-08-08T13:00:00.000Z",
+            "temperature_c": 17.2,
+            "dewpoint_c": 13.3,
+            "wind_direction_degrees": 250,
+            "wind_speed_knots": 3,
+            "raw_metar": "METAR KMSP 081253Z 25003KT 10SM FEW250 17/13 A3007 RMK AO2 SLP178 T01720133"
+        },
+        "KFCM": {
+            "observation_time": "2026-08-08T13:00:00.000Z",
+            "temperature_c": 15.6,
+            "dewpoint_c": 13.9,
+            "wind_direction_degrees": 230,
+            "wind_speed_knots": 4,
+            "raw_metar": "METAR KFCM 081253Z 23004KT 10SM CLR 16/14 A3006 RMK AO2 SLP177 T01560139"
+        },
+        "KMIC": {
+            "observation_time": "2026-08-08T13:00:00.000Z",
+            "temperature_c": 17.8,
+            "dewpoint_c": 12.8,
+            "wind_direction_degrees": 270,
+            "wind_speed_knots": 4,
+            "raw_metar": "METAR KMIC 081253Z 27004KT 10SM CLR 18/13 A3005 RMK AO2 SLP173 T01780128"
+        }
+    }
+}
