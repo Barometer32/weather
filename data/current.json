@@ -13,7 +13,7 @@
         "status": "Complete",
         "temperature_f": 67,
         "dewpoint_f": 57,
-        "wind": "Calm",
+        "wind": "CALM",
         "wind_speed_mph": 2,
         "wind_direction": null
     },
@@ -32,7 +32,7 @@
             "status": "Complete",
             "temperature_f": 67,
             "dewpoint_f": 57,
-            "wind": "Calm",
+            "wind": "CALM",
             "wind_speed_mph": 2,
             "wind_direction": null
         },
@@ -50,7 +50,7 @@
             "status": "Complete",
             "temperature_f": 62,
             "dewpoint_f": 56,
-            "wind": "W at 4 mph",
+            "wind": "W 4",
             "wind_speed_mph": 4,
             "wind_direction": "W"
         },
@@ -68,7 +68,7 @@
             "status": "Complete",
             "temperature_f": 57,
             "dewpoint_f": 55,
-            "wind": "Calm",
+            "wind": "CALM",
             "wind_speed_mph": 1,
             "wind_direction": null
         },
@@ -86,9 +86,9 @@
             "status": "Complete",
             "temperature_f": 57,
             "dewpoint_f": 55,
-            "wind": "SW at 3 mph",
+            "wind": "CALM",
             "wind_speed_mph": 3,
-            "wind_direction": "SW"
+            "wind_direction": null
         },
         {
             "hour_utc": "2026-08-08T10:00:00+00:00",
@@ -104,7 +104,7 @@
             "status": "Complete",
             "temperature_f": 59,
             "dewpoint_f": 55,
-            "wind": "Calm",
+            "wind": "CALM",
             "wind_speed_mph": 1,
             "wind_direction": null
         },
@@ -122,7 +122,7 @@
             "status": "Complete",
             "temperature_f": 60,
             "dewpoint_f": 55,
-            "wind": "Calm",
+            "wind": "CALM",
             "wind_speed_mph": 1,
             "wind_direction": null
         },
@@ -140,9 +140,9 @@
             "status": "Complete",
             "temperature_f": 61,
             "dewpoint_f": 55,
-            "wind": "NW at 3 mph",
+            "wind": "CALM",
             "wind_speed_mph": 3,
-            "wind_direction": "NW"
+            "wind_direction": null
         },
         {
             "hour_utc": "2026-08-08T07:00:00+00:00",
@@ -158,7 +158,7 @@
             "status": "Complete",
             "temperature_f": 62,
             "dewpoint_f": 54,
-            "wind": "Calm",
+            "wind": "CALM",
             "wind_speed_mph": 1,
             "wind_direction": null
         },
@@ -176,9 +176,9 @@
             "status": "Complete",
             "temperature_f": 63,
             "dewpoint_f": 54,
-            "wind": "W at 3 mph",
+            "wind": "CALM",
             "wind_speed_mph": 3,
-            "wind_direction": "W"
+            "wind_direction": null
         },
         {
             "hour_utc": "2026-08-08T05:00:00+00:00",
@@ -194,7 +194,7 @@
             "status": "Complete",
             "temperature_f": 66,
             "dewpoint_f": 54,
-            "wind": "NW at 6 mph",
+            "wind": "NW 6",
             "wind_speed_mph": 6,
             "wind_direction": "NW"
         },
@@ -212,7 +212,7 @@
             "status": "Complete",
             "temperature_f": 67,
             "dewpoint_f": 55,
-            "wind": "NW at 8 mph",
+            "wind": "NW 8",
             "wind_speed_mph": 8,
             "wind_direction": "NW"
         },
@@ -230,7 +230,7 @@
             "status": "Complete",
             "temperature_f": 70,
             "dewpoint_f": 58,
-            "wind": "W at 6 mph",
+            "wind": "W 6",
             "wind_speed_mph": 6,
             "wind_direction": "W"
         },
@@ -248,7 +248,7 @@
             "status": "Complete",
             "temperature_f": 72,
             "dewpoint_f": 61,
-            "wind": "W at 5 mph",
+            "wind": "W 5",
             "wind_speed_mph": 5,
             "wind_direction": "W"
         }
