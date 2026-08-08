@@ -1,0 +1,379 @@
+Downloading METAR observations...
+
+Metro Current Conditions
+------------------------
+Valid for: 8 AM
+Temperature: 62°F
+Dew Point: 56°F
+Wind: West at 4 mph
+Quality check: PASS
+Stations: KFCM, KMIC, KMSP
+
+Saved to /weather/data/current.json
+Downloading METAR observations...
+
+Metro Current Conditions
+------------------------
+Valid for: 8 AM
+Temperature: 62°F
+Dew Point: 56°F
+Wind: West at 4 mph
+Quality check: PASS
+Stations: KFCM, KMIC, KMSP
+
+Saved to /weather/data/current.json
+Downloading METAR observations...
+
+Metro Current Conditions
+------------------------
+Valid for: 8 AM
+Temperature: 62°F
+Dew Point: 56°F
+Wind: West at 4 mph
+Quality check: PASS
+Stations: KFCM, KMIC, KMSP
+
+Saved to /weather/data/current.json
+Downloading METAR observations...
+
+Metro Current Conditions
+------------------------
+Showing: 8 AM
+Temperature: 62°F
+Dew Point: 56°F
+Wind: West at 4 mph
+New hourly observation: READY
+
+Saved to /weather/data/current.json
+
+================================
+Starting weather data update
+================================
+
+Running update_weather.py...
+update_weather.py completed.
+
+Checking published weather data...
+No published weather data changed.
+Nothing to push.
+
+Update cycle complete.
+Downloading METAR observations...
+
+Metro Current Conditions
+------------------------
+Showing: 8 AM
+Temperature: 62°F
+Dew Point: 56°F
+Wind: West at 4 mph
+New hourly observation: READY
+
+Saved to /weather/data/current.json
+
+================================
+Starting weather data update
+================================
+
+Running update_weather.py...
+update_weather.py completed.
+
+Checking published weather data...
+No published weather data changed.
+Nothing to push.
+
+Update cycle complete.
+Downloading METAR observations...
+
+Metro Current Conditions
+------------------------
+Showing: 8 AM
+Temperature: 62°F
+Dew Point: 56°F
+Wind: West at 4 mph
+New hourly observation: READY
+
+Saved to /weather/data/current.json
+
+================================
+Starting weather data update
+================================
+
+Running update_weather.py...
+update_weather.py completed.
+
+Checking published weather data...
+No published weather data changed.
+Nothing to push.
+
+Update cycle complete.
+Downloading METAR observations...
+
+Metro Current Conditions
+------------------------
+Showing: 8 AM
+Temperature: 62°F
+Dew Point: 56°F
+Wind: West at 4 mph
+New hourly observation: READY
+
+Saved to /weather/data/current.json
+
+================================
+Starting weather data update
+================================
+
+Running update_weather.py...
+update_weather.py completed.
+
+Checking published weather data...
+No published weather data changed.
+Nothing to push.
+
+Update cycle complete.
+Downloading METAR observations...
+
+Metro Current Conditions
+------------------------
+Showing: 8 AM
+Temperature: 62°F
+Dew Point: 56°F
+Wind: West at 4 mph
+New hourly observation: READY
+
+Saved to /weather/data/current.json
+
+================================
+Starting weather data update
+================================
+
+Running update_weather.py...
+update_weather.py completed.
+
+Checking published weather data...
+No published weather data changed.
+Nothing to push.
+
+Update cycle complete.
+Downloading METAR observations...
+
+Metro Current Conditions
+------------------------
+Showing: 8 AM
+Temperature: 62°F
+Dew Point: 56°F
+Wind: West at 4 mph
+New hourly observation: READY
+
+Saved to /weather/data/current.json
+
+================================
+Starting weather data update
+================================
+
+Running update_weather.py...
+update_weather.py completed.
+
+Checking published weather data...
+No published weather data changed.
+Nothing to push.
+
+Update cycle complete.
+Downloading METAR observations...
+
+Metro Current Conditions
+------------------------
+Showing: 8 AM
+Temperature: 62°F
+Dew Point: 56°F
+Wind: West at 4 mph
+New hourly observation: READY
+
+Saved to /weather/data/current.json
+
+================================
+Starting weather data update
+================================
+
+Running update_weather.py...
+update_weather.py completed.
+
+Checking published weather data...
+No published weather data changed.
+Nothing to push.
+
+Update cycle complete.
+Downloading METAR observations...
+
+Metro Current Conditions
+------------------------
+Showing: 8 AM
+Temperature: 62°F
+Dew Point: 56°F
+Wind: West at 4 mph
+New hourly observation: READY
+
+Saved to /weather/data/current.json
+
+================================
+Starting weather data update
+================================
+
+Running update_weather.py...
+update_weather.py completed.
+
+Checking published weather data...
+No published weather data changed.
+Nothing to push.
+
+Update cycle complete.
+Downloading METAR observations...
+
+Metro Current Conditions
+------------------------
+Showing: 8 AM
+Temperature: 62°F
+Dew Point: 56°F
+Wind: West at 4 mph
+New hourly observation: WAITING
+Missing: KFCM, KMIC, KMSP
+
+Saved to /weather/data/current.json
+[main 2482aea] Update weather data
+ 1 file changed, 23 insertions(+), 23 deletions(-)
+To github.com:Barometer32/weather.git
+   8aa9a70..2482aea  main -> main
+
+================================
+Starting weather data update
+================================
+
+Running update_weather.py...
+update_weather.py completed.
+
+Checking published weather data...
+Weather data changed.
+Pushing changes to GitHub...
+GitHub update complete.
+
+Update cycle complete.
+Downloading METAR observations...
+
+Metro Current Conditions
+------------------------
+Showing: 9 AM
+Temperature: 67°F
+Dew Point: 57°F
+Wind: Calm
+New hourly observation: READY
+
+Saved to /weather/data/current.json
+[main d69ce5c] Update weather data
+ 1 file changed, 41 insertions(+), 41 deletions(-)
+To github.com:Barometer32/weather.git
+   2482aea..d69ce5c  main -> main
+
+================================
+Starting weather data update
+================================
+
+Running update_weather.py...
+update_weather.py completed.
+
+Checking published weather data...
+Weather data changed.
+Pushing changes to GitHub...
+GitHub update complete.
+
+Update cycle complete.
+Downloading METAR observations...
+
+Metro Current Conditions
+------------------------
+Showing: 9 AM
+Temperature: 67°F
+Dew Point: 57°F
+Wind: Calm
+New hourly observation: READY
+
+Saved to /weather/data/current.json
+
+================================
+Starting weather data update
+================================
+
+Running update_weather.py...
+update_weather.py completed.
+
+Checking published weather data...
+No published weather data changed.
+Nothing to push.
+
+Update cycle complete.
+Downloading METAR observations...
+
+Metro Current Conditions
+------------------------
+Showing: 9 AM
+Temperature: 67°F
+Dew Point: 57°F
+Wind: Calm
+New hourly observation: READY
+
+Saved to /weather/data/current.json
+
+================================
+Starting weather data update
+================================
+
+Running update_weather.py...
+update_weather.py completed.
+
+Checking published weather data...
+No published weather data changed.
+Nothing to push.
+
+Update cycle complete.
+Downloading METAR observations...
+
+Metro Current Conditions
+------------------------
+Showing: 9 AM
+Temperature: 67°F
+Dew Point: 57°F
+Wind: Calm
+New hourly observation: READY
+
+Saved to /weather/data/current.json
+
+================================
+Starting weather data update
+================================
+
+Running update_weather.py...
+update_weather.py completed.
+
+Checking published weather data...
+No published weather data changed.
+Nothing to push.
+
+Update cycle complete.
+  File "/weather/scripts/update_weather.py", line 29
+    max-width: 1000px;
+                  ^
+SyntaxError: invalid decimal literal
+
+================================
+Starting weather data update
+================================
+
+Running update_weather.py...
+update_weather.py failed with return code 1
+
+Collector problems:
+  update_weather.py
+
+Checking published weather data...
+No published weather data changed.
+Nothing to push.
+
+Update cycle complete.
