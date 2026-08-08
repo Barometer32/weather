@@ -1,253 +1,722 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
 
     <title>Metro Weather</title>
 
     <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
-            background: #e8eef5;
+            background: #edf1f5;
             font-family: Arial, Helvetica, sans-serif;
-            color: #222;
+            color: #20252a;
         }
 
-        .container {
-            max-width: 1100px;
-            margin: 40px auto;
-            padding: 20px;
+        .page {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 12px;
         }
 
-        h1 {
-            text-align: center;
-            font-size: 34px;
-            margin-bottom: 5px;
-        }
-
-        .subtitle {
-            text-align: center;
-            color: #666;
-            margin-bottom: 30px;
-        }
-
-        .conditions {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-
-        .card {
+        .section {
             background: white;
-            border-radius: 12px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            border: 1px solid #d9dee4;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 9px 12px;
+            background: #f6f8fa;
+            border-bottom: 1px solid #e1e5e9;
+        }
+
+        .section-title {
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        .section-subtitle {
+            color: #6e747a;
+            font-size: 12px;
+            margin-top: 2px;
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #999;
+        }
+
+        .status-dot.good {
+            background: #1ba64b;
+        }
+
+        .status-dot.waiting {
+            background: #e5a000;
+        }
+
+        .status-dot.bad {
+            background: #d93025;
+        }
+
+        .current-grid {
+            display: grid;
+            grid-template-columns:
+                1fr 1fr 1.5fr;
+        }
+
+        .current-item {
+            padding: 13px 15px;
+            border-right: 1px solid #e5e8eb;
+        }
+
+        .current-item:last-child {
+            border-right: none;
         }
 
         .label {
-            font-size: 18px;
-            color: #666;
-            margin-bottom: 12px;
+            color: #747a80;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            margin-bottom: 3px;
         }
 
         .value {
-            font-size: 42px;
+            font-size: 27px;
             font-weight: bold;
         }
 
         .wind-value {
-            font-size: 34px;
+            font-size: 21px;
         }
 
-        .updated {
-            text-align: center;
-            color: #777;
-            margin-top: 30px;
-            font-size: 14px;
+        .valid-time {
+            padding: 7px 12px;
+            border-top: 1px solid #e5e8eb;
+            font-size: 12px;
+            color: #5d6369;
+            background: #fafbfc;
         }
 
-        /*
-         * Phone layout
-         */
+        .history-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f7f8fa;
+            color: #61676d;
+            font-size: 11px;
+            text-align: left;
+            padding: 7px 9px;
+            border-bottom: 1px solid #dfe3e7;
+        }
+
+        td {
+            padding: 7px 9px;
+            border-bottom: 1px solid #eceff1;
+            font-size: 13px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .history-time {
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .small-green-dot,
+        .small-red-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .small-green-dot {
+            background: #1ba64b;
+        }
+
+        .small-red-dot {
+            background: #d93025;
+        }
+
+        .unavailable {
+            color: #b3261e;
+        }
+
         @media (max-width: 600px) {
 
-            body {
-                background: #eef3f8;
+            .page {
+                padding: 6px;
             }
 
-            .container {
-                margin: 0;
-                padding: 16px;
+            .section {
+                margin-bottom: 7px;
+                border-radius: 6px;
             }
 
-            h1 {
-                font-size: 25px;
-                margin-top: 10px;
-                margin-bottom: 4px;
+            .section-header {
+                padding: 8px 9px;
             }
 
-            .subtitle {
-                font-size: 14px;
-                margin-bottom: 20px;
+            .section-title {
+                font-size: 15px;
             }
 
-            .conditions {
-                grid-template-columns: 1fr;
-                gap: 12px;
+            .section-subtitle {
+                font-size: 10px;
             }
 
-            .card {
-                padding: 18px 20px;
-                border-radius: 14px;
+            .status {
+                font-size: 10px;
+            }
 
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
+            .current-grid {
+                grid-template-columns:
+                    1fr 1fr;
+            }
 
-                text-align: left;
+            .current-item {
+                padding: 9px 10px;
+            }
+
+            .current-item:nth-child(2) {
+                border-right: none;
+            }
+
+            .current-item:last-child {
+                grid-column: 1 / -1;
+                border-top: 1px solid #e5e8eb;
+                border-right: none;
             }
 
             .label {
-                font-size: 18px;
-                margin-bottom: 0;
+                font-size: 9px;
             }
 
             .value {
-                font-size: 30px;
+                font-size: 23px;
             }
 
             .wind-value {
-                font-size: 24px;
-                text-align: right;
+                font-size: 19px;
             }
 
-            .updated {
-                font-size: 12px;
-                margin-top: 18px;
+            .valid-time {
+                font-size: 10px;
+                padding: 6px 9px;
+            }
+
+            table {
+                min-width: 400px;
+            }
+
+            th {
+                font-size: 9px;
+                padding: 6px 7px;
+            }
+
+            td {
+                font-size: 11px;
+                padding: 6px 7px;
             }
         }
+
     </style>
+
 </head>
+
 
 <body>
 
-<div class="container">
+<div class="page">
 
-    <h1>Metro Current Conditions</h1>
+    <section class="section">
 
-    <div class="subtitle">
-        Combined KFCM • KMIC • KMSP
-    </div>
+        <div class="section-header">
 
-    <div class="conditions">
+            <div>
 
-        <div class="card">
-            <div class="label">
-                Temperature
+                <div class="section-title">
+                    Metro Current Conditions
+                </div>
+
+                <div class="section-subtitle">
+                    KFCM • KMIC • KMSP
+                </div>
+
             </div>
 
-            <div class="value" id="temperature">
-                --
+
+            <div class="status">
+
+                <span
+                    class="status-dot"
+                    id="qualityDot"
+                ></span>
+
+                <span id="qualityText">
+                    Checking
+                </span>
+
             </div>
+
         </div>
 
 
-        <div class="card">
-            <div class="label">
-                Dew Point
+        <div class="current-grid">
+
+            <div class="current-item">
+
+                <div class="label">
+                    Temperature
+                </div>
+
+                <div
+                    class="value"
+                    id="temperature"
+                >
+                    --
+                </div>
+
             </div>
 
-            <div class="value" id="dewpoint">
-                --
+
+            <div class="current-item">
+
+                <div class="label">
+                    Dew Point
+                </div>
+
+                <div
+                    class="value"
+                    id="dewpoint"
+                >
+                    --
+                </div>
+
             </div>
+
+
+            <div class="current-item">
+
+                <div class="label">
+                    Wind
+                </div>
+
+                <div
+                    class="value wind-value"
+                    id="wind"
+                >
+                    --
+                </div>
+
+            </div>
+
         </div>
 
 
-        <div class="card">
-            <div class="label">
-                Wind
-            </div>
-
-            <div class="value wind-value" id="wind">
-                --
-            </div>
+        <div
+            class="valid-time"
+            id="validTime"
+        >
+            Loading observations...
         </div>
 
-    </div>
+    </section>
 
-    <div class="updated" id="updated">
-        Loading latest observations...
-    </div>
+
+    <section class="section">
+
+        <div class="section-header">
+
+            <div>
+
+                <div class="section-title">
+                    12-Hour Trend
+                </div>
+
+                <div class="section-subtitle">
+                    Hourly metro averages
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="history-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Time</th>
+                        <th>Temp</th>
+                        <th>Dew</th>
+                        <th>Wind</th>
+                        <th>Status</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="historyBody">
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
 
 </div>
 
 
 <script>
+
 async function loadWeather() {
 
     try {
 
         const response = await fetch(
-            "data/current.json?t=" + Date.now()
+            "data/current.json?t="
+            + Date.now()
         );
 
         if (!response.ok) {
-            throw new Error("Unable to load weather data");
+
+            throw new Error(
+                "Unable to load weather data"
+            );
+
         }
 
-        const data = await response.json();
+        const data =
+            await response.json();
 
-        const current = data.current_conditions;
-
-
-        document.getElementById(
-            "temperature"
-        ).textContent =
-            current.temperature_f + "°F";
-
-
-        document.getElementById(
-            "dewpoint"
-        ).textContent =
-            current.dewpoint_f + "°F";
-
-
-        document.getElementById(
-            "wind"
-        ).textContent =
-            current.wind;
-
-
-        const updateTime =
-            new Date(data.updated_utc);
-
-
-        document.getElementById(
-            "updated"
-        ).textContent =
-            "Updated: " +
-            updateTime.toLocaleString();
+        displayCurrent(data);
+        displayHistory(data);
 
     }
 
     catch (error) {
 
         document.getElementById(
-            "updated"
+            "temperature"
         ).textContent =
-            "Weather data unavailable";
+            "Unavailable";
+
+        document.getElementById(
+            "dewpoint"
+        ).textContent =
+            "Unavailable";
+
+        document.getElementById(
+            "wind"
+        ).textContent =
+            "Unavailable";
+
+        const dot =
+            document.getElementById(
+                "qualityDot"
+            );
+
+        dot.classList.add(
+            "bad"
+        );
+
+        document.getElementById(
+            "qualityText"
+        ).textContent =
+            "Unavailable";
 
         console.error(error);
+
     }
+
+}
+
+
+function displayCurrent(data) {
+
+    const current =
+        data.current_conditions;
+
+    const quality =
+        data.quality;
+
+    const dot =
+        document.getElementById(
+            "qualityDot"
+        );
+
+    dot.classList.remove(
+        "good",
+        "waiting",
+        "bad"
+    );
+
+    if (
+        current.available
+        && quality.new_hour_ready
+    ) {
+
+        dot.classList.add(
+            "good"
+        );
+
+        document.getElementById(
+            "qualityText"
+        ).textContent =
+            "Verified";
+
+    }
+
+    else if (
+        current.available
+        && !quality.new_hour_ready
+    ) {
+
+        dot.classList.add(
+            "waiting"
+        );
+
+        document.getElementById(
+            "qualityText"
+        ).textContent =
+            "Waiting for new hour";
+
+    }
+
+    else {
+
+        dot.classList.add(
+            "bad"
+        );
+
+        document.getElementById(
+            "qualityText"
+        ).textContent =
+            "Unavailable";
+
+    }
+
+
+    if (current.available) {
+
+        document.getElementById(
+            "temperature"
+        ).textContent =
+            current.temperature_f
+            + "°F";
+
+        document.getElementById(
+            "dewpoint"
+        ).textContent =
+            current.dewpoint_f
+            + "°F";
+
+        document.getElementById(
+            "wind"
+        ).textContent =
+            current.wind;
+
+    }
+
+    else {
+
+        document.getElementById(
+            "temperature"
+        ).textContent =
+            "Unavailable";
+
+        document.getElementById(
+            "dewpoint"
+        ).textContent =
+            "Unavailable";
+
+        document.getElementById(
+            "wind"
+        ).textContent =
+            "Unavailable";
+
+    }
+
+
+    let detailText;
+
+    if (
+        quality.new_hour_ready
+    ) {
+
+        detailText =
+            "Valid for "
+            + current.display_time
+            + " • 3 of 3 stations verified"
+            + " • reports :50–:59";
+
+    }
+
+    else if (
+        current.available
+    ) {
+
+        detailText =
+            "Showing "
+            + current.display_time
+            + " verified conditions"
+            + " • waiting for new hour";
+
+        if (
+            quality.missing_stations
+            && quality.missing_stations.length
+            > 0
+        ) {
+
+            detailText +=
+                " • missing "
+                + quality.missing_stations.join(
+                    ", "
+                );
+
+        }
+
+    }
+
+    else {
+
+        detailText =
+            "Current conditions unavailable";
+
+    }
+
+
+    document.getElementById(
+        "validTime"
+    ).textContent =
+        detailText;
+
+}
+
+
+function displayHistory(data) {
+
+    const body =
+        document.getElementById(
+            "historyBody"
+        );
+
+    body.innerHTML = "";
+
+    data.history.forEach(
+        function(hour) {
+
+            const row =
+                document.createElement(
+                    "tr"
+                );
+
+            if (hour.available) {
+
+                row.innerHTML =
+                    "<td class='history-time'>"
+                    + hour.display_time
+                    + "</td>"
+
+                    + "<td>"
+                    + hour.temperature_f
+                    + "°"
+                    + "</td>"
+
+                    + "<td>"
+                    + hour.dewpoint_f
+                    + "°"
+                    + "</td>"
+
+                    + "<td>"
+                    + hour.wind
+                    + "</td>"
+
+                    + "<td>"
+                    + "<span class='small-green-dot'></span>"
+                    + "OK"
+                    + "</td>";
+
+            }
+
+            else {
+
+                row.innerHTML =
+                    "<td class='history-time'>"
+                    + hour.display_time
+                    + "</td>"
+
+                    + "<td>—</td>"
+
+                    + "<td>—</td>"
+
+                    + "<td class='unavailable'>"
+                    + "Unavailable"
+                    + "</td>"
+
+                    + "<td class='unavailable'>"
+                    + "<span class='small-red-dot'></span>"
+                    + "Unavailable"
+                    + "</td>";
+
+            }
+
+            body.appendChild(
+                row
+            );
+
+        }
+    );
+
 }
 
 
 loadWeather();
+
 </script>
 
 </body>
+
 </html>
