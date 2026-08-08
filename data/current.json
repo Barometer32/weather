@@ -19,21 +19,21 @@
     },
     "quality": {
         "ok": true,
-        "all_stations_present": true,
+        "all_stations_present": false,
         "valid_minute_window": "50-59",
         "stations_required": [
             "KFCM",
             "KMIC",
             "KMSP"
         ],
-        "stations_present": [
+        "stations_present": [],
+        "missing_stations": [
             "KFCM",
             "KMIC",
             "KMSP"
         ],
-        "missing_stations": [],
-        "message": "All 3 stations verified",
-        "new_hour_ready": true
+        "message": "Waiting for new hourly METAR set",
+        "new_hour_ready": false
     },
     "stations": {
         "KFCM": {
@@ -68,6 +68,24 @@
         }
     },
     "history": [
+        {
+            "hour_utc": "2026-08-08T14:00:00+00:00",
+            "hour_local": "2026-08-08T09:00:00-05:00",
+            "display_time": "9 AM",
+            "stations_present": [],
+            "missing_stations": [
+                "KFCM",
+                "KMIC",
+                "KMSP"
+            ],
+            "available": false,
+            "status": "Unavailable",
+            "temperature_f": null,
+            "dewpoint_f": null,
+            "wind": "Unavailable",
+            "wind_speed_mph": null,
+            "wind_direction": null
+        },
         {
             "hour_utc": "2026-08-08T13:00:00+00:00",
             "hour_local": "2026-08-08T08:00:00-05:00",
@@ -264,24 +282,6 @@
             "dewpoint_f": 58,
             "wind": "West at 6 mph",
             "wind_speed_mph": 6,
-            "wind_direction": "West"
-        },
-        {
-            "hour_utc": "2026-08-08T02:00:00+00:00",
-            "hour_local": "2026-08-07T21:00:00-05:00",
-            "display_time": "9 PM",
-            "stations_present": [
-                "KFCM",
-                "KMIC",
-                "KMSP"
-            ],
-            "missing_stations": [],
-            "available": true,
-            "status": "Complete",
-            "temperature_f": 72,
-            "dewpoint_f": 61,
-            "wind": "West at 5 mph",
-            "wind_speed_mph": 5,
             "wind_direction": "West"
         }
     ]
