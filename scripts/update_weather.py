@@ -1,404 +1,672 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1"
-    >
-
-    <title>Metro Weather</title>
-
-    <style>
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            background: #edf1f5;
-            font-family: Arial, Helvetica, sans-serif;
-            color: #20252a;
-        }
-
-        .page {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 12px;
-        }
-
-        .section {
-            background: white;
-            border: 1px solid #d9dee4;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 12px;
-            background: #f6f8fa;
-            border-bottom: 1px solid #e1e5e9;
-        }
-
-        .section-title {
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .section-subtitle {
-            color: #6e747a;
-            font-size: 12px;
-            margin-top: 2px;
-        }
-
-        .status {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .status-dot {
-            width: 9px;
-            height: 9px;
-            border-radius: 50%;
-            background: #1ba64b;
-        }
-
-        .history-wrapper {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th {
-            background: #f7f8fa;
-            color: #61676d;
-            font-size: 11px;
-            text-align: left;
-            padding: 7px 9px;
-            border-bottom: 1px solid #dfe3e7;
-        }
-
-        td {
-            padding: 8px 9px;
-            border-bottom: 1px solid #eceff1;
-            font-size: 13px;
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
+import json
+import math
+from collections import defaultdict
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
+from zoneinfo import ZoneInfo
 
-        .history-time {
-            font-weight: bold;
-            white-space: nowrap;
-        }
+import requests
 
-        .latest-row {
-            background: #f7fbff;
-        }
 
-        .small-green-dot,
-        .small-red-dot {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            margin-right: 5px;
-        }
+STATIONS = ["KFCM", "KMIC", "KMSP"]
 
-        .small-green-dot {
-            background: #1ba64b;
-        }
+METAR_URL = "https://aviationweather.gov/api/data/metar"
 
-        .small-red-dot {
-            background: #d93025;
-        }
+OUTPUT_FILE = Path("/weather/data/current.json")
 
-        .unavailable {
-            color: #b3261e;
-        }
+KNOTS_TO_MPH = 1.15078
 
-        @media (max-width: 600px) {
+LOCAL_TIMEZONE = ZoneInfo("America/Chicago")
 
-            .page {
-                padding: 6px;
-            }
+VALID_MINUTE_START = 50
+VALID_MINUTE_END = 59
 
-            .section {
-                border-radius: 6px;
-            }
+HOURS_TO_DOWNLOAD = 18
 
-            .section-header {
-                padding: 8px 9px;
-            }
+HISTORY_HOURS = 13
 
-            .section-title {
-                font-size: 16px;
-            }
 
-            .section-subtitle {
-                font-size: 10px;
-            }
+def fahrenheit(celsius):
+    return (celsius * 9 / 5) + 32
 
-            .status {
-                font-size: 10px;
-            }
 
-            table {
-                min-width: 410px;
-            }
+def round_half_up(value):
+    if value is None:
+        return None
 
-            th {
-                font-size: 9px;
-                padding: 6px 7px;
-            }
+    return int(math.floor(value + 0.5))
 
-            td {
-                font-size: 11px;
-                padding: 7px;
-            }
-        }
 
-    </style>
+def wind_direction_name(degrees):
+    directions = [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S",
+        "SW",
+        "W",
+        "NW",
+    ]
 
-</head>
+    index = int((degrees + 22.5) // 45) % 8
 
+    return directions[index]
 
-<body>
 
-<div class="page">
-
-    <section class="section">
-
-        <div class="section-header">
-
-            <div>
-
-                <div class="section-title">
-                    Last 13 Hours
-                </div>
-
-                <div class="section-subtitle">
-                    Combined KFCM • KMIC • KMSP
-                </div>
-
-            </div>
-
-
-            <div class="status">
-
-                <span class="status-dot"></span>
-
-                <span id="latestStatus">
-                    Loading
-                </span>
-
-            </div>
-
-        </div>
-
-
-        <div class="history-wrapper">
-
-            <table>
-
-                <thead>
-
-                    <tr>
-                        <th>Time</th>
-                        <th>Temp</th>
-                        <th>Dew</th>
-                        <th>Wind</th>
-                        <th>Status</th>
-                    </tr>
-
-                </thead>
-
-
-                <tbody id="historyBody">
-                </tbody>
-
-            </table>
-
-        </div>
-
-    </section>
-
-</div>
-
-
-<script>
-
-async function loadWeather() {
-
-    try {
-
-        const response = await fetch(
-            "data/current.json?t="
-            + Date.now()
-        );
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Unable to load weather data"
-            );
-
-        }
-
-        const data =
-            await response.json();
-
-        displayHistory(data);
-
+def get_metars():
+    params = {
+        "ids": ",".join(STATIONS),
+        "format": "json",
+        "hours": HOURS_TO_DOWNLOAD,
     }
 
-    catch (error) {
+    response = requests.get(
+        METAR_URL,
+        params=params,
+        timeout=30,
+    )
 
-        document.getElementById(
-            "latestStatus"
-        ).textContent =
-            "Unavailable";
+    response.raise_for_status()
 
-        console.error(error);
+    return response.json()
 
+
+def get_observation_datetime(report):
+    obs_time = report.get("obsTime")
+
+    if obs_time is None:
+        return None
+
+    try:
+        return datetime.fromtimestamp(
+            float(obs_time),
+            tz=timezone.utc,
+        )
+
+    except (
+        TypeError,
+        ValueError,
+        OSError,
+    ):
+        return None
+
+
+def is_valid_hourly_report(report):
+    obs_datetime = get_observation_datetime(
+        report
+    )
+
+    if obs_datetime is None:
+        return False
+
+    return (
+        VALID_MINUTE_START
+        <= obs_datetime.minute
+        <= VALID_MINUTE_END
+    )
+
+
+def group_valid_reports_by_hour(data):
+    hours = defaultdict(dict)
+
+    for report in data:
+        station = report.get("icaoId")
+
+        if station not in STATIONS:
+            continue
+
+        if not is_valid_hourly_report(
+            report
+        ):
+            continue
+
+        obs_datetime = (
+            get_observation_datetime(
+                report
+            )
+        )
+
+        hour_key = obs_datetime.replace(
+            minute=0,
+            second=0,
+            microsecond=0,
+        )
+
+        existing = hours[hour_key].get(
+            station
+        )
+
+        if existing is None:
+            hours[hour_key][station] = (
+                report
+            )
+            continue
+
+        existing_time = (
+            get_observation_datetime(
+                existing
+            )
+        )
+
+        if obs_datetime > existing_time:
+            hours[hour_key][station] = (
+                report
+            )
+
+    return hours
+
+
+def calculate_temperature(reports):
+    values = []
+
+    for station in STATIONS:
+        value = reports[station].get(
+            "temp"
+        )
+
+        if value is None:
+            return None
+
+        values.append(
+            fahrenheit(float(value))
+        )
+
+    return sum(values) / len(values)
+
+
+def calculate_dewpoint(reports):
+    values = []
+
+    for station in STATIONS:
+        value = reports[station].get(
+            "dewp"
+        )
+
+        if value is None:
+            return None
+
+        values.append(
+            fahrenheit(float(value))
+        )
+
+    return sum(values) / len(values)
+
+
+def calculate_wind(reports):
+    u_components = []
+    v_components = []
+
+    for station in STATIONS:
+        report = reports[station]
+
+        speed_knots = report.get(
+            "wspd"
+        )
+
+        direction = report.get(
+            "wdir"
+        )
+
+        if speed_knots is None:
+            return None, None
+
+        try:
+            speed_knots = float(
+                speed_knots
+            )
+
+        except (
+            TypeError,
+            ValueError,
+        ):
+            return None, None
+
+        if speed_knots == 0:
+            u_components.append(0.0)
+            v_components.append(0.0)
+            continue
+
+        if direction is None:
+            return None, None
+
+        try:
+            direction = float(
+                direction
+            )
+
+        except (
+            TypeError,
+            ValueError,
+        ):
+            return None, None
+
+        radians = math.radians(
+            direction
+        )
+
+        u = (
+            -speed_knots
+            * math.sin(radians)
+        )
+
+        v = (
+            -speed_knots
+            * math.cos(radians)
+        )
+
+        u_components.append(u)
+        v_components.append(v)
+
+    average_u = (
+        sum(u_components)
+        / len(u_components)
+    )
+
+    average_v = (
+        sum(v_components)
+        / len(v_components)
+    )
+
+    speed_knots = math.sqrt(
+        average_u ** 2
+        + average_v ** 2
+    )
+
+    speed_mph = (
+        speed_knots
+        * KNOTS_TO_MPH
+    )
+
+    if speed_mph <= 3:
+        return speed_mph, None
+
+    direction = (
+        math.degrees(
+            math.atan2(
+                -average_u,
+                -average_v,
+            )
+        )
+        + 360
+    ) % 360
+
+    return speed_mph, direction
+
+
+def build_hour_record(
+    display_hour_utc,
+    reports,
+):
+    stations_present = sorted(
+        reports.keys()
+    )
+
+    missing_stations = [
+        station
+        for station in STATIONS
+        if station not in reports
+    ]
+
+    local_time = (
+        display_hour_utc.astimezone(
+            LOCAL_TIMEZONE
+        )
+    )
+
+    record = {
+        "hour_utc":
+            display_hour_utc.isoformat(),
+
+        "hour_local":
+            local_time.isoformat(),
+
+        "display_time":
+            local_time.strftime(
+                "%-I %p"
+            ),
+
+        "stations_present":
+            stations_present,
+
+        "missing_stations":
+            missing_stations,
     }
 
-}
+    if missing_stations:
+        record.update({
+            "available": False,
+            "status": "Unavailable",
+            "temperature_f": None,
+            "dewpoint_f": None,
+            "wind": "Unavailable",
+            "wind_speed_mph": None,
+            "wind_direction": None,
+        })
 
+        return record
 
-function displayHistory(data) {
+    temperature = (
+        calculate_temperature(
+            reports
+        )
+    )
 
-    const body =
-        document.getElementById(
-            "historyBody"
-        );
+    dewpoint = (
+        calculate_dewpoint(
+            reports
+        )
+    )
 
-    body.innerHTML = "";
-
-
-    data.history.forEach(
-        function(hour, index) {
-
-            const row =
-                document.createElement(
-                    "tr"
-                );
-
-
-            if (index === 0) {
-
-                row.classList.add(
-                    "latest-row"
-                );
-
-            }
-
-
-            if (hour.available) {
-
-                row.innerHTML =
-
-                    "<td class='history-time'>"
-                    + hour.display_time
-                    + "</td>"
-
-                    + "<td>"
-                    + hour.temperature_f
-                    + "°"
-                    + "</td>"
-
-                    + "<td>"
-                    + hour.dewpoint_f
-                    + "°"
-                    + "</td>"
-
-                    + "<td>"
-                    + hour.wind
-                    + "</td>"
-
-                    + "<td>"
-                    + "<span class='small-green-dot'></span>"
-                    + "OK"
-                    + "</td>";
-
-            }
-
-            else {
-
-                row.innerHTML =
-
-                    "<td class='history-time'>"
-                    + hour.display_time
-                    + "</td>"
-
-                    + "<td>—</td>"
-
-                    + "<td>—</td>"
-
-                    + "<td class='unavailable'>"
-                    + "Unavailable"
-                    + "</td>"
-
-                    + "<td class='unavailable'>"
-                    + "<span class='small-red-dot'></span>"
-                    + "Unavailable"
-                    + "</td>";
-
-            }
-
-
-            body.appendChild(
-                row
-            );
-
-        }
-    );
-
+    wind_speed, wind_direction = (
+        calculate_wind(
+            reports
+        )
+    )
 
     if (
-        data.history.length > 0
-        && data.history[0].available
-    ) {
+        temperature is None
+        or dewpoint is None
+        or wind_speed is None
+    ):
+        record.update({
+            "available": False,
+            "status": "Unavailable",
+            "temperature_f": None,
+            "dewpoint_f": None,
+            "wind": "Unavailable",
+            "wind_speed_mph": None,
+            "wind_direction": None,
+        })
 
-        document.getElementById(
-            "latestStatus"
-        ).textContent =
-            "Latest: "
-            + data.history[0].display_time;
+        return record
 
+    temperature_display = (
+        round_half_up(
+            temperature
+        )
+    )
+
+    dewpoint_display = (
+        round_half_up(
+            dewpoint
+        )
+    )
+
+    wind_speed_display = (
+        round_half_up(
+            wind_speed
+        )
+    )
+
+    if wind_speed <= 3:
+        wind_display = "Calm"
+        wind_direction_display = None
+
+    else:
+        wind_direction_display = (
+            wind_direction_name(
+                wind_direction
+            )
+        )
+
+        wind_display = (
+            f"{wind_direction_display} "
+            f"at {wind_speed_display} mph"
+        )
+
+    record.update({
+        "available": True,
+        "status": "Complete",
+
+        "temperature_f":
+            temperature_display,
+
+        "dewpoint_f":
+            dewpoint_display,
+
+        "wind":
+            wind_display,
+
+        "wind_speed_mph":
+            wind_speed_display,
+
+        "wind_direction":
+            wind_direction_display,
+    })
+
+    return record
+
+
+def get_reports_for_display_hour(
+    grouped_hours,
+    display_hour,
+):
+    source_hour = (
+        display_hour
+        - timedelta(hours=1)
+    )
+
+    return grouped_hours.get(
+        source_hour,
+        {},
+    )
+
+
+def load_existing_output():
+    if not OUTPUT_FILE.exists():
+        return None
+
+    try:
+        with open(
+            OUTPUT_FILE,
+            "r",
+            encoding="utf-8",
+        ) as file:
+            return json.load(file)
+
+    except (
+        OSError,
+        json.JSONDecodeError,
+    ):
+        return None
+
+
+def parse_hour_utc(hour_text):
+    if not hour_text:
+        return None
+
+    try:
+        value = datetime.fromisoformat(
+            hour_text
+        )
+
+        if value.tzinfo is None:
+            value = value.replace(
+                tzinfo=timezone.utc
+            )
+
+        return value.astimezone(
+            timezone.utc
+        )
+
+    except (
+        TypeError,
+        ValueError,
+    ):
+        return None
+
+
+def main():
+    print(
+        "Downloading METAR observations..."
+    )
+
+    raw_data = get_metars()
+
+    grouped_hours = (
+        group_valid_reports_by_hour(
+            raw_data
+        )
+    )
+
+    now_utc = datetime.now(
+        timezone.utc
+    )
+
+    current_hour = now_utc.replace(
+        minute=0,
+        second=0,
+        microsecond=0,
+    )
+
+    current_reports = (
+        get_reports_for_display_hour(
+            grouped_hours,
+            current_hour,
+        )
+    )
+
+    candidate_current = (
+        build_hour_record(
+            current_hour,
+            current_reports,
+        )
+    )
+
+    existing_output = (
+        load_existing_output()
+    )
+
+    if candidate_current["available"]:
+        latest_verified = (
+            candidate_current
+        )
+
+    else:
+        latest_verified = None
+
+        if existing_output:
+            previous = (
+                existing_output.get(
+                    "current_conditions"
+                )
+            )
+
+            if (
+                previous
+                and previous.get(
+                    "available"
+                )
+            ):
+                latest_verified = previous
+
+        if latest_verified is None:
+            latest_verified = (
+                candidate_current
+            )
+
+    history_anchor = parse_hour_utc(
+        latest_verified.get(
+            "hour_utc"
+        )
+    )
+
+    if history_anchor is None:
+        history_anchor = current_hour
+
+    history = []
+
+    for hours_back in range(
+        HISTORY_HOURS
+    ):
+        display_hour = (
+            history_anchor
+            - timedelta(
+                hours=hours_back
+            )
+        )
+
+        reports = (
+            get_reports_for_display_hour(
+                grouped_hours,
+                display_hour,
+            )
+        )
+
+        record = build_hour_record(
+            display_hour,
+            reports,
+        )
+
+        history.append(record)
+
+    output = {
+        "current_conditions":
+            latest_verified,
+
+        "history":
+            history,
     }
 
-    else {
+    with open(
+        OUTPUT_FILE,
+        "w",
+        encoding="utf-8",
+    ) as file:
+        json.dump(
+            output,
+            file,
+            indent=4,
+        )
 
-        document.getElementById(
-            "latestStatus"
-        ).textContent =
-            "Data unavailable";
+    print()
+    print(
+        "Latest Verified Hour"
+    )
 
-    }
+    print(
+        "--------------------"
+    )
 
-}
+    if latest_verified.get(
+        "available"
+    ):
+        print(
+            f"Time: "
+            f"{latest_verified['display_time']}"
+        )
+
+        print(
+            f"Temperature: "
+            f"{latest_verified['temperature_f']}°F"
+        )
+
+        print(
+            f"Dew Point: "
+            f"{latest_verified['dewpoint_f']}°F"
+        )
+
+        print(
+            f"Wind: "
+            f"{latest_verified['wind']}"
+        )
+
+    else:
+        print(
+            "No verified hour available."
+        )
+
+    print()
+    print(
+        f"History rows: "
+        f"{len(history)}"
+    )
+
+    print(
+        f"Saved to {OUTPUT_FILE}"
+    )
 
 
-loadWeather();
-
-</script>
-
-
-</body>
-
-</html>
+if __name__ == "__main__":
+    main()

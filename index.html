@@ -35,7 +35,6 @@
             background: white;
             border: 1px solid #d9dee4;
             border-radius: 8px;
-            margin-bottom: 12px;
             overflow: hidden;
         }
 
@@ -43,13 +42,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 9px 12px;
+            padding: 10px 12px;
             background: #f6f8fa;
             border-bottom: 1px solid #e1e5e9;
         }
 
         .section-title {
-            font-size: 17px;
+            font-size: 18px;
             font-weight: bold;
         }
 
@@ -59,7 +58,7 @@
             margin-top: 2px;
         }
 
-        .status {
+        .latest-status {
             display: flex;
             align-items: center;
             gap: 6px;
@@ -67,63 +66,30 @@
             font-weight: bold;
         }
 
-        .status-dot {
-            width: 10px;
-            height: 10px;
+        .green-dot {
+            display: inline-block;
+            width: 9px;
+            height: 9px;
             border-radius: 50%;
-            background: #999;
-        }
-
-        .status-dot.good {
             background: #1ba64b;
         }
 
-        .status-dot.waiting {
-            background: #e5a000;
-        }
-
-        .status-dot.bad {
+        .red-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
             background: #d93025;
+            margin-right: 5px;
         }
 
-        .current-grid {
-            display: grid;
-            grid-template-columns:
-                1fr 1fr 1.5fr;
-        }
-
-        .current-item {
-            padding: 13px 15px;
-            border-right: 1px solid #e5e8eb;
-        }
-
-        .current-item:last-child {
-            border-right: none;
-        }
-
-        .label {
-            color: #747a80;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.4px;
-            margin-bottom: 3px;
-        }
-
-        .value {
-            font-size: 27px;
-            font-weight: bold;
-        }
-
-        .wind-value {
-            font-size: 21px;
-        }
-
-        .valid-time {
-            padding: 7px 12px;
-            border-top: 1px solid #e5e8eb;
-            font-size: 12px;
-            color: #5d6369;
-            background: #fafbfc;
+        .small-green-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #1ba64b;
+            margin-right: 5px;
         }
 
         .history-wrapper {
@@ -145,7 +111,7 @@
         }
 
         td {
-            padding: 7px 9px;
+            padding: 8px 9px;
             border-bottom: 1px solid #eceff1;
             font-size: 13px;
         }
@@ -154,26 +120,13 @@
             border-bottom: none;
         }
 
-        .history-time {
+        .time-column {
             font-weight: bold;
             white-space: nowrap;
         }
 
-        .small-green-dot,
-        .small-red-dot {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            margin-right: 5px;
-        }
-
-        .small-green-dot {
-            background: #1ba64b;
-        }
-
-        .small-red-dot {
-            background: #d93025;
+        .latest-row {
+            background: #f7fbff;
         }
 
         .unavailable {
@@ -187,7 +140,6 @@
             }
 
             .section {
-                margin-bottom: 7px;
                 border-radius: 6px;
             }
 
@@ -196,55 +148,19 @@
             }
 
             .section-title {
-                font-size: 15px;
+                font-size: 16px;
             }
 
             .section-subtitle {
                 font-size: 10px;
             }
 
-            .status {
+            .latest-status {
                 font-size: 10px;
-            }
-
-            .current-grid {
-                grid-template-columns:
-                    1fr 1fr;
-            }
-
-            .current-item {
-                padding: 9px 10px;
-            }
-
-            .current-item:nth-child(2) {
-                border-right: none;
-            }
-
-            .current-item:last-child {
-                grid-column: 1 / -1;
-                border-top: 1px solid #e5e8eb;
-                border-right: none;
-            }
-
-            .label {
-                font-size: 9px;
-            }
-
-            .value {
-                font-size: 23px;
-            }
-
-            .wind-value {
-                font-size: 19px;
-            }
-
-            .valid-time {
-                font-size: 10px;
-                padding: 6px 9px;
             }
 
             table {
-                min-width: 400px;
+                min-width: 410px;
             }
 
             th {
@@ -254,7 +170,7 @@
 
             td {
                 font-size: 11px;
-                padding: 6px 7px;
+                padding: 7px;
             }
         }
 
@@ -274,107 +190,22 @@
             <div>
 
                 <div class="section-title">
-                    Metro Current Conditions
+                    Last 13 Hours
                 </div>
 
                 <div class="section-subtitle">
-                    KFCM • KMIC • KMSP
+                    Combined KFCM • KMIC • KMSP
                 </div>
 
             </div>
 
+            <div class="latest-status">
 
-            <div class="status">
+                <span class="green-dot"></span>
 
-                <span
-                    class="status-dot"
-                    id="qualityDot"
-                ></span>
-
-                <span id="qualityText">
-                    Checking
+                <span id="latestStatus">
+                    Loading
                 </span>
-
-            </div>
-
-        </div>
-
-
-        <div class="current-grid">
-
-            <div class="current-item">
-
-                <div class="label">
-                    Temperature
-                </div>
-
-                <div
-                    class="value"
-                    id="temperature"
-                >
-                    --
-                </div>
-
-            </div>
-
-
-            <div class="current-item">
-
-                <div class="label">
-                    Dew Point
-                </div>
-
-                <div
-                    class="value"
-                    id="dewpoint"
-                >
-                    --
-                </div>
-
-            </div>
-
-
-            <div class="current-item">
-
-                <div class="label">
-                    Wind
-                </div>
-
-                <div
-                    class="value wind-value"
-                    id="wind"
-                >
-                    --
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div
-            class="valid-time"
-            id="validTime"
-        >
-            Loading observations...
-        </div>
-
-    </section>
-
-
-    <section class="section">
-
-        <div class="section-header">
-
-            <div>
-
-                <div class="section-title">
-                    12-Hour Trend
-                </div>
-
-                <div class="section-subtitle">
-                    Hourly metro averages
-                </div>
 
             </div>
 
@@ -431,7 +262,6 @@ async function loadWeather() {
         const data =
             await response.json();
 
-        displayCurrent(data);
         displayHistory(data);
 
     }
@@ -439,199 +269,13 @@ async function loadWeather() {
     catch (error) {
 
         document.getElementById(
-            "temperature"
-        ).textContent =
-            "Unavailable";
-
-        document.getElementById(
-            "dewpoint"
-        ).textContent =
-            "Unavailable";
-
-        document.getElementById(
-            "wind"
-        ).textContent =
-            "Unavailable";
-
-        const dot =
-            document.getElementById(
-                "qualityDot"
-            );
-
-        dot.classList.add(
-            "bad"
-        );
-
-        document.getElementById(
-            "qualityText"
+            "latestStatus"
         ).textContent =
             "Unavailable";
 
         console.error(error);
 
     }
-
-}
-
-
-function displayCurrent(data) {
-
-    const current =
-        data.current_conditions;
-
-    const quality =
-        data.quality;
-
-    const dot =
-        document.getElementById(
-            "qualityDot"
-        );
-
-    dot.classList.remove(
-        "good",
-        "waiting",
-        "bad"
-    );
-
-    if (
-        current.available
-        && quality.new_hour_ready
-    ) {
-
-        dot.classList.add(
-            "good"
-        );
-
-        document.getElementById(
-            "qualityText"
-        ).textContent =
-            "Verified";
-
-    }
-
-    else if (
-        current.available
-        && !quality.new_hour_ready
-    ) {
-
-        dot.classList.add(
-            "waiting"
-        );
-
-        document.getElementById(
-            "qualityText"
-        ).textContent =
-            "Waiting for new hour";
-
-    }
-
-    else {
-
-        dot.classList.add(
-            "bad"
-        );
-
-        document.getElementById(
-            "qualityText"
-        ).textContent =
-            "Unavailable";
-
-    }
-
-
-    if (current.available) {
-
-        document.getElementById(
-            "temperature"
-        ).textContent =
-            current.temperature_f
-            + "°F";
-
-        document.getElementById(
-            "dewpoint"
-        ).textContent =
-            current.dewpoint_f
-            + "°F";
-
-        document.getElementById(
-            "wind"
-        ).textContent =
-            current.wind;
-
-    }
-
-    else {
-
-        document.getElementById(
-            "temperature"
-        ).textContent =
-            "Unavailable";
-
-        document.getElementById(
-            "dewpoint"
-        ).textContent =
-            "Unavailable";
-
-        document.getElementById(
-            "wind"
-        ).textContent =
-            "Unavailable";
-
-    }
-
-
-    let detailText;
-
-    if (
-        quality.new_hour_ready
-    ) {
-
-        detailText =
-            "Valid for "
-            + current.display_time
-            + " • 3 of 3 stations verified"
-            + " • reports :50–:59";
-
-    }
-
-    else if (
-        current.available
-    ) {
-
-        detailText =
-            "Showing "
-            + current.display_time
-            + " verified conditions"
-            + " • waiting for new hour";
-
-        if (
-            quality.missing_stations
-            && quality.missing_stations.length
-            > 0
-        ) {
-
-            detailText +=
-                " • missing "
-                + quality.missing_stations.join(
-                    ", "
-                );
-
-        }
-
-    }
-
-    else {
-
-        detailText =
-            "Current conditions unavailable";
-
-    }
-
-
-    document.getElementById(
-        "validTime"
-    ).textContent =
-        detailText;
 
 }
 
@@ -645,18 +289,29 @@ function displayHistory(data) {
 
     body.innerHTML = "";
 
+
     data.history.forEach(
-        function(hour) {
+        function(hour, index) {
 
             const row =
                 document.createElement(
                     "tr"
                 );
 
+            if (index === 0) {
+
+                row.classList.add(
+                    "latest-row"
+                );
+
+            }
+
+
             if (hour.available) {
 
                 row.innerHTML =
-                    "<td class='history-time'>"
+
+                    "<td class='time-column'>"
                     + hour.display_time
                     + "</td>"
 
@@ -684,7 +339,8 @@ function displayHistory(data) {
             else {
 
                 row.innerHTML =
-                    "<td class='history-time'>"
+
+                    "<td class='time-column'>"
                     + hour.display_time
                     + "</td>"
 
@@ -697,18 +353,39 @@ function displayHistory(data) {
                     + "</td>"
 
                     + "<td class='unavailable'>"
-                    + "<span class='small-red-dot'></span>"
+                    + "<span class='red-dot'></span>"
                     + "Unavailable"
                     + "</td>";
 
             }
 
-            body.appendChild(
-                row
-            );
+            body.appendChild(row);
 
         }
     );
+
+
+    if (
+        data.history.length > 0
+        && data.history[0].available
+    ) {
+
+        document.getElementById(
+            "latestStatus"
+        ).textContent =
+            "Latest: "
+            + data.history[0].display_time;
+
+    }
+
+    else {
+
+        document.getElementById(
+            "latestStatus"
+        ).textContent =
+            "Unavailable";
+
+    }
 
 }
 
@@ -716,6 +393,7 @@ function displayHistory(data) {
 loadWeather();
 
 </script>
+
 
 </body>
 
