@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Metro Weather</title>
+    <title>Hopkins NBM Forecast</title>
 
     <style>
         * {
@@ -29,7 +29,6 @@
             border: 1px solid #d9dee6;
             border-radius: 8px;
             overflow: hidden;
-            margin-bottom: 22px;
         }
 
         .card-header {
@@ -37,7 +36,6 @@
             justify-content: space-between;
             align-items: center;
             gap: 15px;
-
             padding: 12px 14px;
             border-bottom: 1px solid #d9dee6;
             background: #f8fafc;
@@ -68,6 +66,14 @@
             margin-right: 6px;
             border-radius: 50%;
             background: #16a34a;
+        }
+
+        .forecast-note {
+            padding: 8px 14px;
+            border-bottom: 1px solid #e5e7eb;
+            background: #fff;
+            color: #64748b;
+            font-size: 12px;
         }
 
         .table-wrap {
@@ -102,24 +108,6 @@
             font-weight: 700;
         }
 
-        .status-ok {
-            color: #111827;
-        }
-
-        .status-ok::before {
-            content: "";
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            margin-right: 6px;
-            border-radius: 50%;
-            background: #22c55e;
-        }
-
-        .center {
-            text-align: center;
-        }
-
         .loading,
         .error {
             padding: 18px;
@@ -127,14 +115,6 @@
 
         .error {
             color: #b91c1c;
-        }
-
-        .forecast-note {
-            padding: 8px 14px;
-            border-bottom: 1px solid #e5e7eb;
-            background: #fff;
-            color: #64748b;
-            font-size: 12px;
         }
 
         @media (max-width: 700px) {
@@ -163,80 +143,18 @@
 
 <div class="container">
 
-    <!-- ================================================== -->
-    <!-- LAST 13 HOURS -->
-    <!-- ================================================== -->
-
     <div class="card">
 
         <div class="card-header">
 
             <div>
-                <h1 class="title">Last 13 Hours</h1>
-
-                <div class="subtitle">
-                    Combined KFCM • KMIC • KMSP
-                </div>
-            </div>
-
-            <div
-                class="latest"
-                id="current-latest"
-            >
-                Loading...
-            </div>
-
-        </div>
-
-        <div class="table-wrap">
-
-            <table>
-
-                <thead>
-                    <tr>
-                        <th>Time</th>
-                        <th>Temp</th>
-                        <th>Dew</th>
-                        <th>Wind</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-
-                <tbody id="current-body">
-
-                    <tr>
-                        <td colspan="5" class="loading">
-                            Loading current weather...
-                        </td>
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-    </div>
-
-
-    <!-- ================================================== -->
-    <!-- NBM FORECAST -->
-    <!-- ================================================== -->
-
-    <div class="card">
-
-        <div class="card-header">
-
-            <div>
-
-                <h2 class="title">
+                <h1 class="title">
                     NBM 24-Hour Forecast
-                </h2>
+                </h1>
 
                 <div class="subtitle">
                     Hopkins, MN
                 </div>
-
             </div>
 
             <div
@@ -258,7 +176,6 @@
             <table>
 
                 <thead>
-
                     <tr>
                         <th>Time</th>
                         <th>Temp</th>
@@ -270,7 +187,6 @@
                         <th>Mid</th>
                         <th>High</th>
                     </tr>
-
                 </thead>
 
                 <tbody id="nbm-body">
@@ -346,148 +262,6 @@ function precip(value) {
     return Number(value).toFixed(2);
 }
 
-
-/* =========================================================
-   CURRENT / LAST 13 HOURS
-   ========================================================= */
-
-async function loadCurrent() {
-
-    const tbody =
-        document.getElementById(
-            "current-body"
-        );
-
-    const latest =
-        document.getElementById(
-            "current-latest"
-        );
-
-    try {
-
-        const response = await fetch(
-            "data/current.json?t="
-            + Date.now()
-        );
-
-        if (!response.ok) {
-            throw new Error(
-                "HTTP "
-                + response.status
-            );
-        }
-
-        const data =
-            await response.json();
-
-        tbody.innerHTML = "";
-
-        /*
-         * Support the existing JSON structure.
-         *
-         * The existing project may call the history array
-         * history, observations, or hours.
-         */
-
-        const rows =
-            data.history ||
-            data.observations ||
-            data.hours ||
-            [];
-
-        if (!rows.length) {
-
-            tbody.innerHTML =
-                '<tr><td colspan="5" class="error">'
-                + 'No observation history available.'
-                + '</td></tr>';
-
-            latest.textContent =
-                "Unavailable";
-
-            return;
-        }
-
-        rows.forEach(row => {
-
-            const tr =
-                document.createElement(
-                    "tr"
-                );
-
-            const time =
-                row.time ||
-                row.hour ||
-                "-";
-
-            const temp =
-                row.temp ??
-                row.temperature ??
-                row.temperature_f;
-
-            const dew =
-                row.dew ??
-                row.dewpoint ??
-                row.dewpoint_f;
-
-            const wind =
-                row.wind ||
-                "-";
-
-            const status =
-                row.status ||
-                "OK";
-
-            tr.innerHTML = `
-                <td class="time">${time}</td>
-                <td>${roundValue(temp)}°</td>
-                <td>${roundValue(dew)}°</td>
-                <td>${wind}</td>
-                <td class="status-ok">${status}</td>
-            `;
-
-            tbody.appendChild(
-                tr
-            );
-
-        });
-
-        const newest =
-            rows[0];
-
-        const newestTime =
-            newest.time ||
-            newest.hour ||
-            "-";
-
-        latest.innerHTML =
-            '<span class="green-dot"></span>'
-            + 'Latest: '
-            + newestTime;
-
-    }
-
-    catch (error) {
-
-        tbody.innerHTML =
-            '<tr><td colspan="5" class="error">'
-            + 'Unable to load current weather.'
-            + '</td></tr>';
-
-        latest.textContent =
-            "Unavailable";
-
-        console.error(
-            "Current weather error:",
-            error
-        );
-    }
-}
-
-
-/* =========================================================
-   NBM
-   ========================================================= */
 
 async function loadNBM() {
 
@@ -585,7 +359,6 @@ async function loadNBM() {
             tbody.appendChild(
                 tr
             );
-
         });
 
         run.innerHTML =
@@ -615,24 +388,10 @@ async function loadNBM() {
 }
 
 
-/* =========================================================
-   LOAD PAGE
-   ========================================================= */
-
-loadCurrent();
 loadNBM();
 
-
-// Refresh the browser data every 2 minutes without
-// requiring a manual browser refresh.
-
 setInterval(
-    () => {
-
-        loadCurrent();
-        loadNBM();
-
-    },
+    loadNBM,
     120000
 );
 
