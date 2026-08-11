@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Hopkins NBM Forecast</title>
 
     <style>
@@ -20,7 +19,7 @@
         }
 
         .container {
-            max-width: 1500px;
+            max-width: 1700px;
             margin: 0 auto;
         }
 
@@ -36,10 +35,8 @@
             justify-content: space-between;
             align-items: center;
             gap: 15px;
-
             padding: 12px 14px;
             border-bottom: 1px solid #d9dee6;
-
             background: #f8fafc;
         }
 
@@ -63,25 +60,18 @@
 
         .green-dot {
             display: inline-block;
-
             width: 9px;
             height: 9px;
-
             margin-right: 6px;
-
             border-radius: 50%;
-
             background: #16a34a;
         }
 
         .forecast-note {
             padding: 8px 14px;
-
             border-bottom: 1px solid #e5e7eb;
-
             color: #64748b;
             font-size: 12px;
-
             background: #ffffff;
         }
 
@@ -93,65 +83,46 @@
         table {
             width: max-content;
             min-width: 100%;
-
             border-collapse: collapse;
-
             font-size: 14px;
+            background: white;
         }
 
         th {
             min-width: 76px;
-
             padding: 9px 10px;
-
             text-align: center;
-
             background: #f8fafc;
-
             border-right: 1px solid #e5e7eb;
             border-bottom: 1px solid #d9dee6;
-
             font-size: 12px;
-
             white-space: nowrap;
         }
 
         td {
             min-width: 76px;
-
             padding: 9px 10px;
-
             text-align: center;
-
             border-right: 1px solid #e5e7eb;
             border-bottom: 1px solid #e5e7eb;
-
             white-space: nowrap;
+            background: #ffffff;
         }
 
         th:first-child,
         td:first-child {
             min-width: 95px;
-
             position: sticky;
             left: 0;
-
             text-align: left;
             font-weight: 700;
-
             background: #f8fafc;
-
             z-index: 2;
         }
 
         thead th:first-child {
             z-index: 3;
         }
-
-
-        /* ------------------------------------------
-           CLOUD LAYERS
-           ------------------------------------------ */
 
         .high-row td {
             background: #f1f5f9;
@@ -167,51 +138,41 @@
 
         .high-row td:first-child,
         .mid-row td:first-child,
-        .low-row td:first-child {
+        .low-row td:first-child,
+        .temp-row td:first-child,
+        .dew-row td:first-child,
+        .wind-row td:first-child,
+        .pop-row td:first-child,
+        .precip-row td:first-child {
             background: #f8fafc;
         }
-
-
-        /* ------------------------------------------
-           GROUP DIVIDERS
-           ------------------------------------------ */
-
-        .temp-row td {
-            border-top: 3px solid #cbd5e1;
-        }
-
-        .wind-row td {
-            border-top: 3px solid #cbd5e1;
-        }
-
-        .pop-row td {
-            border-top: 3px solid #cbd5e1;
-        }
-
-
-        /* ------------------------------------------
-           SPECIAL ROW COLORS
-           ------------------------------------------ */
 
         .temp-row td:not(:first-child) {
             font-weight: 700;
         }
 
-        .pop-row td:not(:first-child) {
+        .pop-row td:not(:first-child),
+        .precip-row td:not(:first-child) {
             color: #0369a1;
             font-weight: 600;
         }
 
-        .precip-row td:not(:first-child) {
-            color: #075985;
-            font-weight: 600;
+        /* Small gaps between groups */
+        .temp-row td {
+            border-top: 6px solid #edf2f7;
         }
 
+        .wind-row td {
+            border-top: 6px solid #edf2f7;
+        }
+
+        .pop-row td {
+            border-top: 6px solid #edf2f7;
+        }
 
         .loading,
         .error {
             padding: 18px;
-
             text-align: left;
         }
 
@@ -219,9 +180,7 @@
             color: #b91c1c;
         }
 
-
         @media (max-width: 700px) {
-
             body {
                 padding: 8px;
             }
@@ -238,262 +197,119 @@
             th,
             td {
                 min-width: 70px;
-
                 padding: 8px;
+            }
+
+            th:first-child,
+            td:first-child {
+                min-width: 88px;
             }
         }
     </style>
 </head>
 
-
 <body>
 
 <div class="container">
-
     <div class="card">
 
         <div class="card-header">
-
             <div>
-
-                <h1 class="title">
-                    NBM 24-Hour Forecast
-                </h1>
-
-                <div class="subtitle">
-                    Hopkins, MN
-                </div>
-
+                <h1 class="title">NBM 16-Hour Forecast</h1>
+                <div class="subtitle">Hopkins, MN</div>
             </div>
 
-            <div
-                class="latest"
-                id="nbm-run"
-            >
+            <div class="latest" id="nbm-run">
                 Loading...
             </div>
-
         </div>
-
 
         <div class="forecast-note">
-
             Forecast hours run left to right.
-
-            POP = chance of more than 0.01" precipitation
-            during the following hour.
-
-            PRECIP = forecast precipitation amount during
-            the following hour.
-
+            POP = chance of more than 0.01" precipitation during the following hour.
+            PRECIP = forecast precipitation amount during the following hour.
         </div>
 
-
-        <div
-            class="table-wrap"
-            id="nbm-wrap"
-        >
-
-            <div class="loading">
-                Loading NBM forecast...
-            </div>
-
+        <div class="table-wrap" id="nbm-wrap">
+            <div class="loading">Loading NBM forecast...</div>
         </div>
 
     </div>
-
 </div>
 
-
 <script>
-
-
 function valueOrDash(value) {
-
-    if (
-        value === null ||
-        value === undefined ||
-        value === ""
-    ) {
-
+    if (value === null || value === undefined || value === "") {
         return "-";
     }
-
     return value;
 }
 
-
 function temperature(value) {
-
-    if (
-        value === null ||
-        value === undefined
-    ) {
-
+    if (value === null || value === undefined) {
         return "-";
     }
-
     return Math.round(value) + "°";
 }
 
-
 function percent(value) {
-
-    if (
-        value === null ||
-        value === undefined
-    ) {
-
+    if (value === null || value === undefined) {
         return "-";
     }
-
     return Math.round(value) + "%";
 }
 
-
 function precip(value) {
-
-    if (
-        value === null ||
-        value === undefined
-    ) {
-
+    if (value === null || value === undefined) {
         return "-";
     }
-
     return Number(value).toFixed(2);
 }
 
-
-function createRow(
-    label,
-    rows,
-    field,
-    formatter,
-    className
-) {
-
-    let html =
-        '<tr class="' +
-        className +
-        '">';
-
-    html +=
-        "<td>" +
-        label +
-        "</td>";
+function createRow(label, rows, field, formatter, className) {
+    let html = '<tr class="' + className + '">';
+    html += "<td>" + label + "</td>";
 
     rows.forEach(row => {
-
-        html +=
-            "<td>" +
-            formatter(
-                row[field]
-            ) +
-            "</td>";
-
+        html += "<td>" + formatter(row[field]) + "</td>";
     });
 
     html += "</tr>";
-
     return html;
 }
 
-
 async function loadNBM() {
-
-    const wrap =
-        document.getElementById(
-            "nbm-wrap"
-        );
-
-    const run =
-        document.getElementById(
-            "nbm-run"
-        );
-
+    const wrap = document.getElementById("nbm-wrap");
+    const run = document.getElementById("nbm-run");
 
     try {
-
-        const response =
-            await fetch(
-                "data/nbm.json?t="
-                + Date.now()
-            );
-
+        const response = await fetch("data/nbm.json?t=" + Date.now());
 
         if (!response.ok) {
-
-            throw new Error(
-                "HTTP "
-                + response.status
-            );
+            throw new Error("HTTP " + response.status);
         }
 
-
-        const data =
-            await response.json();
-
-
-        const rows =
-            data.forecast || [];
-
+        const data = await response.json();
+        const rows = data.forecast || [];
 
         if (!rows.length) {
-
             wrap.innerHTML =
-                '<div class="error">'
-                + 'No NBM forecast data available.'
-                + '</div>';
-
-            run.textContent =
-                "Unavailable";
-
+                '<div class="error">No NBM forecast data available.</div>';
+            run.textContent = "Unavailable";
             return;
         }
 
+        let html = "<table>";
 
-        let html =
-            "<table>";
-
-
-        /* ==========================================
-           TIME
-           ========================================== */
-
-        html +=
-            "<thead><tr>";
-
-        html +=
-            "<th>TIME</th>";
-
+        html += "<thead><tr>";
+        html += "<th>TIME</th>";
 
         rows.forEach(row => {
-
-            html +=
-                "<th>"
-                + valueOrDash(
-                    row.hour
-                )
-                + "</th>";
-
+            html += "<th>" + valueOrDash(row.hour) + "</th>";
         });
 
-
-        html +=
-            "</tr></thead>";
-
-
-        html +=
-            "<tbody>";
-
-
-        /* ==========================================
-           CLOUDS
-
-           Highest layer first so the visual layout
-           resembles the atmosphere vertically.
-           ========================================== */
+        html += "</tr></thead>";
+        html += "<tbody>";
 
         html += createRow(
             "HIGH",
@@ -503,7 +319,6 @@ async function loadNBM() {
             "high-row"
         );
 
-
         html += createRow(
             "MID",
             rows,
@@ -511,7 +326,6 @@ async function loadNBM() {
             percent,
             "mid-row"
         );
-
 
         html += createRow(
             "LOW",
@@ -521,11 +335,6 @@ async function loadNBM() {
             "low-row"
         );
 
-
-        /* ==========================================
-           TEMPERATURE
-           ========================================== */
-
         html += createRow(
             "TEMP",
             rows,
@@ -533,11 +342,6 @@ async function loadNBM() {
             temperature,
             "temp-row"
         );
-
-
-        /* ==========================================
-           DEW POINT
-           ========================================== */
 
         html += createRow(
             "DEW",
@@ -547,11 +351,6 @@ async function loadNBM() {
             "dew-row"
         );
 
-
-        /* ==========================================
-           WIND
-           ========================================== */
-
         html += createRow(
             "WIND",
             rows,
@@ -559,11 +358,6 @@ async function loadNBM() {
             valueOrDash,
             "wind-row"
         );
-
-
-        /* ==========================================
-           PRECIPITATION PROBABILITY
-           ========================================== */
 
         html += createRow(
             "POP",
@@ -573,11 +367,6 @@ async function loadNBM() {
             "pop-row"
         );
 
-
-        /* ==========================================
-           PRECIPITATION AMOUNT
-           ========================================== */
-
         html += createRow(
             "PRECIP",
             rows,
@@ -586,53 +375,26 @@ async function loadNBM() {
             "precip-row"
         );
 
+        html += "</tbody></table>";
 
-        html +=
-            "</tbody></table>";
-
-
-        wrap.innerHTML =
-            html;
-
+        wrap.innerHTML = html;
 
         run.innerHTML =
-            '<span class="green-dot"></span>'
-            + 'Run: '
-            + valueOrDash(
-                data.run_label
-            );
+            '<span class="green-dot"></span>' +
+            'Run: ' + valueOrDash(data.run_label);
 
-    }
-
-
-    catch (error) {
-
+    } catch (error) {
         wrap.innerHTML =
-            '<div class="error">'
-            + 'Unable to load NBM forecast.'
-            + '</div>';
+            '<div class="error">Unable to load NBM forecast.</div>';
 
-        run.textContent =
-            "Unavailable";
+        run.textContent = "Unavailable";
 
-
-        console.error(
-            "NBM error:",
-            error
-        );
+        console.error("NBM error:", error);
     }
 }
 
-
 loadNBM();
-
-
-setInterval(
-    loadNBM,
-    120000
-);
-
-
+setInterval(loadNBM, 120000);
 </script>
 
 </body>
