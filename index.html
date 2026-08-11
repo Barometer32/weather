@@ -20,7 +20,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1500px;
             margin: 0 auto;
         }
 
@@ -36,8 +36,10 @@
             justify-content: space-between;
             align-items: center;
             gap: 15px;
+
             padding: 12px 14px;
             border-bottom: 1px solid #d9dee6;
+
             background: #f8fafc;
         }
 
@@ -61,63 +63,165 @@
 
         .green-dot {
             display: inline-block;
+
             width: 9px;
             height: 9px;
+
             margin-right: 6px;
+
             border-radius: 50%;
+
             background: #16a34a;
         }
 
         .forecast-note {
             padding: 8px 14px;
+
             border-bottom: 1px solid #e5e7eb;
-            background: #fff;
+
             color: #64748b;
             font-size: 12px;
+
+            background: #ffffff;
         }
 
         .table-wrap {
+            width: 100%;
             overflow-x: auto;
         }
 
         table {
-            width: 100%;
+            width: max-content;
+            min-width: 100%;
+
             border-collapse: collapse;
+
             font-size: 14px;
         }
 
         th {
-            padding: 9px 10px;
-            text-align: left;
-            background: #f8fafc;
-            border-bottom: 1px solid #d9dee6;
-            font-size: 12px;
-        }
+            min-width: 76px;
 
-        td {
             padding: 9px 10px;
-            border-bottom: 1px solid #e5e7eb;
+
+            text-align: center;
+
+            background: #f8fafc;
+
+            border-right: 1px solid #e5e7eb;
+            border-bottom: 1px solid #d9dee6;
+
+            font-size: 12px;
+
             white-space: nowrap;
         }
 
-        tbody tr:last-child td {
-            border-bottom: none;
+        td {
+            min-width: 76px;
+
+            padding: 9px 10px;
+
+            text-align: center;
+
+            border-right: 1px solid #e5e7eb;
+            border-bottom: 1px solid #e5e7eb;
+
+            white-space: nowrap;
         }
 
-        .time {
+        th:first-child,
+        td:first-child {
+            min-width: 95px;
+
+            position: sticky;
+            left: 0;
+
+            text-align: left;
+            font-weight: 700;
+
+            background: #f8fafc;
+
+            z-index: 2;
+        }
+
+        thead th:first-child {
+            z-index: 3;
+        }
+
+
+        /* ------------------------------------------
+           CLOUD LAYERS
+           ------------------------------------------ */
+
+        .high-row td {
+            background: #f1f5f9;
+        }
+
+        .mid-row td {
+            background: #f8fafc;
+        }
+
+        .low-row td {
+            background: #ffffff;
+        }
+
+        .high-row td:first-child,
+        .mid-row td:first-child,
+        .low-row td:first-child {
+            background: #f8fafc;
+        }
+
+
+        /* ------------------------------------------
+           GROUP DIVIDERS
+           ------------------------------------------ */
+
+        .temp-row td {
+            border-top: 3px solid #cbd5e1;
+        }
+
+        .wind-row td {
+            border-top: 3px solid #cbd5e1;
+        }
+
+        .pop-row td {
+            border-top: 3px solid #cbd5e1;
+        }
+
+
+        /* ------------------------------------------
+           SPECIAL ROW COLORS
+           ------------------------------------------ */
+
+        .temp-row td:not(:first-child) {
             font-weight: 700;
         }
+
+        .pop-row td:not(:first-child) {
+            color: #0369a1;
+            font-weight: 600;
+        }
+
+        .precip-row td:not(:first-child) {
+            color: #075985;
+            font-weight: 600;
+        }
+
 
         .loading,
         .error {
             padding: 18px;
+
+            text-align: left;
         }
 
         .error {
             color: #b91c1c;
         }
 
+
         @media (max-width: 700px) {
+
             body {
                 padding: 8px;
             }
@@ -133,11 +237,14 @@
 
             th,
             td {
+                min-width: 70px;
+
                 padding: 8px;
             }
         }
     </style>
 </head>
+
 
 <body>
 
@@ -148,6 +255,7 @@
         <div class="card-header">
 
             <div>
+
                 <h1 class="title">
                     NBM 24-Hour Forecast
                 </h1>
@@ -155,6 +263,7 @@
                 <div class="subtitle">
                     Hopkins, MN
                 </div>
+
             </div>
 
             <div
@@ -166,40 +275,28 @@
 
         </div>
 
+
         <div class="forecast-note">
-            PRECIP and POP are for the hour following the displayed time.
-            POP = chance of more than 0.01" precipitation.
+
+            Forecast hours run left to right.
+
+            POP = chance of more than 0.01" precipitation
+            during the following hour.
+
+            PRECIP = forecast precipitation amount during
+            the following hour.
+
         </div>
 
-        <div class="table-wrap">
 
-            <table>
+        <div
+            class="table-wrap"
+            id="nbm-wrap"
+        >
 
-                <thead>
-                    <tr>
-                        <th>Time</th>
-                        <th>Temp</th>
-                        <th>Dew</th>
-                        <th>Wind</th>
-                        <th>Precip</th>
-                        <th>POP</th>
-                        <th>Low</th>
-                        <th>Mid</th>
-                        <th>High</th>
-                    </tr>
-                </thead>
-
-                <tbody id="nbm-body">
-
-                    <tr>
-                        <td colspan="9" class="loading">
-                            Loading NBM forecast...
-                        </td>
-                    </tr>
-
-                </tbody>
-
-            </table>
+            <div class="loading">
+                Loading NBM forecast...
+            </div>
 
         </div>
 
@@ -210,6 +307,7 @@
 
 <script>
 
+
 function valueOrDash(value) {
 
     if (
@@ -217,6 +315,7 @@ function valueOrDash(value) {
         value === undefined ||
         value === ""
     ) {
+
         return "-";
     }
 
@@ -224,16 +323,17 @@ function valueOrDash(value) {
 }
 
 
-function roundValue(value) {
+function temperature(value) {
 
     if (
         value === null ||
         value === undefined
     ) {
+
         return "-";
     }
 
-    return Math.round(value);
+    return Math.round(value) + "°";
 }
 
 
@@ -243,6 +343,7 @@ function percent(value) {
         value === null ||
         value === undefined
     ) {
+
         return "-";
     }
 
@@ -256,6 +357,7 @@ function precip(value) {
         value === null ||
         value === undefined
     ) {
+
         return "-";
     }
 
@@ -263,11 +365,46 @@ function precip(value) {
 }
 
 
+function createRow(
+    label,
+    rows,
+    field,
+    formatter,
+    className
+) {
+
+    let html =
+        '<tr class="' +
+        className +
+        '">';
+
+    html +=
+        "<td>" +
+        label +
+        "</td>";
+
+    rows.forEach(row => {
+
+        html +=
+            "<td>" +
+            formatter(
+                row[field]
+            ) +
+            "</td>";
+
+    });
+
+    html += "</tr>";
+
+    return html;
+}
+
+
 async function loadNBM() {
 
-    const tbody =
+    const wrap =
         document.getElementById(
-            "nbm-body"
+            "nbm-wrap"
         );
 
     const run =
@@ -275,12 +412,15 @@ async function loadNBM() {
             "nbm-run"
         );
 
+
     try {
 
-        const response = await fetch(
-            "data/nbm.json?t="
-            + Date.now()
-        );
+        const response =
+            await fetch(
+                "data/nbm.json?t="
+                + Date.now()
+            );
+
 
         if (!response.ok) {
 
@@ -290,20 +430,21 @@ async function loadNBM() {
             );
         }
 
+
         const data =
             await response.json();
 
-        tbody.innerHTML = "";
 
         const rows =
             data.forecast || [];
 
+
         if (!rows.length) {
 
-            tbody.innerHTML =
-                '<tr><td colspan="9" class="error">'
+            wrap.innerHTML =
+                '<div class="error">'
                 + 'No NBM forecast data available.'
-                + '</td></tr>';
+                + '</div>';
 
             run.textContent =
                 "Unavailable";
@@ -311,55 +452,148 @@ async function loadNBM() {
             return;
         }
 
+
+        let html =
+            "<table>";
+
+
+        /* ==========================================
+           TIME
+           ========================================== */
+
+        html +=
+            "<thead><tr>";
+
+        html +=
+            "<th>TIME</th>";
+
+
         rows.forEach(row => {
 
-            const tr =
-                document.createElement(
-                    "tr"
-                );
+            html +=
+                "<th>"
+                + valueOrDash(
+                    row.hour
+                )
+                + "</th>";
 
-            tr.innerHTML = `
-                <td class="time">
-                    ${valueOrDash(row.hour)}
-                </td>
-
-                <td>
-                    ${roundValue(row.temperature_f)}°
-                </td>
-
-                <td>
-                    ${roundValue(row.dewpoint_f)}°
-                </td>
-
-                <td>
-                    ${valueOrDash(row.wind)}
-                </td>
-
-                <td>
-                    ${precip(row.precip_next_hour_inches)}
-                </td>
-
-                <td>
-                    ${percent(row.pop_next_hour_pct)}
-                </td>
-
-                <td>
-                    ${percent(row.low_cloud_pct)}
-                </td>
-
-                <td>
-                    ${percent(row.mid_cloud_pct)}
-                </td>
-
-                <td>
-                    ${percent(row.high_cloud_pct)}
-                </td>
-            `;
-
-            tbody.appendChild(
-                tr
-            );
         });
+
+
+        html +=
+            "</tr></thead>";
+
+
+        html +=
+            "<tbody>";
+
+
+        /* ==========================================
+           CLOUDS
+
+           Highest layer first so the visual layout
+           resembles the atmosphere vertically.
+           ========================================== */
+
+        html += createRow(
+            "HIGH",
+            rows,
+            "high_cloud_pct",
+            percent,
+            "high-row"
+        );
+
+
+        html += createRow(
+            "MID",
+            rows,
+            "mid_cloud_pct",
+            percent,
+            "mid-row"
+        );
+
+
+        html += createRow(
+            "LOW",
+            rows,
+            "low_cloud_pct",
+            percent,
+            "low-row"
+        );
+
+
+        /* ==========================================
+           TEMPERATURE
+           ========================================== */
+
+        html += createRow(
+            "TEMP",
+            rows,
+            "temperature_f",
+            temperature,
+            "temp-row"
+        );
+
+
+        /* ==========================================
+           DEW POINT
+           ========================================== */
+
+        html += createRow(
+            "DEW",
+            rows,
+            "dewpoint_f",
+            temperature,
+            "dew-row"
+        );
+
+
+        /* ==========================================
+           WIND
+           ========================================== */
+
+        html += createRow(
+            "WIND",
+            rows,
+            "wind",
+            valueOrDash,
+            "wind-row"
+        );
+
+
+        /* ==========================================
+           PRECIPITATION PROBABILITY
+           ========================================== */
+
+        html += createRow(
+            "POP",
+            rows,
+            "pop_next_hour_pct",
+            percent,
+            "pop-row"
+        );
+
+
+        /* ==========================================
+           PRECIPITATION AMOUNT
+           ========================================== */
+
+        html += createRow(
+            "PRECIP",
+            rows,
+            "precip_next_hour_inches",
+            precip,
+            "precip-row"
+        );
+
+
+        html +=
+            "</tbody></table>";
+
+
+        wrap.innerHTML =
+            html;
+
 
         run.innerHTML =
             '<span class="green-dot"></span>'
@@ -370,15 +604,17 @@ async function loadNBM() {
 
     }
 
+
     catch (error) {
 
-        tbody.innerHTML =
-            '<tr><td colspan="9" class="error">'
+        wrap.innerHTML =
+            '<div class="error">'
             + 'Unable to load NBM forecast.'
-            + '</td></tr>';
+            + '</div>';
 
         run.textContent =
             "Unavailable";
+
 
         console.error(
             "NBM error:",
@@ -390,10 +626,12 @@ async function loadNBM() {
 
 loadNBM();
 
+
 setInterval(
     loadNBM,
     120000
 );
+
 
 </script>
 
