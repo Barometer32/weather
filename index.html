@@ -1,401 +1,324 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hopkins NBM Forecast</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
 
-        body {
-            margin: 0;
-            padding: 20px;
-            background: #edf2f7;
-            color: #111827;
-            font-family: Arial, Helvetica, sans-serif;
-        }
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-        .container {
-            max-width: 1700px;
-            margin: 0 auto;
-        }
+<title>Weather Lab</title>
 
-        .card {
-            background: white;
-            border: 1px solid #d9dee6;
-            border-radius: 8px;
-            overflow: hidden;
-        }
+<style>
 
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-            padding: 12px 14px;
-            border-bottom: 1px solid #d9dee6;
-            background: #f8fafc;
-        }
+* {
+    box-sizing: border-box;
+}
 
-        .title {
-            margin: 0;
-            font-size: 20px;
-            font-weight: 700;
-        }
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
 
-        .subtitle {
-            margin-top: 4px;
-            color: #64748b;
-            font-size: 13px;
-        }
+body {
+    background: #3d3d3d;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #111;
+}
 
-        .latest {
-            font-size: 13px;
-            font-weight: 700;
-            white-space: nowrap;
-        }
 
-        .green-dot {
-            display: inline-block;
-            width: 9px;
-            height: 9px;
-            margin-right: 6px;
-            border-radius: 50%;
-            background: #16a34a;
-        }
+/* =========================================================
+   HEADER
+   ========================================================= */
 
-        .forecast-note {
-            padding: 8px 14px;
-            border-bottom: 1px solid #e5e7eb;
-            color: #64748b;
-            font-size: 12px;
-            background: #ffffff;
-        }
+.header {
+    background: #111;
+    border-bottom: 5px solid #0b651d;
+    color: white;
+}
 
-        .table-wrap {
-            width: 100%;
-            overflow-x: auto;
-        }
+.header-inner {
+    max-width: 1400px;
+    margin: auto;
+    padding: 18px 22px;
+}
 
-        table {
-            width: max-content;
-            min-width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-            background: white;
-        }
+.site-title {
+    font-size: 30px;
+    font-weight: 600;
+}
 
-        th {
-            min-width: 76px;
-            padding: 9px 10px;
-            text-align: center;
-            background: #f8fafc;
-            border-right: 1px solid #e5e7eb;
-            border-bottom: 1px solid #d9dee6;
-            font-size: 12px;
-            white-space: nowrap;
-        }
+.site-subtitle {
+    margin-top: 4px;
+    font-size: 13px;
+    color: #ccc;
+}
 
-        td {
-            min-width: 76px;
-            padding: 9px 10px;
-            text-align: center;
-            border-right: 1px solid #e5e7eb;
-            border-bottom: 1px solid #e5e7eb;
-            white-space: nowrap;
-            background: #ffffff;
-        }
 
-        th:first-child,
-        td:first-child {
-            min-width: 95px;
-            position: sticky;
-            left: 0;
-            text-align: left;
-            font-weight: 700;
-            background: #f8fafc;
-            z-index: 2;
-        }
+/* =========================================================
+   PAGE
+   ========================================================= */
 
-        thead th:first-child {
-            z-index: 3;
-        }
+.page {
+    display: flex;
+    max-width: 1400px;
+    min-height: calc(100vh - 90px);
+    margin: auto;
+    background: white;
+}
 
-        .high-row td {
-            background: #f1f5f9;
-        }
 
-        .mid-row td {
-            background: #f8fafc;
-        }
+/* =========================================================
+   LEFT MENU
+   ========================================================= */
 
-        .low-row td {
-            background: #ffffff;
-        }
+.sidebar {
+    width: 215px;
+    flex-shrink: 0;
+    background: #3c4753;
+    color: white;
+}
 
-        .high-row td:first-child,
-        .mid-row td:first-child,
-        .low-row td:first-child,
-        .temp-row td:first-child,
-        .dew-row td:first-child,
-        .wind-row td:first-child,
-        .pop-row td:first-child,
-        .precip-row td:first-child {
-            background: #f8fafc;
-        }
+.menu-heading {
+    padding: 9px 13px;
+    background: #27313a;
+    font-size: 14px;
+    font-weight: bold;
+}
 
-        .temp-row td:not(:first-child) {
-            font-weight: 700;
-        }
+.menu-item {
+    display: block;
+    padding: 8px 13px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+}
 
-        .pop-row td:not(:first-child),
-        .precip-row td:not(:first-child) {
-            color: #0369a1;
-            font-weight: 600;
-        }
+.menu-item:hover {
+    background: #506173;
+}
 
-        /* Larger gaps between groups */
-        .temp-row td {
-            border-top: 14px solid #edf2f7;
-        }
+.menu-item.active {
+    background: #687c91;
+    font-weight: bold;
+}
 
-        .wind-row td {
-            border-top: 14px solid #edf2f7;
-        }
 
-        .pop-row td {
-            border-top: 14px solid #edf2f7;
-        }
+/* =========================================================
+   CONTENT
+   ========================================================= */
 
-        .loading,
-        .error {
-            padding: 18px;
-            text-align: left;
-        }
+.content {
+    flex: 1;
+    min-width: 0;
+    padding: 15px 18px 30px 18px;
+}
 
-        .error {
-            color: #b91c1c;
-        }
+.product-title {
+    margin-bottom: 12px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
 
-        @media (max-width: 700px) {
-            body {
-                padding: 8px;
-            }
+.image-container {
+    width: 100%;
+    text-align: center;
+    background: white;
+}
 
-            .card-header {
-                align-items: flex-start;
-                flex-direction: column;
-            }
+.image-container img {
+    display: block;
+    width: 100%;
+    max-width: 1150px;
+    height: auto;
+    margin: auto;
+}
 
-            table {
-                font-size: 13px;
-            }
+.product-description {
+    margin-top: 14px;
+    padding: 11px 13px;
+    border: 1px solid #ccc;
+    background: #f3f3f3;
+    font-size: 13px;
+    line-height: 1.5;
+}
 
-            th,
-            td {
-                min-width: 70px;
-                padding: 8px;
-            }
 
-            th:first-child,
-            td:first-child {
-                min-width: 88px;
-            }
-        }
-    </style>
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 760px) {
+
+    .page {
+        display: block;
+    }
+
+    .sidebar {
+        width: 100%;
+    }
+
+    .content {
+        padding: 10px;
+    }
+
+}
+
+</style>
+
 </head>
+
 
 <body>
 
-<div class="container">
-    <div class="card">
+<header class="header">
 
-        <div class="card-header">
-            <div>
-                <h1 class="title">NBM 16-Hour Forecast</h1>
-                <div class="subtitle">Hopkins, MN</div>
-            </div>
+<div class="header-inner">
 
-            <div class="latest" id="nbm-run">
-                Loading...
-            </div>
-        </div>
-
-        <div class="forecast-note">
-            Forecast hours run left to right.
-            POP = chance of more than 0.01" precipitation during the following hour.
-            PRECIP = forecast precipitation amount during the following hour.
-        </div>
-
-        <div class="table-wrap" id="nbm-wrap">
-            <div class="loading">Loading NBM forecast...</div>
-        </div>
-
+    <div class="site-title">
+        Weather Lab
     </div>
+
+    <div class="site-subtitle">
+        Regional Weather Analysis
+    </div>
+
 </div>
 
+</header>
+
+
+<div class="page">
+
+
+<nav class="sidebar">
+
+    <div class="menu-heading">
+        Surface Maps
+    </div>
+
+    <a
+        class="menu-item active"
+        href="index.html"
+    >
+        METAR Station Plot
+    </a>
+
+    <a class="menu-item" href="#">
+        Temperature
+    </a>
+
+    <a class="menu-item" href="#">
+        Dew Point
+    </a>
+
+    <a class="menu-item" href="#">
+        Sea-Level Pressure
+    </a>
+
+    <a class="menu-item" href="#">
+        Wind
+    </a>
+
+
+    <div class="menu-heading">
+        Radar
+    </div>
+
+    <a class="menu-item" href="#">
+        NEXRAD
+    </a>
+
+
+    <div class="menu-heading">
+        Satellite
+    </div>
+
+    <a class="menu-item" href="#">
+        GOES
+    </a>
+
+
+    <div class="menu-heading">
+        Forecast
+    </div>
+
+    <a class="menu-item" href="#">
+        LAMP
+    </a>
+
+    <a class="menu-item" href="#">
+        NWS Forecast
+    </a>
+
+</nav>
+
+
+<main class="content">
+
+    <div class="product-title">
+        Regional METAR Surface Observations
+    </div>
+
+    <div class="image-container">
+
+        <img
+            id="metar-image"
+            src="images/metar_surface.png"
+            alt="Regional METAR surface observations"
+        >
+
+    </div>
+
+
+    <div class="product-description">
+
+        Hourly METAR observations for Minnesota,
+        eastern North Dakota, and western Wisconsin.
+
+        <br><br>
+
+        The Twin Cities station labeled
+        <strong>METRO</strong>
+        is a combined average of KMSP, KFCM, and KMIC.
+
+    </div>
+
+</main>
+
+
+</div>
+
+
 <script>
-function valueOrDash(value) {
-    if (value === null || value === undefined || value === "") {
-        return "-";
-    }
-    return value;
+
+function refreshMap() {
+
+    const image =
+        document.getElementById(
+            "metar-image"
+        );
+
+    image.src =
+        "images/metar_surface.png?v="
+        + Date.now();
+
 }
 
-function temperature(value) {
-    if (value === null || value === undefined) {
-        return "-";
-    }
-    return Math.round(value) + "°";
-}
+setInterval(
+    refreshMap,
+    300000
+);
 
-function percent(value) {
-    if (value === null || value === undefined) {
-        return "-";
-    }
-    return Math.round(value) + "%";
-}
-
-function precip(value) {
-    if (value === null || value === undefined) {
-        return "-";
-    }
-    return Number(value).toFixed(2);
-}
-
-function createRow(label, rows, field, formatter, className) {
-    let html = '<tr class="' + className + '">';
-    html += "<td>" + label + "</td>";
-
-    rows.forEach(row => {
-        html += "<td>" + formatter(row[field]) + "</td>";
-    });
-
-    html += "</tr>";
-    return html;
-}
-
-async function loadNBM() {
-    const wrap = document.getElementById("nbm-wrap");
-    const run = document.getElementById("nbm-run");
-
-    try {
-        const response = await fetch("data/nbm.json?t=" + Date.now());
-
-        if (!response.ok) {
-            throw new Error("HTTP " + response.status);
-        }
-
-        const data = await response.json();
-        const rows = data.forecast || [];
-
-        if (!rows.length) {
-            wrap.innerHTML =
-                '<div class="error">No NBM forecast data available.</div>';
-            run.textContent = "Unavailable";
-            return;
-        }
-
-        let html = "<table>";
-
-        html += "<thead><tr>";
-        html += "<th>TIME</th>";
-
-        rows.forEach(row => {
-            html += "<th>" + valueOrDash(row.hour) + "</th>";
-        });
-
-        html += "</tr></thead>";
-        html += "<tbody>";
-
-        html += createRow(
-            "HIGH",
-            rows,
-            "high_cloud_pct",
-            percent,
-            "high-row"
-        );
-
-        html += createRow(
-            "MID",
-            rows,
-            "mid_cloud_pct",
-            percent,
-            "mid-row"
-        );
-
-        html += createRow(
-            "LOW",
-            rows,
-            "low_cloud_pct",
-            percent,
-            "low-row"
-        );
-
-        html += createRow(
-            "TEMP",
-            rows,
-            "temperature_f",
-            temperature,
-            "temp-row"
-        );
-
-        html += createRow(
-            "DEW",
-            rows,
-            "dewpoint_f",
-            temperature,
-            "dew-row"
-        );
-
-        html += createRow(
-            "WIND",
-            rows,
-            "wind",
-            valueOrDash,
-            "wind-row"
-        );
-
-        html += createRow(
-            "POP",
-            rows,
-            "pop_next_hour_pct",
-            percent,
-            "pop-row"
-        );
-
-        html += createRow(
-            "PRECIP",
-            rows,
-            "precip_next_hour_inches",
-            precip,
-            "precip-row"
-        );
-
-        html += "</tbody></table>";
-
-        wrap.innerHTML = html;
-
-        run.innerHTML =
-            '<span class="green-dot"></span>' +
-            'Run: ' + valueOrDash(data.run_label);
-
-    } catch (error) {
-        wrap.innerHTML =
-            '<div class="error">Unable to load NBM forecast.</div>';
-
-        run.textContent = "Unavailable";
-
-        console.error("NBM error:", error);
-    }
-}
-
-loadNBM();
-setInterval(loadNBM, 120000);
 </script>
 
+
 </body>
+
 </html>
