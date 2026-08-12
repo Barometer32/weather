@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -10,7 +11,10 @@
     content="width=device-width, initial-scale=1.0"
 >
 
-<title>Weather Lab</title>
+<title>
+    Weather Lab
+</title>
+
 
 <style>
 
@@ -25,21 +29,19 @@ body {
 }
 
 body {
+    margin: 0;
     background: #3d3d3d;
     font-family: Arial, Helvetica, sans-serif;
     color: #111;
 }
 
 
-/* =========================================================
-   HEADER
-   ========================================================= */
-
 .header {
     background: #111;
-    border-bottom: 5px solid #0b651d;
+    border-bottom: 5px solid #116622;
     color: white;
 }
+
 
 .header-inner {
     max-width: 1400px;
@@ -47,21 +49,19 @@ body {
     padding: 18px 22px;
 }
 
+
 .site-title {
     font-size: 30px;
     font-weight: 600;
 }
 
+
 .site-subtitle {
     margin-top: 4px;
     font-size: 13px;
-    color: #ccc;
+    color: #cccccc;
 }
 
-
-/* =========================================================
-   PAGE
-   ========================================================= */
 
 .page {
     display: flex;
@@ -72,10 +72,6 @@ body {
 }
 
 
-/* =========================================================
-   LEFT MENU
-   ========================================================= */
-
 .sidebar {
     width: 215px;
     flex-shrink: 0;
@@ -83,12 +79,14 @@ body {
     color: white;
 }
 
+
 .menu-heading {
     padding: 9px 13px;
     background: #27313a;
     font-size: 14px;
     font-weight: bold;
 }
+
 
 .menu-item {
     display: block;
@@ -99,9 +97,11 @@ body {
     font-size: 13px;
 }
 
+
 .menu-item:hover {
     background: #506173;
 }
+
 
 .menu-item.active {
     background: #687c91;
@@ -109,28 +109,27 @@ body {
 }
 
 
-/* =========================================================
-   CONTENT
-   ========================================================= */
-
 .content {
     flex: 1;
     min-width: 0;
-    padding: 15px 18px 30px 18px;
+    padding: 10px 18px 25px 18px;
 }
 
+
 .product-title {
-    margin-bottom: 12px;
+    margin-bottom: 8px;
     text-align: center;
     font-size: 20px;
     font-weight: bold;
 }
+
 
 .image-container {
     width: 100%;
     text-align: center;
     background: white;
 }
+
 
 .image-container img {
     display: block;
@@ -140,19 +139,16 @@ body {
     margin: auto;
 }
 
+
 .product-description {
-    margin-top: 14px;
-    padding: 11px 13px;
-    border: 1px solid #ccc;
+    margin-top: 12px;
+    padding: 10px 13px;
+    border: 1px solid #cccccc;
     background: #f3f3f3;
     font-size: 13px;
     line-height: 1.5;
 }
 
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
 
 @media (max-width: 760px) {
 
@@ -176,6 +172,7 @@ body {
 
 
 <body>
+
 
 <header class="header">
 
@@ -210,19 +207,31 @@ body {
         METAR Station Plot
     </a>
 
-    <a class="menu-item" href="#">
+    <a
+        class="menu-item"
+        href="#"
+    >
         Temperature
     </a>
 
-    <a class="menu-item" href="#">
+    <a
+        class="menu-item"
+        href="#"
+    >
         Dew Point
     </a>
 
-    <a class="menu-item" href="#">
+    <a
+        class="menu-item"
+        href="#"
+    >
         Sea-Level Pressure
     </a>
 
-    <a class="menu-item" href="#">
+    <a
+        class="menu-item"
+        href="#"
+    >
         Wind
     </a>
 
@@ -231,7 +240,10 @@ body {
         Radar
     </div>
 
-    <a class="menu-item" href="#">
+    <a
+        class="menu-item"
+        href="#"
+    >
         NEXRAD
     </a>
 
@@ -240,7 +252,10 @@ body {
         Satellite
     </div>
 
-    <a class="menu-item" href="#">
+    <a
+        class="menu-item"
+        href="#"
+    >
         GOES
     </a>
 
@@ -249,11 +264,17 @@ body {
         Forecast
     </div>
 
-    <a class="menu-item" href="#">
+    <a
+        class="menu-item"
+        href="#"
+    >
         LAMP
     </a>
 
-    <a class="menu-item" href="#">
+    <a
+        class="menu-item"
+        href="#"
+    >
         NWS Forecast
     </a>
 
@@ -266,11 +287,12 @@ body {
         Regional METAR Surface Observations
     </div>
 
+
     <div class="image-container">
 
         <img
             id="metar-image"
-            src="images/metar_surface.png"
+            src=""
             alt="Regional METAR surface observations"
         >
 
@@ -279,14 +301,12 @@ body {
 
     <div class="product-description">
 
-        Hourly METAR observations for Minnesota,
-        eastern North Dakota, and western Wisconsin.
+        Regional hourly METAR observations.
 
         <br><br>
 
-        The Twin Cities station labeled
-        <strong>METRO</strong>
-        is a combined average of KMSP, KFCM, and KMIC.
+        Twin Cities conditions represent the combined
+        KMSP / KFCM / KMIC observation.
 
     </div>
 
@@ -298,7 +318,7 @@ body {
 
 <script>
 
-function refreshMap() {
+function loadCurrentMap() {
 
     const image =
         document.getElementById(
@@ -311,9 +331,22 @@ function refreshMap() {
 
 }
 
+
+/*
+Load uncached image immediately.
+*/
+
+loadCurrentMap();
+
+
+/*
+Check every 60 seconds for a newer
+GitHub Pages image.
+*/
+
 setInterval(
-    refreshMap,
-    300000
+    loadCurrentMap,
+    60000
 );
 
 </script>
