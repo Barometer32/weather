@@ -5,7 +5,7 @@
   "model": "NBM",
   "cycle_utc": "2026-08-14T13:00:00+00:00",
   "cycle": "2026-08-14 13Z",
-  "generated_utc": "2026-08-14T15:25:23.696602+00:00",
+  "generated_utc": "2026-08-14T15:54:53.676574+00:00",
   "forecast": [
     {
       "forecast_hour": 2,
@@ -17,9 +17,9 @@
       "wind_direction_deg": 0.0,
       "wind_direction": "N",
       "cloud_high": 0.0,
-      "cloud_mid": null,
-      "cloud_low": null,
-      "pop": 100.0,
+      "cloud_mid": 77.0,
+      "cloud_low": 0.0,
+      "pop": 1.0,
       "precip_in": 0.0
     },
     {
@@ -32,9 +32,9 @@
       "wind_direction_deg": 0.0,
       "wind_direction": "N",
       "cloud_high": 0.0,
-      "cloud_mid": null,
-      "cloud_low": null,
-      "pop": 100.0,
+      "cloud_mid": 49.0,
+      "cloud_low": 0.0,
+      "pop": 1.0,
       "precip_in": 0.0
     },
     {
@@ -47,9 +47,9 @@
       "wind_direction_deg": 0.0,
       "wind_direction": "N",
       "cloud_high": 28.0,
-      "cloud_mid": null,
-      "cloud_low": null,
-      "pop": 100.0,
+      "cloud_mid": 30.0,
+      "cloud_low": 0.0,
+      "pop": 1.0,
       "precip_in": 0.0
     },
     {
@@ -62,9 +62,9 @@
       "wind_direction_deg": 0.0,
       "wind_direction": "N",
       "cloud_high": 70.0,
-      "cloud_mid": null,
-      "cloud_low": null,
-      "pop": 100.0,
+      "cloud_mid": 22.0,
+      "cloud_low": 0.0,
+      "pop": 1.0,
       "precip_in": 0.0
     },
     {
@@ -77,9 +77,9 @@
       "wind_direction_deg": 0.0,
       "wind_direction": "N",
       "cloud_high": 99.0,
-      "cloud_mid": null,
-      "cloud_low": null,
-      "pop": 2.0,
+      "cloud_mid": 0.0,
+      "cloud_low": 0.0,
+      "pop": 1.0,
       "precip_in": 0.0
     },
     {
@@ -92,10 +92,10 @@
       "wind_direction_deg": 0.0,
       "wind_direction": "N",
       "cloud_high": 96.0,
-      "cloud_mid": null,
-      "cloud_low": null,
-      "pop": 4.0,
-      "precip_in": 0.01
+      "cloud_mid": 0.0,
+      "cloud_low": 0.0,
+      "pop": 2.0,
+      "precip_in": 0.0
     },
     {
       "forecast_hour": 8,
@@ -107,10 +107,10 @@
       "wind_direction_deg": 0.0,
       "wind_direction": "N",
       "cloud_high": 92.0,
-      "cloud_mid": null,
-      "cloud_low": null,
-      "pop": 5.0,
-      "precip_in": 0.0
+      "cloud_mid": 0.0,
+      "cloud_low": 0.0,
+      "pop": 4.0,
+      "precip_in": 0.01
     },
     {
       "forecast_hour": 9,
@@ -122,9 +122,9 @@
       "wind_direction_deg": 0.0,
       "wind_direction": "N",
       "cloud_high": 87.0,
-      "cloud_mid": null,
-      "cloud_low": null,
-      "pop": 10.0,
+      "cloud_mid": 41.0,
+      "cloud_low": 0.0,
+      "pop": 5.0,
       "precip_in": 0.0
     },
     {
@@ -137,9 +137,9 @@
       "wind_direction_deg": 0.0,
       "wind_direction": "N",
       "cloud_high": 93.0,
-      "cloud_mid": null,
-      "cloud_low": null,
-      "pop": 13.0,
+      "cloud_mid": 41.0,
+      "cloud_low": 0.0,
+      "pop": 10.0,
       "precip_in": 0.0
     },
     {
@@ -152,9 +152,9 @@
       "wind_direction_deg": 0.0,
       "wind_direction": "N",
       "cloud_high": 94.0,
-      "cloud_mid": null,
-      "cloud_low": null,
-      "pop": 12.0,
+      "cloud_mid": 43.0,
+      "cloud_low": 0.0,
+      "pop": 13.0,
       "precip_in": 0.0
     },
     {
@@ -167,8 +167,8 @@
       "wind_direction_deg": 0.0,
       "wind_direction": "N",
       "cloud_high": 94.0,
-      "cloud_mid": null,
-      "cloud_low": null,
+      "cloud_mid": 41.0,
+      "cloud_low": 0.0,
       "pop": 12.0,
       "precip_in": 0.0
     },
@@ -182,9 +182,9 @@
       "wind_direction_deg": 0.0,
       "wind_direction": "N",
       "cloud_high": 95.0,
-      "cloud_mid": null,
-      "cloud_low": null,
-      "pop": 16.0,
+      "cloud_mid": 24.0,
+      "cloud_low": 37.0,
+      "pop": 12.0,
       "precip_in": 0.0
     },
     {
@@ -197,10 +197,10 @@
       "wind_direction_deg": 0.0,
       "wind_direction": "N",
       "cloud_high": 99.0,
-      "cloud_mid": null,
-      "cloud_low": null,
-      "pop": 21.0,
-      "precip_in": 0.01
+      "cloud_mid": 14.0,
+      "cloud_low": 52.0,
+      "pop": 16.0,
+      "precip_in": 0.0
     },
     {
       "forecast_hour": 15,
@@ -212,9 +212,9 @@
       "wind_direction_deg": 0.0,
       "wind_direction": "N",
       "cloud_high": 99.0,
-      "cloud_mid": null,
-      "cloud_low": null,
-      "pop": 29.0,
+      "cloud_mid": 0.0,
+      "cloud_low": 74.0,
+      "pop": 21.0,
       "precip_in": 0.01
     },
     {
@@ -227,10 +227,10 @@
       "wind_direction_deg": 0.0,
       "wind_direction": "N",
       "cloud_high": 97.0,
-      "cloud_mid": null,
-      "cloud_low": null,
-      "pop": 33.0,
-      "precip_in": 0.02
+      "cloud_mid": 0.0,
+      "cloud_low": 79.0,
+      "pop": 29.0,
+      "precip_in": 0.01
     },
     {
       "forecast_hour": 17,
@@ -242,10 +242,10 @@
       "wind_direction_deg": 0.0,
       "wind_direction": "N",
       "cloud_high": 98.0,
-      "cloud_mid": null,
-      "cloud_low": null,
-      "pop": 27.0,
-      "precip_in": 0.0
+      "cloud_mid": 0.0,
+      "cloud_low": 77.0,
+      "pop": 33.0,
+      "precip_in": 0.02
     },
     {
       "forecast_hour": 18,
@@ -257,9 +257,9 @@
       "wind_direction_deg": 0.0,
       "wind_direction": "N",
       "cloud_high": 81.0,
-      "cloud_mid": null,
-      "cloud_low": null,
-      "pop": 24.0,
+      "cloud_mid": 0.0,
+      "cloud_low": 97.0,
+      "pop": 27.0,
       "precip_in": 0.0
     }
   ]
