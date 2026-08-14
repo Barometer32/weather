@@ -7,8 +7,8 @@
 <meta charset="UTF-8">
 
 <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
+name="viewport"
+content="width=device-width, initial-scale=1.0"
 >
 
 <title>
@@ -37,22 +37,30 @@ body {
 }
 
 h1 {
-    margin:
-        0
-        0
-        5px
-        0;
-
-    font-size: 22px;
+    margin: 0 0 5px 0;
+    font-size: 24px;
 }
 
-.subtitle {
-    margin-bottom: 3px;
-}
-
-.updated {
-    margin-bottom: 18px;
+.page-info {
+    margin-bottom: 25px;
     color: #555555;
+}
+
+.run-section {
+    margin-bottom: 46px;
+}
+
+.run-title {
+    font-size: 19px;
+    font-weight: bold;
+}
+
+.run-subtitle {
+    margin-top: 2px;
+    margin-bottom: 10px;
+
+    color: #555555;
+    font-size: 13px;
 }
 
 .table-wrap {
@@ -74,17 +82,12 @@ table {
 th,
 td {
     min-width: 68px;
-
     height: 31px;
 
-    padding:
-        5px
-        8px;
+    padding: 5px 8px;
 
     text-align: center;
-
-    vertical-align:
-        middle;
+    vertical-align: middle;
 
     border:
         1px solid
@@ -93,15 +96,13 @@ td {
 
 th {
     position: sticky;
-
     left: 0;
 
     min-width: 110px;
 
     text-align: right;
 
-    background:
-        #f5f5f5;
+    background: #f5f5f5;
 
     font-weight: 600;
 
@@ -112,8 +113,7 @@ th {
 .time-cell {
     font-weight: 600;
 
-    background:
-        #f5f5f5;
+    background: #f5f5f5;
 }
 
 .spacer td,
@@ -124,17 +124,18 @@ th {
 
     border: none;
 
-    background:
-        #ffffff;
+    background: #ffffff;
 }
 
 .note {
-    margin-top: 14px;
-
-    color:
-        #666666;
-
+    color: #666666;
     font-size: 12px;
+
+    border-top:
+        1px solid
+        #dddddd;
+
+    padding-top: 12px;
 }
 
 </style>
@@ -147,30 +148,31 @@ th {
 NBM Forecast - Hopkins, MN
 </h1>
 
-<div class="subtitle">
+<div class="page-info">
 
-NBM Run:
-
+Page generated:
 <strong>
-2026-08-14 13Z
+11:17 AM CDT August 14, 2026
 </strong>
 
-&nbsp;|&nbsp;
+<br>
 
-Local run time:
-
-<strong>
-8:00 AM CDT
-</strong>
+Latest four NBM cycles shown newest first.
 
 </div>
 
-<div class="updated">
 
-Page generated:
+<section class="run-section">
 
-10:54 AM CDT August 14, 2026
+<div class="run-title">
+NBM Run: 2026-08-14 14Z
+</div>
 
+<div class="run-subtitle">
+LATEST RUN
+&nbsp;|&nbsp;
+Local run time:
+9:00 AM CDT
 </div>
 
 <div class="table-wrap">
@@ -178,23 +180,113 @@ Page generated:
 <table>
 
 <tr>
-
-<th>
-DATE
-</th>
-
-<td class="date-cell">Fri 08/14</td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell">Sat 08/15</td><td class="date-cell"></td><td class="date-cell"></td>
-
+<th>DATE</th>
+<td class="date-cell">Fri 08/14</td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell">Sat 08/15</td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td>
 </tr>
 
 <tr>
+<th>TIME</th>
+<td class="time-cell">11 AM</td><td class="time-cell">12 PM</td><td class="time-cell">1 PM</td><td class="time-cell">2 PM</td><td class="time-cell">3 PM</td><td class="time-cell">4 PM</td><td class="time-cell">5 PM</td><td class="time-cell">6 PM</td><td class="time-cell">7 PM</td><td class="time-cell">8 PM</td><td class="time-cell">9 PM</td><td class="time-cell">10 PM</td><td class="time-cell">11 PM</td><td class="time-cell">12 AM</td><td class="time-cell">1 AM</td><td class="time-cell">2 AM</td><td class="time-cell">3 AM</td>
+</tr>
 
-<th>
-TIME
-</th>
 
+<tr>
+    <th>HIGH CLOUD</th>
+    <td class="">71</td><td class="">34</td><td class="">82</td><td class="">95</td><td class="">97</td><td class="">90</td><td class="">85</td><td class="">67</td><td class="">87</td><td class="">90</td><td class="">84</td><td class="">82</td><td class="">88</td><td class="">82</td><td class="">88</td><td class="">71</td><td class="">45</td>
+</tr>
+
+
+<tr>
+    <th>MID CLOUD</th>
+    <td class="">44</td><td class="">50</td><td class="">34</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">15</td><td class="">0</td><td class="">41</td><td class="">40</td><td class="">13</td><td class="">37</td><td class="">16</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td>
+</tr>
+
+
+<tr>
+    <th>LOW CLOUD</th>
+    <td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">14</td><td class="">16</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">62</td><td class="">95</td><td class="">87</td><td class="">73</td><td class="">87</td><td class="">91</td><td class="">99</td>
+</tr>
+
+
+<tr class="spacer">
+<th></th>
+<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+</tr>
+
+
+<tr>
+    <th>TEMP °F</th>
+    <td class="">78</td><td class="">81</td><td class="">82</td><td class="">83</td><td class="">84</td><td class="">84</td><td class="">83</td><td class="">82</td><td class="">80</td><td class="">78</td><td class="">77</td><td class="">75</td><td class="">74</td><td class="">73</td><td class="">73</td><td class="">72</td><td class="">71</td>
+</tr>
+
+
+<tr>
+    <th>DEWPOINT °F</th>
+    <td class="">65</td><td class="">66</td><td class="">65</td><td class="">65</td><td class="">65</td><td class="">65</td><td class="">66</td><td class="">66</td><td class="">66</td><td class="">67</td><td class="">67</td><td class="">68</td><td class="">68</td><td class="">69</td><td class="">68</td><td class="">68</td><td class="">68</td>
+</tr>
+
+
+<tr class="spacer">
+<th></th>
+<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+</tr>
+
+
+<tr>
+    <th>WIND MPH</th>
+    <td class="">E 10</td><td class="">E 11</td><td class="">SE 11</td><td class="">E 12</td><td class="">SE 12</td><td class="">SE 12</td><td class="">SE 12</td><td class="">SE 11</td><td class="">SE 11</td><td class="">SE 10</td><td class="">SE 10</td><td class="">SE 10</td><td class="">SE 10</td><td class="">E 10</td><td class="">SE 10</td><td class="">SE 10</td><td class="">SE 11</td>
+</tr>
+
+
+<tr class="spacer">
+<th></th>
+<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+</tr>
+
+
+<tr>
+    <th>PRECIP POP</th>
+    <td class="">1%</td><td class="">1%</td><td class="">2%</td><td class="">3%</td><td class="">3%</td><td class="">5%</td><td class="">4%</td><td class="">10%</td><td class="">18%</td><td class="">12%</td><td class="">12%</td><td class="">16%</td><td class="">18%</td><td class="">26%</td><td class="">32%</td><td class="">27%</td><td class="">24%</td>
+</tr>
+
+
+<tr>
+    <th>PRECIP IN</th>
+    <td class="">0.00</td><td class="">0.00</td><td class="">0.00</td><td class="">0.00</td><td class="">0.00</td><td class="">0.01</td><td class="">0.00</td><td class="">0.00</td><td class="">0.00</td><td class="">0.00</td><td class="">0.00</td><td class="">0.00</td><td class="">0.01</td><td class="">0.01</td><td class="">0.02</td><td class="">0.00</td><td class="">0.00</td>
+</tr>
+
+
+</table>
+
+</div>
+
+</section>
+
+<section class="run-section">
+
+<div class="run-title">
+NBM Run: 2026-08-14 13Z
+</div>
+
+<div class="run-subtitle">
+1 HOUR OLDER
+&nbsp;|&nbsp;
+Local run time:
+8:00 AM CDT
+</div>
+
+<div class="table-wrap">
+
+<table>
+
+<tr>
+<th>DATE</th>
+<td class="date-cell">Fri 08/14</td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell">Sat 08/15</td><td class="date-cell"></td><td class="date-cell"></td>
+</tr>
+
+<tr>
+<th>TIME</th>
 <td class="time-cell">10 AM</td><td class="time-cell">11 AM</td><td class="time-cell">12 PM</td><td class="time-cell">1 PM</td><td class="time-cell">2 PM</td><td class="time-cell">3 PM</td><td class="time-cell">4 PM</td><td class="time-cell">5 PM</td><td class="time-cell">6 PM</td><td class="time-cell">7 PM</td><td class="time-cell">8 PM</td><td class="time-cell">9 PM</td><td class="time-cell">10 PM</td><td class="time-cell">11 PM</td><td class="time-cell">12 AM</td><td class="time-cell">1 AM</td><td class="time-cell">2 AM</td>
-
 </tr>
 
 
@@ -204,12 +296,10 @@ TIME
 </tr>
 
 
-
 <tr>
     <th>MID CLOUD</th>
     <td class="">77</td><td class="">49</td><td class="">30</td><td class="">22</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">41</td><td class="">41</td><td class="">43</td><td class="">41</td><td class="">24</td><td class="">14</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td>
 </tr>
-
 
 
 <tr>
@@ -219,11 +309,8 @@ TIME
 
 
 <tr class="spacer">
-
 <th></th>
-
 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-
 </tr>
 
 
@@ -233,7 +320,6 @@ TIME
 </tr>
 
 
-
 <tr>
     <th>DEWPOINT °F</th>
     <td class="">64</td><td class="">65</td><td class="">66</td><td class="">65</td><td class="">65</td><td class="">65</td><td class="">65</td><td class="">66</td><td class="">66</td><td class="">66</td><td class="">67</td><td class="">67</td><td class="">68</td><td class="">68</td><td class="">69</td><td class="">68</td><td class="">68</td>
@@ -241,26 +327,20 @@ TIME
 
 
 <tr class="spacer">
-
 <th></th>
-
 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-
 </tr>
 
 
 <tr>
     <th>WIND MPH</th>
-    <td class="">CALM</td><td class="">CALM</td><td class="">CALM</td><td class="">CALM</td><td class="">CALM</td><td class="">CALM</td><td class="">CALM</td><td class="">CALM</td><td class="">CALM</td><td class="">CALM</td><td class="">CALM</td><td class="">CALM</td><td class="">CALM</td><td class="">CALM</td><td class="">CALM</td><td class="">CALM</td><td class="">CALM</td>
+    <td class="">E 9</td><td class="">E 10</td><td class="">E 11</td><td class="">E 11</td><td class="">E 12</td><td class="">SE 12</td><td class="">SE 12</td><td class="">SE 12</td><td class="">SE 11</td><td class="">SE 11</td><td class="">SE 10</td><td class="">SE 10</td><td class="">SE 10</td><td class="">SE 10</td><td class="">SE 10</td><td class="">SE 10</td><td class="">SE 10</td>
 </tr>
 
 
 <tr class="spacer">
-
 <th></th>
-
 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-
 </tr>
 
 
@@ -268,7 +348,6 @@ TIME
     <th>PRECIP POP</th>
     <td class="">1%</td><td class="">1%</td><td class="">1%</td><td class="">1%</td><td class="">1%</td><td class="">2%</td><td class="">4%</td><td class="">5%</td><td class="">10%</td><td class="">13%</td><td class="">12%</td><td class="">12%</td><td class="">16%</td><td class="">21%</td><td class="">29%</td><td class="">33%</td><td class="">27%</td>
 </tr>
-
 
 
 <tr>
@@ -281,13 +360,216 @@ TIME
 
 </div>
 
+</section>
+
+<section class="run-section">
+
+<div class="run-title">
+NBM Run: 2026-08-14 12Z
+</div>
+
+<div class="run-subtitle">
+2 HOURS OLDER
+&nbsp;|&nbsp;
+Local run time:
+7:00 AM CDT
+</div>
+
+<div class="table-wrap">
+
+<table>
+
+<tr>
+<th>DATE</th>
+<td class="date-cell">Fri 08/14</td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell">Sat 08/15</td><td class="date-cell"></td>
+</tr>
+
+<tr>
+<th>TIME</th>
+<td class="time-cell">9 AM</td><td class="time-cell">10 AM</td><td class="time-cell">11 AM</td><td class="time-cell">12 PM</td><td class="time-cell">1 PM</td><td class="time-cell">2 PM</td><td class="time-cell">3 PM</td><td class="time-cell">4 PM</td><td class="time-cell">5 PM</td><td class="time-cell">6 PM</td><td class="time-cell">7 PM</td><td class="time-cell">8 PM</td><td class="time-cell">9 PM</td><td class="time-cell">10 PM</td><td class="time-cell">11 PM</td><td class="time-cell">12 AM</td><td class="time-cell">1 AM</td>
+</tr>
+
+
+<tr>
+    <th>HIGH CLOUD</th>
+    <td class="">0</td><td class="">0</td><td class="">0</td><td class="">35</td><td class="">87</td><td class="">99</td><td class="">98</td><td class="">92</td><td class="">92</td><td class="">91</td><td class="">91</td><td class="">90</td><td class="">93</td><td class="">90</td><td class="">93</td><td class="">99</td><td class="">99</td>
+</tr>
+
+
+<tr>
+    <th>MID CLOUD</th>
+    <td class="">89</td><td class="">88</td><td class="">57</td><td class="">43</td><td class="">45</td><td class="">25</td><td class="">0</td><td class="">50</td><td class="">62</td><td class="">52</td><td class="">37</td><td class="">18</td><td class="">26</td><td class="">32</td><td class="">17</td><td class="">0</td><td class="">0</td>
+</tr>
+
+
+<tr>
+    <th>LOW CLOUD</th>
+    <td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">56</td><td class="">67</td><td class="">57</td><td class="">57</td>
+</tr>
+
+
+<tr class="spacer">
+<th></th>
+<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+</tr>
+
+
+<tr>
+    <th>TEMP °F</th>
+    <td class="">72</td><td class="">74</td><td class="">77</td><td class="">79</td><td class="">81</td><td class="">82</td><td class="">82</td><td class="">83</td><td class="">82</td><td class="">80</td><td class="">79</td><td class="">77</td><td class="">76</td><td class="">75</td><td class="">74</td><td class="">73</td><td class="">73</td>
+</tr>
+
+
+<tr>
+    <th>DEWPOINT °F</th>
+    <td class="">63</td><td class="">64</td><td class="">65</td><td class="">66</td><td class="">65</td><td class="">65</td><td class="">65</td><td class="">65</td><td class="">66</td><td class="">66</td><td class="">66</td><td class="">66</td><td class="">67</td><td class="">67</td><td class="">67</td><td class="">68</td><td class="">67</td>
+</tr>
+
+
+<tr class="spacer">
+<th></th>
+<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+</tr>
+
+
+<tr>
+    <th>WIND MPH</th>
+    <td class="">E 8</td><td class="">E 9</td><td class="">E 10</td><td class="">E 11</td><td class="">E 11</td><td class="">E 12</td><td class="">SE 12</td><td class="">SE 11</td><td class="">SE 11</td><td class="">SE 11</td><td class="">SE 11</td><td class="">SE 10</td><td class="">SE 10</td><td class="">SE 10</td><td class="">SE 10</td><td class="">SE 9</td><td class="">SE 9</td>
+</tr>
+
+
+<tr class="spacer">
+<th></th>
+<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+</tr>
+
+
+<tr>
+    <th>PRECIP POP</th>
+    <td class="">1%</td><td class="">1%</td><td class="">1%</td><td class="">1%</td><td class="">1%</td><td class="">2%</td><td class="">2%</td><td class="">4%</td><td class="">4%</td><td class="">7%</td><td class="">12%</td><td class="">11%</td><td class="">11%</td><td class="">18%</td><td class="">23%</td><td class="">30%</td><td class="">33%</td>
+</tr>
+
+
+<tr>
+    <th>PRECIP IN</th>
+    <td class="">0.00</td><td class="">0.00</td><td class="">0.00</td><td class="">0.00</td><td class="">0.00</td><td class="">0.00</td><td class="">0.00</td><td class="">0.01</td><td class="">0.00</td><td class="">0.00</td><td class="">0.00</td><td class="">0.00</td><td class="">0.00</td><td class="">0.00</td><td class="">0.01</td><td class="">0.01</td><td class="">0.02</td>
+</tr>
+
+
+</table>
+
+</div>
+
+</section>
+
+<section class="run-section">
+
+<div class="run-title">
+NBM Run: 2026-08-14 11Z
+</div>
+
+<div class="run-subtitle">
+3 HOURS OLDER
+&nbsp;|&nbsp;
+Local run time:
+6:00 AM CDT
+</div>
+
+<div class="table-wrap">
+
+<table>
+
+<tr>
+<th>DATE</th>
+<td class="date-cell">Fri 08/14</td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell">Sat 08/15</td>
+</tr>
+
+<tr>
+<th>TIME</th>
+<td class="time-cell">8 AM</td><td class="time-cell">9 AM</td><td class="time-cell">10 AM</td><td class="time-cell">11 AM</td><td class="time-cell">12 PM</td><td class="time-cell">1 PM</td><td class="time-cell">2 PM</td><td class="time-cell">3 PM</td><td class="time-cell">4 PM</td><td class="time-cell">5 PM</td><td class="time-cell">6 PM</td><td class="time-cell">7 PM</td><td class="time-cell">8 PM</td><td class="time-cell">9 PM</td><td class="time-cell">10 PM</td><td class="time-cell">11 PM</td><td class="time-cell">12 AM</td>
+</tr>
+
+
+<tr>
+    <th>HIGH CLOUD</th>
+    <td class="">65</td><td class="">48</td><td class="">66</td><td class="">79</td><td class="">89</td><td class="">93</td><td class="">96</td><td class="">99</td><td class="">98</td><td class="">94</td><td class="">94</td><td class="">89</td><td class="">95</td><td class="">99</td><td class="">99</td><td class="">99</td><td class="">100</td>
+</tr>
+
+
+<tr>
+    <th>MID CLOUD</th>
+    <td class="">0</td><td class="">82</td><td class="">82</td><td class="">37</td><td class="">34</td><td class="">20</td><td class="">0</td><td class="">0</td><td class="">64</td><td class="">78</td><td class="">43</td><td class="">34</td><td class="">58</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td>
+</tr>
+
+
+<tr>
+    <th>LOW CLOUD</th>
+    <td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">89</td><td class="">99</td><td class="">95</td><td class="">61</td>
+</tr>
+
+
+<tr class="spacer">
+<th></th>
+<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+</tr>
+
+
+<tr>
+    <th>TEMP °F</th>
+    <td class="">69</td><td class="">72</td><td class="">74</td><td class="">77</td><td class="">79</td><td class="">81</td><td class="">82</td><td class="">82</td><td class="">83</td><td class="">82</td><td class="">80</td><td class="">79</td><td class="">77</td><td class="">76</td><td class="">75</td><td class="">74</td><td class="">73</td>
+</tr>
+
+
+<tr>
+    <th>DEWPOINT °F</th>
+    <td class="">62</td><td class="">63</td><td class="">64</td><td class="">65</td><td class="">66</td><td class="">65</td><td class="">65</td><td class="">65</td><td class="">65</td><td class="">66</td><td class="">66</td><td class="">66</td><td class="">66</td><td class="">67</td><td class="">67</td><td class="">67</td><td class="">68</td>
+</tr>
+
+
+<tr class="spacer">
+<th></th>
+<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+</tr>
+
+
+<tr>
+    <th>WIND MPH</th>
+    <td class="">E 7</td><td class="">E 8</td><td class="">E 9</td><td class="">E 10</td><td class="">E 11</td><td class="">E 11</td><td class="">E 12</td><td class="">SE 12</td><td class="">SE 11</td><td class="">SE 11</td><td class="">SE 11</td><td class="">SE 11</td><td class="">SE 10</td><td class="">SE 10</td><td class="">SE 10</td><td class="">SE 10</td><td class="">SE 9</td>
+</tr>
+
+
+<tr class="spacer">
+<th></th>
+<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+</tr>
+
+
+<tr>
+    <th>PRECIP POP</th>
+    <td class="">2%</td><td class="">2%</td><td class="">2%</td><td class="">2%</td><td class="">1%</td><td class="">2%</td><td class="">2%</td><td class="">2%</td><td class="">7%</td><td class="">7%</td><td class="">7%</td><td class="">13%</td><td class="">13%</td><td class="">15%</td><td class="">20%</td><td class="">25%</td><td class="">31%</td>
+</tr>
+
+
+<tr>
+    <th>PRECIP IN</th>
+    <td class="">0.00</td><td class="">0.00</td><td class="">0.00</td><td class="">0.00</td><td class="">0.00</td><td class="">0.00</td><td class="">0.00</td><td class="">0.00</td><td class="">0.01</td><td class="">0.00</td><td class="">0.00</td><td class="">0.00</td><td class="">0.00</td><td class="">0.00</td><td class="">0.00</td><td class="">0.01</td><td class="">0.01</td>
+</tr>
+
+
+</table>
+
+</div>
+
+</section>
+
+
 <div class="note">
 
 NBM point forecast near Hopkins, Minnesota.
-Cloud layers are classified by NBM aviation
-cloud-base altitude.
-PoP is probability of at least 0.01 inch
-of precipitation.
+Cloud layers are classified using NBM
+aviation cloud-base altitude.
+PoP represents probability of at least
+0.01 inch of precipitation.
 Precipitation amounts are inches.
 
 </div>
