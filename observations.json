@@ -1,0 +1,12 @@
+[
+  {
+    "timestamp": "2026-08-27T23:53:00+00:00",
+    "local_time": "2026-08-27 06:53 PM",
+    "temperature": 78,
+    "dewpoint": 50,
+    "wind_direction_degrees": 320,
+    "wind_direction": "NW",
+    "wind_speed": 7,
+    "sun_angle": 11.2
+  }
+]

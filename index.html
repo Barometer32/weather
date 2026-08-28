@@ -1,5 +1,5 @@
-<!DOCTYPE html>
 
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -11,10 +11,9 @@
     content="width=device-width, initial-scale=1.0"
 >
 
-<title>
-    Weather Lab
-</title>
+<meta http-equiv="refresh" content="300">
 
+<title>Weather Lab</title>
 
 <style>
 
@@ -22,335 +21,219 @@
     box-sizing: border-box;
 }
 
-html,
 body {
     margin: 0;
-    padding: 0;
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+    background: #ffffff;
+    color: #111111;
 }
 
-body {
-    margin: 0;
-    background: #3d3d3d;
-    font-family: Arial, Helvetica, sans-serif;
-    color: #111;
-}
-
-
-.header {
-    background: #111;
-    border-bottom: 5px solid #116622;
+header {
+    background: #111111;
     color: white;
+    padding: 20px 30px;
+    border-bottom: 4px solid #16833b;
 }
 
-
-.header-inner {
-    max-width: 1400px;
-    margin: auto;
-    padding: 18px 22px;
-}
-
-
-.site-title {
+header h1 {
+    margin: 0;
     font-size: 30px;
-    font-weight: 600;
 }
 
-
-.site-subtitle {
-    margin-top: 4px;
-    font-size: 13px;
-    color: #cccccc;
-}
-
-
-.page {
-    display: flex;
-    max-width: 1400px;
-    min-height: calc(100vh - 90px);
-    margin: auto;
-    background: white;
-}
-
-
-.sidebar {
-    width: 215px;
-    flex-shrink: 0;
-    background: #3c4753;
-    color: white;
-}
-
-
-.menu-heading {
-    padding: 9px 13px;
-    background: #27313a;
+header p {
+    margin: 5px 0 0;
     font-size: 14px;
-    font-weight: bold;
 }
 
-
-.menu-item {
-    display: block;
-    padding: 8px 13px;
-    border-bottom: 1px solid rgba(255,255,255,.08);
-    color: white;
-    text-decoration: none;
-    font-size: 13px;
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px;
 }
 
-
-.menu-item:hover {
-    background: #506173;
+h2 {
+    text-align: center;
+    margin-top: 0;
 }
 
-
-.menu-item.active {
-    background: #687c91;
-    font-weight: bold;
+.subtitle {
+    text-align: center;
+    color: #555;
+    margin-bottom: 25px;
 }
 
-
-.content {
-    flex: 1;
-    min-width: 0;
-    padding: 10px 18px 25px 18px;
+.current-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 35px;
 }
 
+.current-box {
+    border: 1px solid #d0d0d0;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    background: #fafafa;
+}
 
-.product-title {
+.label {
+    color: #666;
+    font-size: 14px;
     margin-bottom: 8px;
-    text-align: center;
-    font-size: 20px;
+}
+
+.value {
+    font-size: 34px;
     font-weight: bold;
 }
 
+.value.wind {
+    font-size: 22px;
+}
 
-.image-container {
+table {
     width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+}
+
+th {
+    background: #eeeeee;
+    font-weight: bold;
+}
+
+th,
+td {
+    padding: 13px;
     text-align: center;
-    background: white;
-}
-
-
-.image-container img {
-    display: block;
-    width: 100%;
-    max-width: 1150px;
-    height: auto;
-    margin: auto;
-}
-
-
-.product-description {
-    margin-top: 12px;
-    padding: 10px 13px;
     border: 1px solid #cccccc;
-    background: #f3f3f3;
-    font-size: 13px;
-    line-height: 1.5;
 }
 
+tr:nth-child(even) {
+    background: #f8f8f8;
+}
 
-@media (max-width: 760px) {
+.footer {
+    margin-top: 20px;
+    text-align: center;
+    color: #777;
+    font-size: 13px;
+}
 
-    .page {
-        display: block;
+@media (max-width: 800px) {
+
+    .current-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
     }
 
-    .sidebar {
-        width: 100%;
+    main {
+        padding: 15px;
     }
 
-    .content {
-        padding: 10px;
+    table {
+        font-size: 13px;
     }
 
+    th,
+    td {
+        padding: 8px 4px;
+    }
 }
 
 </style>
 
 </head>
 
-
 <body>
 
-
-<header class="header">
-
-<div class="header-inner">
-
-    <div class="site-title">
-        Weather Lab
-    </div>
-
-    <div class="site-subtitle">
-        Regional Weather Analysis
-    </div>
-
-</div>
-
+<header>
+    <h1>Weather Lab</h1>
+    <p>Twin Cities Local Weather Observations</p>
 </header>
 
+<main>
 
-<div class="page">
+    <h2>Current Conditions</h2>
 
-
-<nav class="sidebar">
-
-    <div class="menu-heading">
-        Surface Maps
+    <div class="subtitle">
+        KMSP + KFCM averaged observation<br>
+        Updated: 2026-08-27 06:53 PM
     </div>
 
-    <a
-        class="menu-item active"
-        href="index.html"
-    >
-        METAR Station Plot
-    </a>
+    
+        <div class="current-grid">
 
-    <a
-        class="menu-item"
-        href="#"
-    >
-        Temperature
-    </a>
+            <div class="current-box">
+                <div class="label">Temperature</div>
+                <div class="value">
+                    78°
+                </div>
+            </div>
 
-    <a
-        class="menu-item"
-        href="#"
-    >
-        Dew Point
-    </a>
+            <div class="current-box">
+                <div class="label">Dew Point</div>
+                <div class="value">
+                    50°
+                </div>
+            </div>
 
-    <a
-        class="menu-item"
-        href="#"
-    >
-        Sea-Level Pressure
-    </a>
+            <div class="current-box">
+                <div class="label">Wind</div>
+                <div class="value wind">
+                    NW 320° at 7 mph
+                </div>
+            </div>
 
-    <a
-        class="menu-item"
-        href="#"
-    >
-        Wind
-    </a>
+            <div class="current-box">
+                <div class="label">Sun Angle</div>
+                <div class="value">
+                    11.2°
+                </div>
+            </div>
 
+        </div>
+        
 
-    <div class="menu-heading">
-        Radar
-    </div>
+    <h2>Last 12 Hours</h2>
 
-    <a
-        class="menu-item"
-        href="#"
-    >
-        NEXRAD
-    </a>
+    <table>
 
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Temp</th>
+                <th>Dew Point</th>
+                <th>Wind</th>
+                <th>Sun Angle</th>
+            </tr>
+        </thead>
 
-    <div class="menu-heading">
-        Satellite
-    </div>
+        <tbody>
+            
+        <tr>
+            <td>2026-08-27 06:53 PM</td>
+            <td>78°F</td>
+            <td>50°F</td>
+            <td>NW (320°) 7 mph</td>
+            <td>11.2°</td>
+        </tr>
+        
+        </tbody>
 
-    <a
-        class="menu-item"
-        href="#"
-    >
-        GOES
-    </a>
+    </table>
 
-
-    <div class="menu-heading">
-        Forecast
-    </div>
-
-    <a
-        class="menu-item"
-        href="#"
-    >
-        LAMP
-    </a>
-
-    <a
-        class="menu-item"
-        href="#"
-    >
-        NWS Forecast
-    </a>
-
-</nav>
-
-
-<main class="content">
-
-    <div class="product-title">
-        Regional METAR Surface Observations
-    </div>
-
-
-    <div class="image-container">
-
-        <img
-            id="metar-image"
-            src=""
-            alt="Regional METAR surface observations"
-        >
-
-    </div>
-
-
-    <div class="product-description">
-
-        Regional hourly METAR observations.
-
-        <br><br>
-
-        Twin Cities conditions represent the combined
-        KMSP / KFCM / KMIC observation.
-
+    <div class="footer">
+        Observations: KMSP + KFCM<br>
+        Solar elevation calculated for Hopkins, Minnesota
     </div>
 
 </main>
-
-
-</div>
-
-
-<script>
-
-function loadCurrentMap() {
-
-    const image =
-        document.getElementById(
-            "metar-image"
-        );
-
-    image.src =
-        "images/metar_surface.png?v="
-        + Date.now();
-
-}
-
-
-/*
-Load uncached image immediately.
-*/
-
-loadCurrentMap();
-
-
-/*
-Check every 60 seconds for a newer
-GitHub Pages image.
-*/
-
-setInterval(
-    loadCurrentMap,
-    60000
-);
-
-</script>
-
 
 </body>
 
