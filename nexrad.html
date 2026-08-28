@@ -162,11 +162,12 @@ main {
 
 
 /* ==========================================================
-   COD-STYLE BOTTOM CONTROL STRIP
+   BOTTOM RADAR CONTROL STRIP
    ========================================================== */
 
 .radar-controls {
     position: fixed;
+
     left: 0;
     right: 0;
     bottom: 0;
@@ -235,8 +236,15 @@ main {
 
 .transport button.play {
     min-width: 58px;
+
     font-size: 15px;
+
     font-weight: bold;
+}
+
+.transport button:disabled {
+    opacity: 0.4;
+    cursor: wait;
 }
 
 .slider-wrap {
@@ -256,8 +264,11 @@ main {
 
 .slider-time {
     color: white;
+
     font-size: 14px;
+
     font-weight: bold;
+
     white-space: nowrap;
 }
 
@@ -271,9 +282,15 @@ main {
     cursor: pointer;
 }
 
+#timeline:disabled {
+    cursor: wait;
+}
+
 .frame-count {
     color: #cccccc;
+
     font-size: 13px;
+
     white-space: nowrap;
 }
 
@@ -304,6 +321,11 @@ main {
     background: #484848;
 }
 
+.latest-button:disabled {
+    opacity: 0.4;
+    cursor: wait;
+}
+
 
 @media (max-width: 720px) {
 
@@ -319,6 +341,7 @@ main {
     .control-inner {
         grid-template-columns:
             1fr;
+
         gap: 6px;
     }
 
@@ -456,6 +479,7 @@ Actual radar volume times are used.
     id="previous-button"
     type="button"
     title="Previous frame"
+    disabled
 >
 ◀
 </button>
@@ -464,14 +488,16 @@ Actual radar volume times are used.
     id="play-button"
     class="play"
     type="button"
+    disabled
 >
-Pause
+Play
 </button>
 
 <button
     id="next-button"
     type="button"
     title="Next frame"
+    disabled
 >
 ▶
 </button>
@@ -495,6 +521,7 @@ Pause
     max="0"
     value="0"
     step="1"
+    disabled
 >
 
 <div
@@ -511,6 +538,7 @@ Pause
     id="latest-button"
     class="latest-button"
     type="button"
+    disabled
 >
 LATEST
 </button>
@@ -534,9 +562,20 @@ let frames = [];
 
 let currentIndex = 0;
 
-let playing = true;
+let playing = false;
 
 let timer = null;
+
+
+/*
+Every radar image is preloaded as an object URL.
+
+After this initial preload, moving the slider switches
+between images already stored in browser memory.
+*/
+
+const imageCache =
+    new Map();
 
 
 const radarImage =
@@ -574,6 +613,198 @@ const playButton =
         "play-button"
     );
 
+const previousButton =
+    document.getElementById(
+        "previous-button"
+    );
+
+const nextButton =
+    document.getElementById(
+        "next-button"
+    );
+
+const latestButton =
+    document.getElementById(
+        "latest-button"
+    );
+
+
+function setControlsEnabled(enabled) {
+
+    timeline.disabled =
+        !enabled;
+
+    playButton.disabled =
+        !enabled;
+
+    previousButton.disabled =
+        !enabled;
+
+    nextButton.disabled =
+        !enabled;
+
+    latestButton.disabled =
+        !enabled;
+}
+
+
+function frameKey(frame) {
+
+    return frame.timestamp;
+}
+
+
+function frameUrl(frame) {
+
+    return (
+        RADAR_BASE
+        +
+        "/"
+        +
+        frame.file
+        +
+        "?v="
+        +
+        encodeURIComponent(
+            frame.timestamp
+        )
+    );
+}
+
+
+async function preloadOneFrame(frame) {
+
+    const key =
+        frameKey(
+            frame
+        );
+
+    if (
+        imageCache.has(
+            key
+        )
+    ) {
+        return;
+    }
+
+    const response =
+        await fetch(
+            frameUrl(frame),
+            {
+                cache:
+                    "force-cache"
+            }
+        );
+
+    if (!response.ok) {
+
+        throw new Error(
+            "Image HTTP "
+            +
+            response.status
+        );
+    }
+
+    const blob =
+        await response.blob();
+
+    const objectUrl =
+        URL.createObjectURL(
+            blob
+        );
+
+    imageCache.set(
+        key,
+        objectUrl
+    );
+}
+
+
+async function preloadFrames(newFrames) {
+
+    const missing =
+        newFrames.filter(
+            frame =>
+                !imageCache.has(
+                    frameKey(
+                        frame
+                    )
+                )
+        );
+
+    if (!missing.length) {
+        return;
+    }
+
+    let loaded = 0;
+
+    /*
+    Preload several images concurrently for speed.
+    */
+
+    await Promise.all(
+        missing.map(
+            async frame => {
+
+                await preloadOneFrame(
+                    frame
+                );
+
+                loaded++;
+
+                status.textContent =
+                    "Preloading "
+                    +
+                    loaded
+                    +
+                    " / "
+                    +
+                    missing.length;
+            }
+        )
+    );
+}
+
+
+function removeUnusedCachedImages(
+    newFrames
+) {
+
+    const wanted =
+        new Set(
+            newFrames.map(
+                frame =>
+                    frameKey(
+                        frame
+                    )
+            )
+        );
+
+    for (
+        const [
+            key,
+            objectUrl
+        ]
+        of imageCache.entries()
+    ) {
+
+        if (
+            !wanted.has(
+                key
+            )
+        ) {
+
+            URL.revokeObjectURL(
+                objectUrl
+            );
+
+            imageCache.delete(
+                key
+            );
+        }
+    }
+}
+
 
 function displayFrame(index) {
 
@@ -595,18 +826,19 @@ function displayFrame(index) {
             currentIndex
         ];
 
-    radarImage.src =
-        RADAR_BASE
-        +
-        "/"
-        +
-        frame.file
-        +
-        "?v="
-        +
-        encodeURIComponent(
-            frame.timestamp
+    const cached =
+        imageCache.get(
+            frameKey(
+                frame
+            )
         );
+
+    if (!cached) {
+        return;
+    }
+
+    radarImage.src =
+        cached;
 
     scanTime.textContent =
         frame.time;
@@ -618,7 +850,10 @@ function displayFrame(index) {
         currentIndex;
 
     frameCount.textContent =
-        (currentIndex + 1)
+        (
+            currentIndex
+            + 1
+        )
         +
         " / "
         +
@@ -655,7 +890,9 @@ function previousFrame() {
 
     currentIndex--;
 
-    if (currentIndex < 0) {
+    if (
+        currentIndex < 0
+    ) {
         currentIndex =
             frames.length - 1;
     }
@@ -668,7 +905,13 @@ function previousFrame() {
 
 function startLoop() {
 
-    if (timer !== null) {
+    if (!frames.length) {
+        return;
+    }
+
+    if (
+        timer !== null
+    ) {
         clearInterval(
             timer
         );
@@ -689,7 +932,9 @@ function startLoop() {
 
 function stopLoop() {
 
-    if (timer !== null) {
+    if (
+        timer !== null
+    ) {
 
         clearInterval(
             timer
@@ -708,9 +953,11 @@ function stopLoop() {
 function toggleLoop() {
 
     if (playing) {
+
         stopLoop();
-    }
-    else {
+
+    } else {
+
         startLoop();
     }
 }
@@ -718,11 +965,11 @@ function toggleLoop() {
 
 function goLatest() {
 
+    stopLoop();
+
     if (!frames.length) {
         return;
     }
-
-    stopLoop();
 
     displayFrame(
         frames.length - 1
@@ -750,7 +997,7 @@ async function loadFrames() {
         if (!response.ok) {
 
             throw new Error(
-                "HTTP "
+                "Manifest HTTP "
                 +
                 response.status
             );
@@ -773,34 +1020,122 @@ async function loadFrames() {
             return;
         }
 
-        const wasNearLatest =
-            (
-                !frames.length
-                ||
+
+        const oldSignature =
+            frames.map(
+                frame =>
+                    frame.timestamp
+            ).join("|");
+
+        const newSignature =
+            newFrames.map(
+                frame =>
+                    frame.timestamp
+            ).join("|");
+
+
+        if (
+            oldSignature
+            === newSignature
+        ) {
+
+            status.textContent =
+                frames.length
+                +
+                " scans loaded";
+
+            return;
+        }
+
+
+        const hadFrames =
+            frames.length > 0;
+
+        const oldTimestamp =
+            hadFrames
+            ?
+            frames[
                 currentIndex
-                >=
-                frames.length - 2
-            );
+            ].timestamp
+            :
+            null;
+
+
+        setControlsEnabled(
+            false
+        );
+
+
+        await preloadFrames(
+            newFrames
+        );
+
+
+        removeUnusedCachedImages(
+            newFrames
+        );
+
 
         frames =
             newFrames;
 
+
         timeline.max =
             frames.length - 1;
 
-        if (wasNearLatest) {
+
+        /*
+        First load always starts on newest scan and PAUSED.
+        */
+
+        if (!hadFrames) {
+
             currentIndex =
                 frames.length - 1;
+
+        } else {
+
+            /*
+            Preserve the same scan when possible if a new
+            scan arrives while user is viewing history.
+            */
+
+            const oldPosition =
+                frames.findIndex(
+                    frame =>
+                        frame.timestamp
+                        === oldTimestamp
+                );
+
+            if (
+                oldPosition >= 0
+            ) {
+
+                currentIndex =
+                    oldPosition;
+
+            } else {
+
+                currentIndex =
+                    frames.length - 1;
+            }
         }
+
 
         displayFrame(
             currentIndex
         );
 
+
+        setControlsEnabled(
+            true
+        );
+
+
         status.textContent =
             frames.length
             +
-            " scans";
+            " scans loaded";
 
     }
 
@@ -812,92 +1147,107 @@ async function loadFrames() {
 
         status.textContent =
             "Unable to load radar.";
+
+        setControlsEnabled(
+            frames.length > 0
+        );
     }
 }
 
 
-document
-    .getElementById(
-        "previous-button"
-    )
-    .addEventListener(
-        "click",
-        function () {
+previousButton.addEventListener(
+    "click",
+    function () {
 
-            stopLoop();
+        stopLoop();
 
-            previousFrame();
-        }
-    );
+        previousFrame();
+    }
+);
 
 
-playButton
-    .addEventListener(
-        "click",
-        toggleLoop
-    );
+playButton.addEventListener(
+    "click",
+    toggleLoop
+);
 
 
-document
-    .getElementById(
-        "next-button"
-    )
-    .addEventListener(
-        "click",
-        function () {
+nextButton.addEventListener(
+    "click",
+    function () {
 
-            stopLoop();
+        stopLoop();
 
-            nextFrame();
-        }
-    );
+        nextFrame();
+    }
+);
 
 
-document
-    .getElementById(
-        "latest-button"
-    )
-    .addEventListener(
-        "click",
-        goLatest
-    );
+latestButton.addEventListener(
+    "click",
+    goLatest
+);
 
 
-timeline
-    .addEventListener(
-        "input",
-        function () {
+/*
+"input" fires continuously during dragging.
 
-            stopLoop();
+Because every frame is already stored in memory,
+the image switches immediately.
+*/
 
-            displayFrame(
-                Number(
-                    timeline.value
-                )
-            );
-        }
-    );
+timeline.addEventListener(
+    "input",
+    function () {
+
+        stopLoop();
+
+        displayFrame(
+            Number(
+                timeline.value
+            )
+        );
+    }
+);
 
 
 document.addEventListener(
     "keydown",
     function (event) {
 
-        if (event.key === "ArrowLeft") {
+        if (
+            event.target
+            &&
+            event.target.tagName
+            === "INPUT"
+        ) {
+            return;
+        }
+
+        if (
+            event.key
+            === "ArrowLeft"
+        ) {
 
             stopLoop();
 
             previousFrame();
         }
 
-        if (event.key === "ArrowRight") {
+        if (
+            event.key
+            === "ArrowRight"
+        ) {
 
             stopLoop();
 
             nextFrame();
         }
 
-        if (event.key === " ") {
+        if (
+            event.key
+            === " "
+        ) {
 
             event.preventDefault();
 
@@ -907,14 +1257,39 @@ document.addEventListener(
 );
 
 
+/*
+Load page paused.
+
+There is intentionally NO startLoop() here.
+*/
+
 loadFrames();
 
-startLoop();
 
+/*
+Check once per minute for a new radar scan.
+*/
 
 setInterval(
     loadFrames,
     60000
+);
+
+
+window.addEventListener(
+    "beforeunload",
+    function () {
+
+        for (
+            const objectUrl
+            of imageCache.values()
+        ) {
+
+            URL.revokeObjectURL(
+                objectUrl
+            );
+        }
+    }
 );
 
 </script>

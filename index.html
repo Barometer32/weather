@@ -109,8 +109,7 @@ h2 {
 
 .current-grid {
     display: grid;
-    grid-template-columns:
-        repeat(4, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 15px;
     margin-bottom: 38px;
 }
@@ -220,9 +219,11 @@ NEXRAD
 
 <main>
 
+
 <h2>
 Current Conditions
 </h2>
+
 
 <div class="subtitle">
 
@@ -325,6 +326,7 @@ Last 12 Hours
 </tr>
 
 </thead>
+
 
 <tbody>
 
@@ -431,6 +433,7 @@ Hopkins, Minnesota
 
 </div>
 
+
 </main>
 
 
@@ -441,12 +444,18 @@ const LONGITUDE = -93.4627;
 
 
 function degToRad(value) {
-    return value * Math.PI / 180;
+
+    return value
+        * Math.PI
+        / 180;
 }
 
 
 function radToDeg(value) {
-    return value * 180 / Math.PI;
+
+    return value
+        * 180
+        / Math.PI;
 }
 
 
@@ -476,14 +485,18 @@ function getDayOfYear(date) {
 function calculateSunAngle(date) {
 
     const dayOfYear =
-        getDayOfYear(date);
+        getDayOfYear(
+            date
+        );
 
     const hour =
         date.getUTCHours()
         +
-        date.getUTCMinutes() / 60
+        date.getUTCMinutes()
+        / 60
         +
-        date.getUTCSeconds() / 3600;
+        date.getUTCSeconds()
+        / 3600;
 
     const gamma =
         2
@@ -504,36 +517,48 @@ function calculateSunAngle(date) {
         (
             0.000075
             +
-            0.001868 * Math.cos(gamma)
+            0.001868
+            * Math.cos(gamma)
             -
-            0.032077 * Math.sin(gamma)
+            0.032077
+            * Math.sin(gamma)
             -
-            0.014615 * Math.cos(2 * gamma)
+            0.014615
+            * Math.cos(2 * gamma)
             -
-            0.040849 * Math.sin(2 * gamma)
+            0.040849
+            * Math.sin(2 * gamma)
         );
 
     const declination =
         0.006918
         -
-        0.399912 * Math.cos(gamma)
+        0.399912
+        * Math.cos(gamma)
         +
-        0.070257 * Math.sin(gamma)
+        0.070257
+        * Math.sin(gamma)
         -
-        0.006758 * Math.cos(2 * gamma)
+        0.006758
+        * Math.cos(2 * gamma)
         +
-        0.000907 * Math.sin(2 * gamma)
+        0.000907
+        * Math.sin(2 * gamma)
         -
-        0.002697 * Math.cos(3 * gamma)
+        0.002697
+        * Math.cos(3 * gamma)
         +
-        0.00148 * Math.sin(3 * gamma);
+        0.00148
+        * Math.sin(3 * gamma);
 
     const minutesUTC =
-        date.getUTCHours() * 60
+        date.getUTCHours()
+        * 60
         +
         date.getUTCMinutes()
         +
-        date.getUTCSeconds() / 60;
+        date.getUTCSeconds()
+        / 60;
 
     let trueSolarTime =
         (
@@ -550,14 +575,19 @@ function calculateSunAngle(date) {
     }
 
     const hourAngle =
-        trueSolarTime / 4
+        trueSolarTime
+        / 4
         - 180;
 
     const lat =
-        degToRad(LATITUDE);
+        degToRad(
+            LATITUDE
+        );
 
     const ha =
-        degToRad(hourAngle);
+        degToRad(
+            hourAngle
+        );
 
     let cosZenith =
         Math.sin(lat)
@@ -631,5 +661,7 @@ setInterval(
 
 </script>
 
+
 </body>
+
 </html>
