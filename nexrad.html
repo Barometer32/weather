@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -30,7 +29,7 @@ body {
 header {
     background: #111111;
     color: white;
-    padding: 20px 35px 0;
+    padding: 18px 35px 0;
     border-bottom: 4px solid #16833b;
 }
 
@@ -40,20 +39,20 @@ header h1 {
 }
 
 header p {
-    margin: 5px 0 15px;
+    margin: 4px 0 13px;
     font-size: 15px;
 }
 
 nav {
     display: flex;
-    gap: 6px;
+    gap: 5px;
 }
 
 nav a {
     display: block;
     color: white;
     text-decoration: none;
-    padding: 11px 18px;
+    padding: 10px 18px;
     font-weight: bold;
     border-radius: 5px 5px 0 0;
 }
@@ -69,7 +68,7 @@ nav a.active {
 main {
     max-width: 1300px;
     margin: 0 auto;
-    padding: 32px;
+    padding: 30px;
 }
 
 h2 {
@@ -80,12 +79,12 @@ h2 {
 .subtitle {
     text-align: center;
     color: #555555;
-    margin-bottom: 28px;
-    font-size: 17px;
+    margin-bottom: 25px;
+    font-size: 16px;
 }
 
 .footer {
-    margin-top: 22px;
+    margin-top: 20px;
     text-align: center;
     color: #777777;
     font-size: 13px;
@@ -103,15 +102,34 @@ h2 {
     }
 
     nav a {
-        padding: 10px 12px;
+        padding: 9px 12px;
     }
 }
 
 
-.radar-container {
-    max-width: 1050px;
-    margin: 0 auto;
+body {
+    padding-bottom: 82px;
+}
+
+main {
+    max-width: 1150px;
+    padding-top: 20px;
+}
+
+.radar-heading {
+    margin-bottom: 8px;
+}
+
+.radar-subtitle {
     text-align: center;
+    color: #666666;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.radar-container {
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
 .radar-image {
@@ -119,55 +137,215 @@ h2 {
     height: auto;
     display: block;
     background: #080808;
-    border: 1px solid #cccccc;
+    border: 1px solid #777777;
 }
 
-.scan-time {
-    margin-top: 12px;
-    font-size: 21px;
-    font-weight: bold;
-}
-
-.status {
-    margin-top: 4px;
-    color: #666666;
-    font-size: 13px;
-}
-
-.controls {
+.radar-info {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    gap: 12px;
     align-items: center;
-    gap: 9px;
-    margin-top: 16px;
-    flex-wrap: wrap;
-}
-
-button {
-    border: 1px solid #aaaaaa;
-    background: #f5f5f5;
-    border-radius: 5px;
-    padding: 9px 16px;
-    font-size: 15px;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #e5e5e5;
-}
-
-.position {
-    min-width: 90px;
+    margin-top: 7px;
+    font-size: 13px;
     color: #555555;
 }
 
-.timeline {
-    max-width: 1050px;
-    margin: 17px auto 0;
+.scan-time {
+    font-size: 17px;
+    font-weight: bold;
+    color: #111111;
 }
 
-input[type="range"] {
+.status {
+    text-align: right;
+}
+
+
+/* ==========================================================
+   COD-STYLE BOTTOM CONTROL STRIP
+   ========================================================== */
+
+.radar-controls {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: 1000;
+
+    background:
+        rgba(
+            20,
+            20,
+            20,
+            0.97
+        );
+
+    border-top:
+        3px solid #16833b;
+
+    padding:
+        8px 16px 9px;
+}
+
+.control-inner {
     width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    display: grid;
+
+    grid-template-columns:
+        auto
+        minmax(180px, 1fr)
+        auto;
+
+    align-items: center;
+
+    gap: 13px;
+}
+
+.transport {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.transport button {
+    min-width: 42px;
+    height: 38px;
+
+    border:
+        1px solid #666666;
+
+    border-radius: 4px;
+
+    background: #303030;
+
+    color: #ffffff;
+
+    font-size: 18px;
+
+    cursor: pointer;
+}
+
+.transport button:hover {
+    background: #484848;
+}
+
+.transport button.play {
+    min-width: 58px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.slider-wrap {
+    display: grid;
+
+    grid-template-columns:
+        auto
+        minmax(100px, 1fr)
+        auto;
+
+    align-items: center;
+
+    gap: 10px;
+
+    min-width: 0;
+}
+
+.slider-time {
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+#timeline {
+    width: 100%;
+
+    margin: 0;
+
+    accent-color: #20a84a;
+
+    cursor: pointer;
+}
+
+.frame-count {
+    color: #cccccc;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.latest-button {
+    border:
+        1px solid #666666;
+
+    border-radius: 4px;
+
+    background: #303030;
+
+    color: #ffffff;
+
+    height: 38px;
+
+    padding: 0 13px;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+}
+
+.latest-button:hover {
+    background: #484848;
+}
+
+
+@media (max-width: 720px) {
+
+    body {
+        padding-bottom: 118px;
+    }
+
+    .radar-controls {
+        padding:
+            7px 8px;
+    }
+
+    .control-inner {
+        grid-template-columns:
+            1fr;
+        gap: 6px;
+    }
+
+    .transport {
+        justify-content: center;
+    }
+
+    .slider-wrap {
+        grid-template-columns:
+            auto
+            1fr
+            auto;
+    }
+
+    .latest-button {
+        display: none;
+    }
+
+    .radar-info {
+        display: block;
+        text-align: center;
+    }
+
+    .status {
+        text-align: center;
+        margin-top: 3px;
+    }
 }
 
 </style>
@@ -210,19 +388,17 @@ NEXRAD
 
 <main>
 
-
-<h2>
+<h2 class="radar-heading">
 KMPX NEXRAD
 </h2>
 
+<div class="radar-subtitle">
 
-<div class="subtitle">
-
-0.5° Base Reflectivity
+0.5° Base Reflectivity · Last 2 Hours
 
 <br>
 
-Last 2 Hours · 10 dBZ minimum · 5 dBZ intervals
+10 dBZ minimum · 5 dBZ intervals
 
 </div>
 
@@ -234,6 +410,8 @@ Last 2 Hours · 10 dBZ minimum · 5 dBZ intervals
     class="radar-image"
     alt="KMPX NEXRAD Base Reflectivity"
 >
+
+<div class="radar-info">
 
 <div
     id="scan-time"
@@ -251,61 +429,64 @@ Loading radar frames...
 
 </div>
 
+</div>
 
-<div class="controls">
+
+<div class="footer">
+
+KMPX Level II · Lowest elevation scan
+
+<br>
+
+Actual radar volume times are used.
+
+</div>
+
+</main>
 
 
-<button
-    id="first-button"
-    type="button"
->
-|◀
-</button>
+<div class="radar-controls">
 
+<div class="control-inner">
+
+
+<div class="transport">
 
 <button
     id="previous-button"
     type="button"
+    title="Previous frame"
 >
 ◀
 </button>
 
-
 <button
     id="play-button"
+    class="play"
     type="button"
 >
 Pause
 </button>
 
-
 <button
     id="next-button"
     type="button"
+    title="Next frame"
 >
 ▶
 </button>
 
+</div>
 
-<button
-    id="last-button"
-    type="button"
->
-▶|
-</button>
 
+<div class="slider-wrap">
 
 <div
-    id="position"
-    class="position"
+    id="slider-time"
+    class="slider-time"
 >
+--
 </div>
-
-
-</div>
-
-
-<div class="timeline">
 
 <input
     id="timeline"
@@ -316,31 +497,38 @@ Pause
     step="1"
 >
 
+<div
+    id="frame-count"
+    class="frame-count"
+>
+0 / 0
 </div>
-
-
-<div class="footer">
-
-KMPX NEXRAD Level II
-
-<br>
-
-Lowest elevation base reflectivity
-
-<br>
-
-Actual radar scan times are used.
 
 </div>
 
 
-</main>
+<button
+    id="latest-button"
+    class="latest-button"
+    type="button"
+>
+LATEST
+</button>
+
+
+</div>
+
+</div>
 
 
 <script>
 
 const RADAR_BASE =
     "https://35-255-233-134.sslip.io/radar";
+
+const FRAME_DELAY =
+    700;
+
 
 let frames = [];
 
@@ -349,8 +537,6 @@ let currentIndex = 0;
 let playing = true;
 
 let timer = null;
-
-const FRAME_DELAY = 700;
 
 
 const radarImage =
@@ -363,14 +549,19 @@ const scanTime =
         "scan-time"
     );
 
+const sliderTime =
+    document.getElementById(
+        "slider-time"
+    );
+
 const status =
     document.getElementById(
         "status"
     );
 
-const position =
+const frameCount =
     document.getElementById(
-        "position"
+        "frame-count"
     );
 
 const timeline =
@@ -386,10 +577,7 @@ const playButton =
 
 function displayFrame(index) {
 
-    if (
-        !frames.length
-    ) {
-
+    if (!frames.length) {
         return;
     }
 
@@ -409,37 +597,38 @@ function displayFrame(index) {
 
     radarImage.src =
         RADAR_BASE
-        + "/"
-        + frame.file
-        + "?v="
-        + encodeURIComponent(
+        +
+        "/"
+        +
+        frame.file
+        +
+        "?v="
+        +
+        encodeURIComponent(
             frame.timestamp
         );
 
     scanTime.textContent =
         frame.time;
 
-    position.textContent =
-        (
-            currentIndex
-            + 1
-        )
+    sliderTime.textContent =
+        frame.time;
+
+    timeline.value =
+        currentIndex;
+
+    frameCount.textContent =
+        (currentIndex + 1)
         +
         " / "
         +
         frames.length;
-
-    timeline.value =
-        currentIndex;
 }
 
 
 function nextFrame() {
 
-    if (
-        !frames.length
-    ) {
-
+    if (!frames.length) {
         return;
     }
 
@@ -449,7 +638,6 @@ function nextFrame() {
         currentIndex
         >= frames.length
     ) {
-
         currentIndex = 0;
     }
 
@@ -461,20 +649,13 @@ function nextFrame() {
 
 function previousFrame() {
 
-    if (
-        !frames.length
-    ) {
-
+    if (!frames.length) {
         return;
     }
 
     currentIndex--;
 
-    if (
-        currentIndex
-        < 0
-    ) {
-
+    if (currentIndex < 0) {
         currentIndex =
             frames.length - 1;
     }
@@ -487,10 +668,7 @@ function previousFrame() {
 
 function startLoop() {
 
-    if (
-        timer !== null
-    ) {
-
+    if (timer !== null) {
         clearInterval(
             timer
         );
@@ -511,9 +689,7 @@ function startLoop() {
 
 function stopLoop() {
 
-    if (
-        timer !== null
-    ) {
+    if (timer !== null) {
 
         clearInterval(
             timer
@@ -531,16 +707,26 @@ function stopLoop() {
 
 function toggleLoop() {
 
-    if (
-        playing
-    ) {
-
+    if (playing) {
         stopLoop();
-
-    } else {
-
+    }
+    else {
         startLoop();
     }
+}
+
+
+function goLatest() {
+
+    if (!frames.length) {
+        return;
+    }
+
+    stopLoop();
+
+    displayFrame(
+        frames.length - 1
+    );
 }
 
 
@@ -561,9 +747,7 @@ async function loadFrames() {
                 }
             );
 
-        if (
-            !response.ok
-        ) {
+        if (!response.ok) {
 
             throw new Error(
                 "HTTP "
@@ -589,7 +773,7 @@ async function loadFrames() {
             return;
         }
 
-        const wasAtLatest =
+        const wasNearLatest =
             (
                 !frames.length
                 ||
@@ -604,10 +788,7 @@ async function loadFrames() {
         timeline.max =
             frames.length - 1;
 
-        if (
-            wasAtLatest
-        ) {
-
+        if (wasNearLatest) {
             currentIndex =
                 frames.length - 1;
         }
@@ -619,39 +800,20 @@ async function loadFrames() {
         status.textContent =
             frames.length
             +
-            " KMPX scans in current loop";
+            " scans";
 
     }
 
-    catch (
-        error
-    ) {
+    catch (error) {
 
         console.error(
             error
         );
 
         status.textContent =
-            "Unable to load live radar frames.";
+            "Unable to load radar.";
     }
 }
-
-
-document
-    .getElementById(
-        "first-button"
-    )
-    .addEventListener(
-        "click",
-        function () {
-
-            stopLoop();
-
-            displayFrame(
-                0
-            );
-        }
-    );
 
 
 document
@@ -693,18 +855,11 @@ document
 
 document
     .getElementById(
-        "last-button"
+        "latest-button"
     )
     .addEventListener(
         "click",
-        function () {
-
-            stopLoop();
-
-            displayFrame(
-                frames.length - 1
-            );
-        }
+        goLatest
     );
 
 
@@ -722,6 +877,34 @@ timeline
             );
         }
     );
+
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (event.key === "ArrowLeft") {
+
+            stopLoop();
+
+            previousFrame();
+        }
+
+        if (event.key === "ArrowRight") {
+
+            stopLoop();
+
+            nextFrame();
+        }
+
+        if (event.key === " ") {
+
+            event.preventDefault();
+
+            toggleLoop();
+        }
+    }
+);
 
 
 loadFrames();
