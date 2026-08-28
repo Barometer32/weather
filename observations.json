@@ -1,12 +1,134 @@
 [
   {
-    "timestamp": "2026-08-27T23:53:00+00:00",
-    "local_time": "2026-08-27 06:53 PM",
+    "timestamp": "2026-08-27T13:00:00+00:00",
+    "local_time": "2026-08-27 08:00 AM",
+    "time_short": "8:00 AM",
+    "temperature": 64,
+    "dewpoint": 59,
+    "wind_direction_degrees": 300,
+    "wind_direction": "WNW",
+    "wind_speed": 2,
+    "sun_angle": 15.1
+  },
+  {
+    "timestamp": "2026-08-27T14:00:00+00:00",
+    "local_time": "2026-08-27 09:00 AM",
+    "time_short": "9:00 AM",
+    "temperature": 67,
+    "dewpoint": 58,
+    "wind_direction_degrees": 300,
+    "wind_direction": "WNW",
+    "wind_speed": 5,
+    "sun_angle": 25.6
+  },
+  {
+    "timestamp": "2026-08-27T15:00:00+00:00",
+    "local_time": "2026-08-27 10:00 AM",
+    "time_short": "10:00 AM",
+    "temperature": 72,
+    "dewpoint": 60,
+    "wind_direction_degrees": 330,
+    "wind_direction": "NNW",
+    "wind_speed": 2,
+    "sun_angle": 35.7
+  },
+  {
+    "timestamp": "2026-08-27T16:00:00+00:00",
+    "local_time": "2026-08-27 11:00 AM",
+    "time_short": "11:00 AM",
+    "temperature": 74,
+    "dewpoint": 58,
+    "wind_direction_degrees": 310,
+    "wind_direction": "NW",
+    "wind_speed": 7,
+    "sun_angle": 44.8
+  },
+  {
+    "timestamp": "2026-08-27T17:00:00+00:00",
+    "local_time": "2026-08-27 12:00 PM",
+    "time_short": "12:00 PM",
+    "temperature": 76,
+    "dewpoint": 56,
+    "wind_direction_degrees": 325,
+    "wind_direction": "NW",
+    "wind_speed": 9,
+    "sun_angle": 51.7
+  },
+  {
+    "timestamp": "2026-08-27T18:00:00+00:00",
+    "local_time": "2026-08-27 01:00 PM",
+    "time_short": "1:00 PM",
+    "temperature": 77,
+    "dewpoint": 54,
+    "wind_direction_degrees": 315,
+    "wind_direction": "NW",
+    "wind_speed": 9,
+    "sun_angle": 55.2
+  },
+  {
+    "timestamp": "2026-08-27T19:00:00+00:00",
+    "local_time": "2026-08-27 02:00 PM",
+    "time_short": "2:00 PM",
+    "temperature": 79,
+    "dewpoint": 52,
+    "wind_direction_degrees": 300,
+    "wind_direction": "WNW",
+    "wind_speed": 9,
+    "sun_angle": 54.0
+  },
+  {
+    "timestamp": "2026-08-27T20:00:00+00:00",
+    "local_time": "2026-08-27 03:00 PM",
+    "time_short": "3:00 PM",
+    "temperature": 80,
+    "dewpoint": 51,
+    "wind_direction_degrees": 260,
+    "wind_direction": "W",
+    "wind_speed": 9,
+    "sun_angle": 48.7
+  },
+  {
+    "timestamp": "2026-08-27T21:00:00+00:00",
+    "local_time": "2026-08-27 04:00 PM",
+    "time_short": "4:00 PM",
+    "temperature": 80,
+    "dewpoint": 50,
+    "wind_direction_degrees": 305,
+    "wind_direction": "NW",
+    "wind_speed": 9,
+    "sun_angle": 40.6
+  },
+  {
+    "timestamp": "2026-08-27T22:00:00+00:00",
+    "local_time": "2026-08-27 05:00 PM",
+    "time_short": "5:00 PM",
+    "temperature": 81,
+    "dewpoint": 50,
+    "wind_direction_degrees": 300,
+    "wind_direction": "WNW",
+    "wind_speed": 10,
+    "sun_angle": 30.9
+  },
+  {
+    "timestamp": "2026-08-27T23:00:00+00:00",
+    "local_time": "2026-08-27 06:00 PM",
+    "time_short": "6:00 PM",
+    "temperature": 80,
+    "dewpoint": 50,
+    "wind_direction_degrees": 330,
+    "wind_direction": "NNW",
+    "wind_speed": 10,
+    "sun_angle": 20.5
+  },
+  {
+    "timestamp": "2026-08-28T00:00:00+00:00",
+    "local_time": "2026-08-27 07:00 PM",
+    "time_short": "7:00 PM",
     "temperature": 78,
     "dewpoint": 50,
     "wind_direction_degrees": 320,
     "wind_direction": "NW",
     "wind_speed": 7,
-    "sun_angle": 11.2
+    "sun_angle": 9.9
   }
 ]
