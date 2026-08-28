@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Weather Lab - NEXRAD</title>
+
+<style>
+
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #ffffff;
+    color: #111111;
+}
+
+header {
+    background: #111111;
+    color: white;
+    padding: 20px 35px 0;
+    border-bottom: 4px solid #16833b;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 32px;
+}
+
+header p {
+    margin: 5px 0 15px;
+    font-size: 15px;
+}
+
+nav {
+    display: flex;
+    gap: 6px;
+}
+
+nav a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 11px 18px;
+    font-weight: bold;
+    border-radius: 5px 5px 0 0;
+}
+
+nav a:hover {
+    background: #333333;
+}
+
+nav a.active {
+    background: #16833b;
+}
+
+main {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 32px;
+}
+
+h2 {
+    text-align: center;
+    margin-top: 0;
+}
+
+.subtitle {
+    text-align: center;
+    color: #555555;
+    margin-bottom: 28px;
+    font-size: 17px;
+}
+
+.footer {
+    margin-top: 22px;
+    text-align: center;
+    color: #777777;
+    font-size: 13px;
+}
+
+@media (max-width: 800px) {
+
+    header {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    main {
+        padding: 15px;
+    }
+
+    nav a {
+        padding: 10px 12px;
+    }
+}
+
+
+.radar-container {
+    max-width: 1050px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.radar-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    background: #080808;
+    border: 1px solid #cccccc;
+}
+
+.scan-time {
+    margin-top: 12px;
+    font-size: 21px;
+    font-weight: bold;
+}
+
+.status {
+    margin-top: 4px;
+    color: #666666;
+    font-size: 13px;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 9px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+}
+
+button {
+    border: 1px solid #aaaaaa;
+    background: #f5f5f5;
+    border-radius: 5px;
+    padding: 9px 16px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #e5e5e5;
+}
+
+.position {
+    min-width: 90px;
+    color: #555555;
+}
+
+.timeline {
+    max-width: 1050px;
+    margin: 17px auto 0;
+}
+
+input[type="range"] {
+    width: 100%;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<h1>
+Weather Lab
+</h1>
+
+<p>
+Twin Cities Local Weather Observations
+</p>
+
+<nav>
+
+<a
+    href="./"
+>
+Observations
+</a>
+
+<a
+    class="active"
+    href="nexrad.html"
+>
+NEXRAD
+</a>
+
+</nav>
+
+</header>
+
+
+<main>
+
+
+<h2>
+KMPX NEXRAD
+</h2>
+
+
+<div class="subtitle">
+
+0.5° Base Reflectivity
+
+<br>
+
+Last 2 Hours · 10 dBZ minimum · 5 dBZ intervals
+
+</div>
+
+
+<div class="radar-container">
+
+<img
+    id="radar-image"
+    class="radar-image"
+    alt="KMPX NEXRAD Base Reflectivity"
+>
+
+<div
+    id="scan-time"
+    class="scan-time"
+>
+Loading radar...
+</div>
+
+<div
+    id="status"
+    class="status"
+>
+Loading radar frames...
+</div>
+
+</div>
+
+
+<div class="controls">
+
+
+<button
+    id="first-button"
+    type="button"
+>
+|◀
+</button>
+
+
+<button
+    id="previous-button"
+    type="button"
+>
+◀
+</button>
+
+
+<button
+    id="play-button"
+    type="button"
+>
+Pause
+</button>
+
+
+<button
+    id="next-button"
+    type="button"
+>
+▶
+</button>
+
+
+<button
+    id="last-button"
+    type="button"
+>
+▶|
+</button>
+
+
+<div
+    id="position"
+    class="position"
+>
+</div>
+
+
+</div>
+
+
+<div class="timeline">
+
+<input
+    id="timeline"
+    type="range"
+    min="0"
+    max="0"
+    value="0"
+    step="1"
+>
+
+</div>
+
+
+<div class="footer">
+
+KMPX NEXRAD Level II
+
+<br>
+
+Lowest elevation base reflectivity
+
+<br>
+
+Actual radar scan times are used.
+
+</div>
+
+
+</main>
+
+
+<script>
+
+const RADAR_BASE =
+    "https://35-255-233-134.sslip.io/radar";
+
+let frames = [];
+
+let currentIndex = 0;
+
+let playing = true;
+
+let timer = null;
+
+const FRAME_DELAY = 700;
+
+
+const radarImage =
+    document.getElementById(
+        "radar-image"
+    );
+
+const scanTime =
+    document.getElementById(
+        "scan-time"
+    );
+
+const status =
+    document.getElementById(
+        "status"
+    );
+
+const position =
+    document.getElementById(
+        "position"
+    );
+
+const timeline =
+    document.getElementById(
+        "timeline"
+    );
+
+const playButton =
+    document.getElementById(
+        "play-button"
+    );
+
+
+function displayFrame(index) {
+
+    if (
+        !frames.length
+    ) {
+
+        return;
+    }
+
+    currentIndex =
+        Math.max(
+            0,
+            Math.min(
+                index,
+                frames.length - 1
+            )
+        );
+
+    const frame =
+        frames[
+            currentIndex
+        ];
+
+    radarImage.src =
+        RADAR_BASE
+        + "/"
+        + frame.file
+        + "?v="
+        + encodeURIComponent(
+            frame.timestamp
+        );
+
+    scanTime.textContent =
+        frame.time;
+
+    position.textContent =
+        (
+            currentIndex
+            + 1
+        )
+        +
+        " / "
+        +
+        frames.length;
+
+    timeline.value =
+        currentIndex;
+}
+
+
+function nextFrame() {
+
+    if (
+        !frames.length
+    ) {
+
+        return;
+    }
+
+    currentIndex++;
+
+    if (
+        currentIndex
+        >= frames.length
+    ) {
+
+        currentIndex = 0;
+    }
+
+    displayFrame(
+        currentIndex
+    );
+}
+
+
+function previousFrame() {
+
+    if (
+        !frames.length
+    ) {
+
+        return;
+    }
+
+    currentIndex--;
+
+    if (
+        currentIndex
+        < 0
+    ) {
+
+        currentIndex =
+            frames.length - 1;
+    }
+
+    displayFrame(
+        currentIndex
+    );
+}
+
+
+function startLoop() {
+
+    if (
+        timer !== null
+    ) {
+
+        clearInterval(
+            timer
+        );
+    }
+
+    timer =
+        setInterval(
+            nextFrame,
+            FRAME_DELAY
+        );
+
+    playing = true;
+
+    playButton.textContent =
+        "Pause";
+}
+
+
+function stopLoop() {
+
+    if (
+        timer !== null
+    ) {
+
+        clearInterval(
+            timer
+        );
+
+        timer = null;
+    }
+
+    playing = false;
+
+    playButton.textContent =
+        "Play";
+}
+
+
+function toggleLoop() {
+
+    if (
+        playing
+    ) {
+
+        stopLoop();
+
+    } else {
+
+        startLoop();
+    }
+}
+
+
+async function loadFrames() {
+
+    try {
+
+        const response =
+            await fetch(
+                RADAR_BASE
+                +
+                "/frames.json?t="
+                +
+                Date.now(),
+                {
+                    cache:
+                        "no-store"
+                }
+            );
+
+        if (
+            !response.ok
+        ) {
+
+            throw new Error(
+                "HTTP "
+                +
+                response.status
+            );
+        }
+
+        const newFrames =
+            await response.json();
+
+        if (
+            !Array.isArray(
+                newFrames
+            )
+            ||
+            !newFrames.length
+        ) {
+
+            status.textContent =
+                "No radar frames available.";
+
+            return;
+        }
+
+        const wasAtLatest =
+            (
+                !frames.length
+                ||
+                currentIndex
+                >=
+                frames.length - 2
+            );
+
+        frames =
+            newFrames;
+
+        timeline.max =
+            frames.length - 1;
+
+        if (
+            wasAtLatest
+        ) {
+
+            currentIndex =
+                frames.length - 1;
+        }
+
+        displayFrame(
+            currentIndex
+        );
+
+        status.textContent =
+            frames.length
+            +
+            " KMPX scans in current loop";
+
+    }
+
+    catch (
+        error
+    ) {
+
+        console.error(
+            error
+        );
+
+        status.textContent =
+            "Unable to load live radar frames.";
+    }
+}
+
+
+document
+    .getElementById(
+        "first-button"
+    )
+    .addEventListener(
+        "click",
+        function () {
+
+            stopLoop();
+
+            displayFrame(
+                0
+            );
+        }
+    );
+
+
+document
+    .getElementById(
+        "previous-button"
+    )
+    .addEventListener(
+        "click",
+        function () {
+
+            stopLoop();
+
+            previousFrame();
+        }
+    );
+
+
+playButton
+    .addEventListener(
+        "click",
+        toggleLoop
+    );
+
+
+document
+    .getElementById(
+        "next-button"
+    )
+    .addEventListener(
+        "click",
+        function () {
+
+            stopLoop();
+
+            nextFrame();
+        }
+    );
+
+
+document
+    .getElementById(
+        "last-button"
+    )
+    .addEventListener(
+        "click",
+        function () {
+
+            stopLoop();
+
+            displayFrame(
+                frames.length - 1
+            );
+        }
+    );
+
+
+timeline
+    .addEventListener(
+        "input",
+        function () {
+
+            stopLoop();
+
+            displayFrame(
+                Number(
+                    timeline.value
+                )
+            );
+        }
+    );
+
+
+loadFrames();
+
+startLoop();
+
+
+setInterval(
+    loadFrames,
+    60000
+);
+
+</script>
+
+
+</body>
+
+</html>
