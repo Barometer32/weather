@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -15,7 +16,9 @@
         content="#111111"
     >
 
-    <title>Weather Lab</title>
+    <title>
+        Weather Lab
+    </title>
 
     <link
         rel="stylesheet"
@@ -66,15 +69,18 @@
 
 <main class="page">
 
+
     <section class="current-section">
 
         <h2>
             Current Conditions
         </h2>
 
+
         <div class="description">
             KMSP + KFCM averaged observation
         </div>
+
 
         <div
             class="updated"
@@ -85,6 +91,7 @@
 
 
         <div class="condition-grid">
+
 
             <div class="condition-card">
 
@@ -151,9 +158,11 @@
                     class="card-small"
                     id="sun-updated"
                 >
+                    Live • Hopkins, MN
                 </div>
 
             </div>
+
 
         </div>
 
@@ -211,6 +220,10 @@
 
 <script>
 
+/* ========================================================
+   WEATHER JSON
+======================================================== */
+
 async function loadWeather() {
 
     try {
@@ -221,6 +234,7 @@ async function loadWeather() {
                 + Date.now()
             );
 
+
         if (!response.ok) {
 
             throw new Error(
@@ -230,8 +244,10 @@ async function loadWeather() {
 
         }
 
+
         const data =
             await response.json();
+
 
         const current =
             data.current;
@@ -267,56 +283,11 @@ async function loadWeather() {
             + current.display_time;
 
 
-        if (
-            data.sun_angle !== null
-            &&
-            data.sun_angle !== undefined
-        ) {
-
-            document.getElementById(
-                "sun-angle"
-            ).textContent =
-                data.sun_angle
-                + "°";
-
-        }
-
-        else {
-
-            document.getElementById(
-                "sun-angle"
-            ).textContent =
-                "--";
-
-        }
-
-
-        if (
-            data.sun_angle_updated
-        ) {
-
-            document.getElementById(
-                "sun-updated"
-            ).textContent =
-                "As of "
-                + data.sun_angle_updated;
-
-        }
-
-        else {
-
-            document.getElementById(
-                "sun-updated"
-            ).textContent =
-                "";
-
-        }
-
-
         const tbody =
             document.getElementById(
                 "history-body"
             );
+
 
         tbody.innerHTML =
             "";
@@ -325,47 +296,52 @@ async function loadWeather() {
         data.history.forEach(
             item => {
 
+
                 const row =
                     document.createElement(
                         "tr"
                     );
 
 
-                const timeCell =
+                const time =
                     document.createElement(
                         "td"
                     );
 
-                timeCell.textContent =
+
+                const temperature =
+                    document.createElement(
+                        "td"
+                    );
+
+
+                const dewpoint =
+                    document.createElement(
+                        "td"
+                    );
+
+
+                const wind =
+                    document.createElement(
+                        "td"
+                    );
+
+
+                time.textContent =
                     item.display_time;
 
 
-                const tempCell =
-                    document.createElement(
-                        "td"
-                    );
-
-                tempCell.textContent =
+                temperature.textContent =
                     item.temperature
                     + "°F";
 
 
-                const dewCell =
-                    document.createElement(
-                        "td"
-                    );
-
-                dewCell.textContent =
+                dewpoint.textContent =
                     item.dewpoint
                     + "°F";
 
 
-                const windCell =
-                    document.createElement(
-                        "td"
-                    );
-
-                windCell.textContent =
+                wind.textContent =
                     item.wind_direction
                     + " "
                     + item.wind_speed
@@ -373,19 +349,22 @@ async function loadWeather() {
 
 
                 row.appendChild(
-                    timeCell
+                    time
                 );
 
-                row.appendChild(
-                    tempCell
-                );
 
                 row.appendChild(
-                    dewCell
+                    temperature
                 );
 
+
                 row.appendChild(
-                    windCell
+                    dewpoint
+                );
+
+
+                row.appendChild(
+                    wind
                 );
 
 
@@ -401,7 +380,7 @@ async function loadWeather() {
     catch(error) {
 
         console.error(
-            "Unable to load weather data:",
+            "Unable to load weather:",
             error
         );
 
@@ -416,12 +395,756 @@ async function loadWeather() {
 }
 
 
+/* ========================================================
+   LIVE HOPKINS SOLAR ELEVATION
+
+   Hopkins, Minnesota
+   Latitude : 44.924
+   Longitude: -93.462
+
+   NOAA-style solar position calculation.
+
+======================================================== */
+
+const HOPKINS_LATITUDE =
+    44.924;
+
+
+const HOPKINS_LONGITUDE =
+    -93.462;
+
+
+function radians(
+    degrees
+) {
+
+    return (
+        degrees
+        * Math.PI
+        / 180
+    );
+
+}
+
+
+function degrees(
+    radiansValue
+) {
+
+    return (
+        radiansValue
+        * 180
+        / Math.PI
+    );
+
+}
+
+
+function normalizeDegrees(
+    value
+) {
+
+    value =
+        value % 360;
+
+
+    if (
+        value < 0
+    ) {
+
+        value += 360;
+
+    }
+
+
+    return value;
+
+}
+
+
+function calculateSunElevation(
+    date
+) {
+
+    /*
+        Convert JavaScript time to
+        Julian Date.
+    */
+
+    const julianDate =
+        (
+            date.getTime()
+            / 86400000
+        )
+        + 2440587.5;
+
+
+    const julianCentury =
+        (
+            julianDate
+            - 2451545.0
+        )
+        / 36525.0;
+
+
+    /*
+        Solar geometric longitude.
+    */
+
+    const geomMeanLongSun =
+        normalizeDegrees(
+
+            280.46646
+
+            + julianCentury
+            * (
+                36000.76983
+                + julianCentury
+                * 0.0003032
+            )
+
+        );
+
+
+    /*
+        Solar mean anomaly.
+    */
+
+    const geomMeanAnomalySun =
+
+        357.52911
+
+        + julianCentury
+        * (
+            35999.05029
+            - 0.0001537
+            * julianCentury
+        );
+
+
+    /*
+        Earth's orbital eccentricity.
+    */
+
+    const eccentricityEarthOrbit =
+
+        0.016708634
+
+        - julianCentury
+        * (
+            0.000042037
+            + 0.0000001267
+            * julianCentury
+        );
+
+
+    /*
+        Equation of center.
+    */
+
+    const sunEquationOfCenter =
+
+        Math.sin(
+            radians(
+                geomMeanAnomalySun
+            )
+        )
+        * (
+            1.914602
+            - julianCentury
+            * (
+                0.004817
+                + 0.000014
+                * julianCentury
+            )
+        )
+
+        +
+
+        Math.sin(
+            radians(
+                2
+                * geomMeanAnomalySun
+            )
+        )
+        * (
+            0.019993
+            - 0.000101
+            * julianCentury
+        )
+
+        +
+
+        Math.sin(
+            radians(
+                3
+                * geomMeanAnomalySun
+            )
+        )
+        * 0.000289;
+
+
+    const sunTrueLongitude =
+        geomMeanLongSun
+        + sunEquationOfCenter;
+
+
+    const omega =
+
+        125.04
+        - 1934.136
+        * julianCentury;
+
+
+    const sunApparentLongitude =
+
+        sunTrueLongitude
+        - 0.00569
+        - 0.00478
+        * Math.sin(
+            radians(
+                omega
+            )
+        );
+
+
+    /*
+        Obliquity.
+    */
+
+    const meanObliquity =
+
+        23
+
+        +
+
+        (
+            26
+
+            +
+
+            (
+                21.448
+
+                - julianCentury
+                * (
+                    46.815
+                    + julianCentury
+                    * (
+                        0.00059
+                        - julianCentury
+                        * 0.001813
+                    )
+                )
+
+            )
+            / 60
+
+        )
+        / 60;
+
+
+    const correctedObliquity =
+
+        meanObliquity
+
+        +
+
+        0.00256
+
+        * Math.cos(
+            radians(
+                omega
+            )
+        );
+
+
+    /*
+        Solar declination.
+    */
+
+    const solarDeclination =
+
+        degrees(
+
+            Math.asin(
+
+                Math.sin(
+                    radians(
+                        correctedObliquity
+                    )
+                )
+
+                *
+
+                Math.sin(
+                    radians(
+                        sunApparentLongitude
+                    )
+                )
+
+            )
+
+        );
+
+
+    /*
+        Equation of time.
+    */
+
+    const y =
+
+        Math.tan(
+            radians(
+                correctedObliquity
+                / 2
+            )
+        );
+
+
+    const ySquared =
+        y * y;
+
+
+    const equationOfTime =
+
+        4
+
+        * degrees(
+
+            ySquared
+            * Math.sin(
+                2
+                * radians(
+                    geomMeanLongSun
+                )
+            )
+
+            -
+
+            2
+            * eccentricityEarthOrbit
+            * Math.sin(
+                radians(
+                    geomMeanAnomalySun
+                )
+            )
+
+            +
+
+            4
+            * eccentricityEarthOrbit
+            * ySquared
+            * Math.sin(
+                radians(
+                    geomMeanAnomalySun
+                )
+            )
+            * Math.cos(
+                2
+                * radians(
+                    geomMeanLongSun
+                )
+            )
+
+            -
+
+            0.5
+            * ySquared
+            * ySquared
+            * Math.sin(
+                4
+                * radians(
+                    geomMeanLongSun
+                )
+            )
+
+            -
+
+            1.25
+            * eccentricityEarthOrbit
+            * eccentricityEarthOrbit
+            * Math.sin(
+                2
+                * radians(
+                    geomMeanAnomalySun
+                )
+            )
+
+        );
+
+
+    /*
+        UTC minutes since midnight.
+    */
+
+    const utcMinutes =
+
+        date.getUTCHours()
+        * 60
+
+        +
+
+        date.getUTCMinutes()
+
+        +
+
+        date.getUTCSeconds()
+        / 60
+
+        +
+
+        date.getUTCMilliseconds()
+        / 60000;
+
+
+    /*
+        True solar time.
+
+        Longitude is negative west.
+    */
+
+    let trueSolarTime =
+
+        utcMinutes
+
+        +
+
+        equationOfTime
+
+        +
+
+        4
+        * HOPKINS_LONGITUDE;
+
+
+    trueSolarTime =
+        (
+            trueSolarTime
+            % 1440
+            + 1440
+        )
+        % 1440;
+
+
+    /*
+        Solar hour angle.
+    */
+
+    let hourAngle;
+
+
+    if (
+        trueSolarTime
+        / 4
+        < 0
+    ) {
+
+        hourAngle =
+            trueSolarTime
+            / 4
+            + 180;
+
+    }
+
+    else {
+
+        hourAngle =
+            trueSolarTime
+            / 4
+            - 180;
+
+    }
+
+
+    /*
+        Solar zenith.
+    */
+
+    let cosineZenith =
+
+        Math.sin(
+            radians(
+                HOPKINS_LATITUDE
+            )
+        )
+
+        *
+
+        Math.sin(
+            radians(
+                solarDeclination
+            )
+        )
+
+        +
+
+        Math.cos(
+            radians(
+                HOPKINS_LATITUDE
+            )
+        )
+
+        *
+
+        Math.cos(
+            radians(
+                solarDeclination
+            )
+        )
+
+        *
+
+        Math.cos(
+            radians(
+                hourAngle
+            )
+        );
+
+
+    cosineZenith =
+        Math.min(
+            1,
+            Math.max(
+                -1,
+                cosineZenith
+            )
+        );
+
+
+    const zenith =
+
+        degrees(
+            Math.acos(
+                cosineZenith
+            )
+        );
+
+
+    let elevation =
+        90
+        - zenith;
+
+
+    /*
+        Atmospheric refraction correction.
+
+        This makes the displayed angle
+        more representative of the
+        apparent position of the sun near
+        the horizon.
+    */
+
+    let refractionCorrection =
+        0;
+
+
+    if (
+        elevation > 85
+    ) {
+
+        refractionCorrection =
+            0;
+
+    }
+
+    else if (
+        elevation > 5
+    ) {
+
+        const tangent =
+            Math.tan(
+                radians(
+                    elevation
+                )
+            );
+
+
+        refractionCorrection =
+
+            (
+                58.1
+                / tangent
+
+                -
+
+                0.07
+                / Math.pow(
+                    tangent,
+                    3
+                )
+
+                +
+
+                0.000086
+                / Math.pow(
+                    tangent,
+                    5
+                )
+
+            )
+            / 3600;
+
+    }
+
+    else if (
+        elevation > -0.575
+    ) {
+
+        refractionCorrection =
+
+            (
+                1735
+
+                +
+
+                elevation
+                * (
+                    -518.2
+
+                    +
+
+                    elevation
+                    * (
+                        103.4
+
+                        +
+
+                        elevation
+                        * (
+                            -12.79
+
+                            +
+
+                            elevation
+                            * 0.711
+                        )
+                    )
+                )
+
+            )
+            / 3600;
+
+    }
+
+    else {
+
+        refractionCorrection =
+
+            (
+                -20.772
+
+                /
+
+                Math.tan(
+                    radians(
+                        elevation
+                    )
+                )
+
+            )
+            / 3600;
+
+    }
+
+
+    elevation +=
+        refractionCorrection;
+
+
+    return elevation;
+
+}
+
+
+function updateSunAngle() {
+
+    const now =
+        new Date();
+
+
+    const elevation =
+        calculateSunElevation(
+            now
+        );
+
+
+    document.getElementById(
+        "sun-angle"
+    ).textContent =
+        elevation.toFixed(
+            1
+        )
+        + "°";
+
+
+    const timeText =
+        new Intl.DateTimeFormat(
+            "en-US",
+            {
+                timeZone:
+                    "America/Chicago",
+
+                hour:
+                    "numeric",
+
+                minute:
+                    "2-digit",
+
+                second:
+                    "2-digit",
+
+                hour12:
+                    true
+            }
+        ).format(
+            now
+        );
+
+
+    document.getElementById(
+        "sun-updated"
+    ).textContent =
+        "Live • "
+        + timeText
+        + " • Hopkins, MN";
+
+}
+
+
+/* ========================================================
+   START PAGE
+======================================================== */
+
 loadWeather();
 
+updateSunAngle();
+
+
+/*
+    Weather observations do not need
+    constant reloads.
+
+    Recheck JSON once per minute in case
+    GitHub Pages has received a new
+    hourly update.
+*/
 
 setInterval(
     loadWeather,
     60000
+);
+
+
+/*
+    Solar elevation is calculated locally
+    every second for a genuinely live
+    display.
+*/
+
+setInterval(
+    updateSunAngle,
+    1000
 );
 
 </script>
