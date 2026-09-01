@@ -1,0 +1,581 @@
+* {
+    box-sizing: border-box;
+}
+
+
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+
+body {
+
+    margin: 0;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background: #ffffff;
+
+    color: #111111;
+
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.site-header {
+
+    background: #111111;
+
+    color: #ffffff;
+
+    border-bottom:
+        3px solid #168a42;
+
+}
+
+
+.header-inner {
+
+    padding:
+        18px
+        28px
+        10px
+        28px;
+
+}
+
+
+.site-header h1 {
+
+    margin: 0;
+
+    font-size: 28px;
+
+    line-height: 1.1;
+
+    font-weight: 700;
+
+}
+
+
+.subtitle {
+
+    margin-top: 4px;
+
+    font-size: 14px;
+
+    line-height: 1.3;
+
+}
+
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+.tabs {
+
+    display: flex;
+
+    align-items: end;
+
+    gap: 4px;
+
+    padding-left: 28px;
+
+    overflow-x: auto;
+
+    scrollbar-width: none;
+
+}
+
+
+.tabs::-webkit-scrollbar {
+
+    display: none;
+
+}
+
+
+.tabs a {
+
+    display: block;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    padding:
+        11px
+        17px;
+
+}
+
+
+.tabs a:hover {
+
+    background: #292929;
+
+}
+
+
+.tabs a.active {
+
+    background: #168a42;
+
+    border-radius:
+        5px
+        5px
+        0
+        0;
+
+}
+
+
+/* =========================================
+   MAIN PAGE
+========================================= */
+
+.page {
+
+    width:
+        min(
+            1100px,
+            calc(100% - 32px)
+        );
+
+    margin:
+        28px
+        auto
+        60px
+        auto;
+
+}
+
+
+.current-section {
+
+    text-align: center;
+
+}
+
+
+h2 {
+
+    margin:
+        0
+        0
+        10px
+        0;
+
+    font-size: 24px;
+
+    line-height: 1.2;
+
+}
+
+
+.description {
+
+    color: #555555;
+
+    font-size: 15px;
+
+    line-height: 1.4;
+
+}
+
+
+.updated {
+
+    color: #666666;
+
+    font-size: 14px;
+
+    margin-top: 3px;
+
+}
+
+
+/* =========================================
+   CURRENT CONDITION CARDS
+========================================= */
+
+.condition-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            4,
+            minmax(
+                0,
+                1fr
+            )
+        );
+
+    gap: 14px;
+
+    margin-top: 25px;
+
+}
+
+
+.condition-card {
+
+    min-height: 120px;
+
+    padding: 20px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #fafafa;
+
+    border:
+        1px solid #d4d4d4;
+
+    border-radius: 7px;
+
+}
+
+
+.card-label {
+
+    color: #555555;
+
+    font-size: 14px;
+
+    line-height: 1.3;
+
+    margin-bottom: 9px;
+
+}
+
+
+.card-value {
+
+    font-size: 30px;
+
+    font-weight: 700;
+
+    line-height: 1.1;
+
+    white-space: nowrap;
+
+}
+
+
+.card-small {
+
+    color: #777777;
+
+    font-size: 12px;
+
+    margin-top: 8px;
+
+}
+
+
+/* =========================================
+   HISTORY
+========================================= */
+
+.history-section {
+
+    margin-top: 34px;
+
+}
+
+
+.history-section h2 {
+
+    text-align: center;
+
+}
+
+
+.table-wrapper {
+
+    width: 100%;
+
+    overflow-x: auto;
+
+    border:
+        1px solid #d4d4d4;
+
+}
+
+
+table {
+
+    width: 100%;
+
+    min-width: 550px;
+
+    border-collapse: collapse;
+
+}
+
+
+thead {
+
+    background: #eeeeee;
+
+}
+
+
+th {
+
+    font-weight: 700;
+
+}
+
+
+th,
+td {
+
+    padding:
+        12px
+        14px;
+
+    text-align: center;
+
+    border-bottom:
+        1px solid #dddddd;
+
+}
+
+
+tbody tr:nth-child(even) {
+
+    background: #fafafa;
+
+}
+
+
+tbody tr:last-child td {
+
+    border-bottom: none;
+
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (
+    max-width: 800px
+) {
+
+    .condition-grid {
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(
+                    0,
+                    1fr
+                )
+            );
+
+    }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (
+    max-width: 500px
+) {
+
+    .header-inner {
+
+        padding:
+            14px
+            15px
+            8px
+            15px;
+
+    }
+
+
+    .site-header h1 {
+
+        font-size: 24px;
+
+    }
+
+
+    .subtitle {
+
+        font-size: 13px;
+
+    }
+
+
+    .tabs {
+
+        padding-left: 8px;
+
+    }
+
+
+    .tabs a {
+
+        padding:
+            10px
+            12px;
+
+        font-size: 13px;
+
+    }
+
+
+    .page {
+
+        width:
+            calc(
+                100% - 20px
+            );
+
+        margin:
+            20px
+            auto
+            40px
+            auto;
+
+    }
+
+
+    h2 {
+
+        font-size: 21px;
+
+    }
+
+
+    .description {
+
+        font-size: 14px;
+
+    }
+
+
+    .updated {
+
+        font-size: 13px;
+
+    }
+
+
+    .condition-grid {
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(
+                    0,
+                    1fr
+                )
+            );
+
+        gap: 9px;
+
+        margin-top: 20px;
+
+    }
+
+
+    .condition-card {
+
+        min-height: 105px;
+
+        padding: 12px;
+
+    }
+
+
+    .card-label {
+
+        font-size: 12px;
+
+        margin-bottom: 7px;
+
+    }
+
+
+    .card-value {
+
+        font-size: 24px;
+
+    }
+
+
+    .card-small {
+
+        font-size: 11px;
+
+        margin-top: 6px;
+
+    }
+
+
+    .history-section {
+
+        margin-top: 28px;
+
+    }
+
+
+    th,
+    td {
+
+        padding:
+            10px
+            8px;
+
+        font-size: 14px;
+
+    }
+
+}
+
+
+/* =========================================
+   VERY SMALL PHONES
+========================================= */
+
+@media (
+    max-width: 360px
+) {
+
+    .condition-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+}

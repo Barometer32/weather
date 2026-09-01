@@ -3,659 +3,424 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<title>Weather Lab</title>
+    <meta
+        name="theme-color"
+        content="#111111"
+    >
 
-<style>
+    <title>Weather Lab</title>
 
-
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #ffffff;
-    color: #111111;
-}
-
-header {
-    background: #111111;
-    color: white;
-    padding: 18px 35px 0;
-    border-bottom: 4px solid #16833b;
-}
-
-header h1 {
-    margin: 0;
-    font-size: 32px;
-}
-
-header p {
-    margin: 4px 0 13px;
-    font-size: 15px;
-}
-
-nav {
-    display: flex;
-    gap: 5px;
-}
-
-nav a {
-    display: block;
-    color: white;
-    text-decoration: none;
-    padding: 10px 18px;
-    font-weight: bold;
-    border-radius: 5px 5px 0 0;
-}
-
-nav a:hover {
-    background: #333333;
-}
-
-nav a.active {
-    background: #16833b;
-}
-
-main {
-    max-width: 1300px;
-    margin: 0 auto;
-    padding: 30px;
-}
-
-h2 {
-    text-align: center;
-    margin-top: 0;
-}
-
-.subtitle {
-    text-align: center;
-    color: #555555;
-    margin-bottom: 25px;
-    font-size: 16px;
-}
-
-.footer {
-    margin-top: 20px;
-    text-align: center;
-    color: #777777;
-    font-size: 13px;
-}
-
-@media (max-width: 800px) {
-
-    header {
-        padding-left: 15px;
-        padding-right: 15px;
-    }
-
-    main {
-        padding: 15px;
-    }
-
-    nav a {
-        padding: 9px 12px;
-    }
-}
-
-
-.current-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
-    margin-bottom: 38px;
-}
-
-.current-box {
-    border: 1px solid #cccccc;
-    border-radius: 8px;
-    padding: 22px;
-    text-align: center;
-    background: #fafafa;
-}
-
-.label {
-    color: #555555;
-    font-size: 15px;
-    margin-bottom: 8px;
-}
-
-.value {
-    font-size: 36px;
-    font-weight: bold;
-}
-
-.value.wind {
-    font-size: 25px;
-}
-
-.sun-time {
-    font-size: 12px;
-    color: #777777;
-    margin-top: 5px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 16px;
-}
-
-th {
-    background: #eeeeee;
-}
-
-th,
-td {
-    border: 1px solid #cccccc;
-    padding: 12px;
-    text-align: center;
-}
-
-tr:nth-child(even) {
-    background: #fafafa;
-}
-
-@media (max-width: 800px) {
-
-    .current-grid {
-        grid-template-columns:
-            repeat(2, 1fr);
-    }
-
-    table {
-        font-size: 13px;
-    }
-
-    th,
-    td {
-        padding: 8px 4px;
-    }
-}
-
-</style>
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
 </head>
 
+
 <body>
 
-<header>
+<header class="site-header">
 
-<h1>
-Weather Lab
-</h1>
+    <div class="header-inner">
 
-<p>
-Twin Cities Local Weather Observations
-</p>
+        <h1>
+            Weather Lab
+        </h1>
 
-<nav>
+        <div class="subtitle">
+            Twin Cities Local Weather Observations
+        </div>
 
-<a
-    class="active"
-    href="./"
->
-Observations
-</a>
+    </div>
 
-<a
-    href="nexrad.html"
->
-NEXRAD
-</a>
 
-</nav>
+    <nav class="tabs">
+
+        <a
+            href="/weather/"
+            class="active"
+        >
+            Observations
+        </a>
+
+        <a href="#">
+            Radar
+        </a>
+
+        <a href="#">
+            Satellite
+        </a>
+
+    </nav>
 
 </header>
 
 
-<main>
+<main class="page">
 
+    <section class="current-section">
 
-<h2>
-Current Conditions
-</h2>
+        <h2>
+            Current Conditions
+        </h2>
 
+        <div class="description">
+            KMSP + KFCM averaged observation
+        </div>
 
-<div class="subtitle">
+        <div
+            class="updated"
+            id="updated"
+        >
+            Loading...
+        </div>
 
-KMSP + KFCM averaged observation
 
-<br>
+        <div class="condition-grid">
 
-Updated: 8:00 PM
+            <div class="condition-card">
 
-</div>
+                <div class="card-label">
+                    Temperature
+                </div>
 
+                <div
+                    class="card-value"
+                    id="temperature"
+                >
+                    --
+                </div>
 
-<div class="current-grid">
+            </div>
 
 
-<div class="current-box">
+            <div class="condition-card">
 
-<div class="label">
-Temperature
-</div>
+                <div class="card-label">
+                    Dew Point
+                </div>
 
-<div class="value">
-75°
-</div>
+                <div
+                    class="card-value"
+                    id="dewpoint"
+                >
+                    --
+                </div>
 
-</div>
+            </div>
 
 
-<div class="current-box">
+            <div class="condition-card">
 
-<div class="label">
-Dew Point
-</div>
+                <div class="card-label">
+                    Wind
+                </div>
 
-<div class="value">
-50°
-</div>
+                <div
+                    class="card-value"
+                    id="wind"
+                >
+                    --
+                </div>
 
-</div>
+            </div>
 
 
-<div class="current-box">
+            <div class="condition-card">
 
-<div class="label">
-Wind
-</div>
+                <div class="card-label">
+                    Current Sun Angle
+                </div>
 
-<div class="value wind">
-NW 6 mph
-</div>
+                <div
+                    class="card-value"
+                    id="sun-angle"
+                >
+                    --
+                </div>
 
-</div>
+                <div
+                    class="card-small"
+                    id="sun-updated"
+                >
+                </div>
 
+            </div>
 
-<div class="current-box">
+        </div>
 
-<div class="label">
-Current Sun Angle
-</div>
+    </section>
 
-<div
-    class="value"
-    id="sun-angle"
->
---
-</div>
 
-<div
-    class="sun-time"
-    id="sun-time"
->
-Calculating...
-</div>
+    <section class="history-section">
 
-</div>
+        <h2>
+            Last 12 Hours
+        </h2>
 
 
-</div>
+        <div class="table-wrapper">
 
+            <table>
 
-<h2>
-Last 12 Hours
-</h2>
+                <thead>
 
+                    <tr>
 
-<table>
+                        <th>
+                            Time
+                        </th>
 
-<thead>
+                        <th>
+                            Temp
+                        </th>
 
-<tr>
+                        <th>
+                            Dew Point
+                        </th>
 
-<th>Time</th>
+                        <th>
+                            Wind
+                        </th>
 
-<th>Temp</th>
-
-<th>Dew Point</th>
-
-<th>Wind</th>
-
-</tr>
-
-</thead>
-
-
-<tbody>
-
-
-<tr>
-<td>8:00 PM</td>
-<td>75°F</td>
-<td>50°F</td>
-<td>NW 6 mph</td>
-</tr>
+                    </tr>
 
-<tr>
-<td>7:00 PM</td>
-<td>78°F</td>
-<td>50°F</td>
-<td>NW 7 mph</td>
-</tr>
+                </thead>
 
-<tr>
-<td>6:00 PM</td>
-<td>80°F</td>
-<td>50°F</td>
-<td>NW 10 mph</td>
-</tr>
 
-<tr>
-<td>5:00 PM</td>
-<td>81°F</td>
-<td>50°F</td>
-<td>NW 10 mph</td>
-</tr>
+                <tbody id="history-body">
 
-<tr>
-<td>4:00 PM</td>
-<td>80°F</td>
-<td>50°F</td>
-<td>NW 9 mph</td>
-</tr>
+                </tbody>
 
-<tr>
-<td>3:00 PM</td>
-<td>80°F</td>
-<td>51°F</td>
-<td>W 9 mph</td>
-</tr>
+            </table>
 
-<tr>
-<td>2:00 PM</td>
-<td>79°F</td>
-<td>52°F</td>
-<td>NW 9 mph</td>
-</tr>
+        </div>
 
-<tr>
-<td>1:00 PM</td>
-<td>77°F</td>
-<td>54°F</td>
-<td>NW 9 mph</td>
-</tr>
-
-<tr>
-<td>12:00 PM</td>
-<td>76°F</td>
-<td>56°F</td>
-<td>NW 9 mph</td>
-</tr>
-
-<tr>
-<td>11:00 AM</td>
-<td>74°F</td>
-<td>58°F</td>
-<td>NW 7 mph</td>
-</tr>
-
-<tr>
-<td>10:00 AM</td>
-<td>72°F</td>
-<td>60°F</td>
-<td>NW 2 mph</td>
-</tr>
-
-<tr>
-<td>9:00 AM</td>
-<td>67°F</td>
-<td>58°F</td>
-<td>NW 5 mph</td>
-</tr>
-
-
-</tbody>
-
-</table>
-
-
-<div class="footer">
-
-Observations:
-KMSP + KFCM
-
-<br>
-
-Current solar elevation:
-Hopkins, Minnesota
-
-</div>
-
+    </section>
 
 </main>
 
 
 <script>
 
-const LATITUDE = 44.924;
-const LONGITUDE = -93.4627;
+async function loadWeather() {
+
+    try {
+
+        const response =
+            await fetch(
+                "data/weather.json?t="
+                + Date.now()
+            );
+
+        if (!response.ok) {
+
+            throw new Error(
+                "HTTP "
+                + response.status
+            );
+
+        }
+
+        const data =
+            await response.json();
+
+        const current =
+            data.current;
 
 
-function degToRad(value) {
-
-    return value
-        * Math.PI
-        / 180;
-}
-
-
-function radToDeg(value) {
-
-    return value
-        * 180
-        / Math.PI;
-}
-
-
-function getDayOfYear(date) {
-
-    const start =
-        Date.UTC(
-            date.getUTCFullYear(),
-            0,
-            0
-        );
-
-    const current =
-        Date.UTC(
-            date.getUTCFullYear(),
-            date.getUTCMonth(),
-            date.getUTCDate()
-        );
-
-    return Math.floor(
-        (current - start)
-        / 86400000
-    );
-}
-
-
-function calculateSunAngle(date) {
-
-    const dayOfYear =
-        getDayOfYear(
-            date
-        );
-
-    const hour =
-        date.getUTCHours()
-        +
-        date.getUTCMinutes()
-        / 60
-        +
-        date.getUTCSeconds()
-        / 3600;
-
-    const gamma =
-        2
-        * Math.PI
-        / 365
-        *
-        (
-            dayOfYear
-            - 1
-            +
-            (hour - 12)
-            / 24
-        );
-
-    const equationOfTime =
-        229.18
-        *
-        (
-            0.000075
-            +
-            0.001868
-            * Math.cos(gamma)
-            -
-            0.032077
-            * Math.sin(gamma)
-            -
-            0.014615
-            * Math.cos(2 * gamma)
-            -
-            0.040849
-            * Math.sin(2 * gamma)
-        );
-
-    const declination =
-        0.006918
-        -
-        0.399912
-        * Math.cos(gamma)
-        +
-        0.070257
-        * Math.sin(gamma)
-        -
-        0.006758
-        * Math.cos(2 * gamma)
-        +
-        0.000907
-        * Math.sin(2 * gamma)
-        -
-        0.002697
-        * Math.cos(3 * gamma)
-        +
-        0.00148
-        * Math.sin(3 * gamma);
-
-    const minutesUTC =
-        date.getUTCHours()
-        * 60
-        +
-        date.getUTCMinutes()
-        +
-        date.getUTCSeconds()
-        / 60;
-
-    let trueSolarTime =
-        (
-            minutesUTC
-            +
-            equationOfTime
-            +
-            4 * LONGITUDE
-        )
-        % 1440;
-
-    if (trueSolarTime < 0) {
-        trueSolarTime += 1440;
-    }
-
-    const hourAngle =
-        trueSolarTime
-        / 4
-        - 180;
-
-    const lat =
-        degToRad(
-            LATITUDE
-        );
-
-    const ha =
-        degToRad(
-            hourAngle
-        );
-
-    let cosZenith =
-        Math.sin(lat)
-        * Math.sin(declination)
-        +
-        Math.cos(lat)
-        * Math.cos(declination)
-        * Math.cos(ha);
-
-    cosZenith =
-        Math.max(
-            -1,
-            Math.min(
-                1,
-                cosZenith
-            )
-        );
-
-    const zenith =
-        radToDeg(
-            Math.acos(
-                cosZenith
-            )
-        );
-
-    return 90 - zenith;
-}
-
-
-function updateSunAngle() {
-
-    const now =
-        new Date();
-
-    const angle =
-        calculateSunAngle(
-            now
-        );
-
-    document
-        .getElementById(
-            "sun-angle"
-        )
-        .textContent =
-            angle.toFixed(1)
+        document.getElementById(
+            "temperature"
+        ).textContent =
+            current.temperature
             + "°";
 
-    document
-        .getElementById(
-            "sun-time"
-        )
-        .textContent =
-            "As of "
-            +
-            now.toLocaleTimeString(
-                [],
-                {
-                    hour: "numeric",
-                    minute: "2-digit"
-                }
+
+        document.getElementById(
+            "dewpoint"
+        ).textContent =
+            current.dewpoint
+            + "°";
+
+
+        document.getElementById(
+            "wind"
+        ).textContent =
+            current.wind_direction
+            + " "
+            + current.wind_speed
+            + " mph";
+
+
+        document.getElementById(
+            "updated"
+        ).textContent =
+            "Updated: "
+            + current.display_time;
+
+
+        if (
+            data.sun_angle !== null
+            &&
+            data.sun_angle !== undefined
+        ) {
+
+            document.getElementById(
+                "sun-angle"
+            ).textContent =
+                data.sun_angle
+                + "°";
+
+        }
+
+        else {
+
+            document.getElementById(
+                "sun-angle"
+            ).textContent =
+                "--";
+
+        }
+
+
+        if (
+            data.sun_angle_updated
+        ) {
+
+            document.getElementById(
+                "sun-updated"
+            ).textContent =
+                "As of "
+                + data.sun_angle_updated;
+
+        }
+
+        else {
+
+            document.getElementById(
+                "sun-updated"
+            ).textContent =
+                "";
+
+        }
+
+
+        const tbody =
+            document.getElementById(
+                "history-body"
             );
+
+        tbody.innerHTML =
+            "";
+
+
+        data.history.forEach(
+            item => {
+
+                const row =
+                    document.createElement(
+                        "tr"
+                    );
+
+
+                const timeCell =
+                    document.createElement(
+                        "td"
+                    );
+
+                timeCell.textContent =
+                    item.display_time;
+
+
+                const tempCell =
+                    document.createElement(
+                        "td"
+                    );
+
+                tempCell.textContent =
+                    item.temperature
+                    + "°F";
+
+
+                const dewCell =
+                    document.createElement(
+                        "td"
+                    );
+
+                dewCell.textContent =
+                    item.dewpoint
+                    + "°F";
+
+
+                const windCell =
+                    document.createElement(
+                        "td"
+                    );
+
+                windCell.textContent =
+                    item.wind_direction
+                    + " "
+                    + item.wind_speed
+                    + " mph";
+
+
+                row.appendChild(
+                    timeCell
+                );
+
+                row.appendChild(
+                    tempCell
+                );
+
+                row.appendChild(
+                    dewCell
+                );
+
+                row.appendChild(
+                    windCell
+                );
+
+
+                tbody.appendChild(
+                    row
+                );
+
+            }
+        );
+
+    }
+
+    catch(error) {
+
+        console.error(
+            "Unable to load weather data:",
+            error
+        );
+
+
+        document.getElementById(
+            "updated"
+        ).textContent =
+            "Unable to load weather data";
+
+    }
+
 }
 
 
-updateSunAngle();
+loadWeather();
+
 
 setInterval(
-    updateSunAngle,
+    loadWeather,
     60000
 );
 
