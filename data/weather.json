@@ -3,7 +3,7 @@
   "description": "KMSP + KFCM averaged observation",
   "location": "Twin Cities, Minnesota",
   "solar_location": "Hopkins, Minnesota",
-  "updated": "2026-09-01T12:41:08.371588-05:00",
+  "updated": "2026-09-01T12:44:18.033502-05:00",
   "updated_display": "12:00 PM",
   "current": {
     "timestamp": "2026-09-01T12:00:00-05:00",
@@ -34,8 +34,8 @@
       }
     ]
   },
-  "sun_angle": 52.5,
-  "sun_angle_updated": "12:42 PM",
+  "sun_angle": 52.6,
+  "sun_angle_updated": "12:44 PM",
   "history": [
     {
       "timestamp": "2026-09-01T12:00:00-05:00",
