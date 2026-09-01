@@ -1,0 +1,70 @@
+{
+  "name": "Weather Lab",
+  "description": "KMSP + KFCM averaged observation",
+  "location": "Twin Cities, Minnesota",
+  "solar_location": "Hopkins, Minnesota",
+  "updated": "2026-09-01T12:41:08.371588-05:00",
+  "updated_display": "12:00 PM",
+  "current": {
+    "timestamp": "2026-09-01T12:00:00-05:00",
+    "display_time": "12:00 PM",
+    "temperature": 84,
+    "dewpoint": 59,
+    "wind_direction": "NW",
+    "wind_direction_degrees": 310,
+    "wind_speed": 5,
+    "stations": [
+      {
+        "station": "KMSP",
+        "observation_time": "2026-09-01T16:53:00+00:00",
+        "temperature_f": 84.91999999999999,
+        "dewpoint_f": 57.92,
+        "wind_direction_degrees": null,
+        "wind_speed_mph": 3.4523399999999995,
+        "raw_metar": "METAR KMSP 011653Z VRB03KT 10SM SCT250 29/14 A2996 RMK AO2 SLP141 T02940144"
+      },
+      {
+        "station": "KFCM",
+        "observation_time": "2026-09-01T16:53:00+00:00",
+        "temperature_f": 82.94,
+        "dewpoint_f": 60.08,
+        "wind_direction_degrees": 310.0,
+        "wind_speed_mph": 5.7539,
+        "raw_metar": "METAR KFCM 011653Z 31005KT 10SM CLR 28/16 A2996 RMK AO2 SLP140 T02830156"
+      }
+    ]
+  },
+  "sun_angle": 52.5,
+  "sun_angle_updated": "12:41 PM",
+  "history": [
+    {
+      "timestamp": "2026-09-01T12:00:00-05:00",
+      "display_time": "12:00 PM",
+      "temperature": 84,
+      "dewpoint": 59,
+      "wind_direction": "NW",
+      "wind_direction_degrees": 310,
+      "wind_speed": 5,
+      "stations": [
+        {
+          "station": "KMSP",
+          "observation_time": "2026-09-01T16:53:00+00:00",
+          "temperature_f": 84.91999999999999,
+          "dewpoint_f": 57.92,
+          "wind_direction_degrees": null,
+          "wind_speed_mph": 3.4523399999999995,
+          "raw_metar": "METAR KMSP 011653Z VRB03KT 10SM SCT250 29/14 A2996 RMK AO2 SLP141 T02940144"
+        },
+        {
+          "station": "KFCM",
+          "observation_time": "2026-09-01T16:53:00+00:00",
+          "temperature_f": 82.94,
+          "dewpoint_f": 60.08,
+          "wind_direction_degrees": 310.0,
+          "wind_speed_mph": 5.7539,
+          "raw_metar": "METAR KFCM 011653Z 31005KT 10SM CLR 28/16 A2996 RMK AO2 SLP140 T02830156"
+        }
+      ]
+    }
+  ]
+}
